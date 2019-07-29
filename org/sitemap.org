@@ -1,7 +1,8 @@
 #+TITLE: Sitemap
 
-- [[file:pl-learning-experience.org][我的程序语言学习经历]]
-- [[file:junior-high-exprience.org][我的初中经历]]
 - [[file:index.org][Ziwen's Blog Homepage]]
-- [[file:cps-converter.org][自动 CPS 变换]]
+- [[file:junior-high-exprience.org][我的初中经历]]
+- [[file:pl-tutorial-0-old.org][前言]]
 - [[file:pl-tutorial-1.org][数字工厂]]
+- [[file:pl-tutorial-0.org][前言]]
+- [[file:cps-converter.org][自动 CPS 变换]]
