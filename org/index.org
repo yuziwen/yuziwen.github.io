@@ -5,3 +5,5 @@
 -----
  [[./cps-converter.html][自动 CPS 变换]]
 -----
+ [[./junior-high-experience.html][我的初中经历]]
+-----
