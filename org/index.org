@@ -1,6 +1,8 @@
 #+TITLE: Ziwen's Blog Homepage
 
 -----
+ [[./pl-tutorial-1.org][PL教程 第一章 人和机器]] 
+-----
  [[./pl-tutorial-0.html][PL教程 前言 关于程序语言理论]]
 -----
  [[./cps-converter.html][自动 CPS 变换]]
