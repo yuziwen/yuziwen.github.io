@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-01 Thu 09:51 -->
+<!-- 2019-08-01 Thu 11:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第一章 人和机器</title>
@@ -524,6 +524,8 @@
 这就是所有的数学内容。
 </p>
 
+<hr />
+
 <p>
 定义变量:
 </p>
@@ -572,6 +574,8 @@
 &#20986;&#38169;&#65292;&#21516;&#29702;
 </pre>
 </div>
+
+<hr />
 
 <p>
 下面就是函数了。
@@ -639,13 +643,14 @@
 #&lt;procedure:always1&gt;
 <span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">sqr</span> <span style="color: #228b22;">3</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">9</span>
-<span style="color: #262680;">&gt;</span> <span style="color: #262680;">sqr</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#25968;&#23398;&#19978;&#24635;&#26159;&#29992;(sqr x)&#34920;&#31034;&#36825;&#20010;&#20989;&#25968;&#65292;&#20320;&#20250;&#21457;&#29616;&#26159;&#22810;&#20040;&#38169;&#35823;&#30340;&#19968;&#20010;&#20889;&#27861;</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #262680;">sqr</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#25968;&#23398;&#19978;&#24635;&#26159;&#29992;(sqr x)&#34920;&#31034;&#36825;&#20010;&#20989;&#25968;&#65292;</span>
+      <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20320;&#20250;&#21457;&#29616;&#26159;&#22810;&#20040;&#38169;&#35823;&#30340;&#19968;&#20010;&#20889;&#27861;</span>
 #&lt;procedure:sqr&gt;
 <span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>circle-area <span style="color: #228b22;">3.14</span> <span style="color: #228b22;">10</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">314</span>
 <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#31561;&#20215;&#20110;&#30452;&#25509;&#29992; &#955; &#26367;&#25442;</span>
-<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">pi</span> radius<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#26368;&#22806;&#38754;&#30340;&#25324;&#21495;&#26159;&#20989;&#25968;&#35843;&#29992;&#65292;&#955;&#22806;&#36824;&#26377;&#19968;&#23618;&#25324;&#21495;</span>
-     <span style="color: #b0b1a3;">(</span><span style="color: #262680;">*</span> <span style="color: #262680;">pi</span> radius radius<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">pi</span> radius<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#26368;&#22806;&#38754;&#30340;&#25324;&#21495;&#26159;&#20989;&#25968;&#35843;&#29992;</span>
+     <span style="color: #b0b1a3;">(</span><span style="color: #262680;">*</span> <span style="color: #262680;">pi</span> radius radius<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#955;&#22806;&#36824;&#26377;&#19968;&#23618;&#25324;&#21495;</span>
    <span style="color: #228b22;">3.14</span> <span style="color: #228b22;">10</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">314</span>
 </pre>
@@ -678,6 +683,8 @@
 这个地址就是个数字。我们要调用这个函数，只要知道它的地址，
 就可以找到这段程序，然后运行，就是这么简单。
 </p>
+
+<hr />
 
 <p>
 最后的问题就是，函数参数的名字。
@@ -939,8 +946,7 @@ DrRacket 会添加在你的桌面应用里面。
 <li>Racket 支持分数表示，但分子和分母只能是整数。</li>
 <li>如果是小数运算，结果也是小数，但小数计算的最后几位都会不精确。</li>
 <li>次方函数和平方根函数</li>
-<li>注释掉我们自定义的 <code>pi</code> ，Racket 本身就提供了三角函数和 <code>pi</code>
-的定义。</li>
+<li>Racket 提供了三角函数和 <code>pi</code> 的定义。</li>
 <li>接下来两个函数是在精确值和不精确值之间转换的。</li>
 <li>一个数后面紧跟“e”再加一个整数表示科学计数法，
 比如 <code>1.23e5</code> 就是 1.23×10<sup>5</sup></li>
@@ -953,8 +959,7 @@ DrRacket 会添加在你的桌面应用里面。
 <p>
 最后，既然已经没的讲了，我就随便编一个 <code>sqrt</code> 函数，
 自己实现一个简单的开平方根的函数。我实在不想推导数学公式，
-你们会牛顿法的就用牛顿法，我更喜欢不动点法，虽然结果是一样的。
-反正你们只要知道结果就行了。
+你们会什么方法就用什么方法，我不想在这说，反正你们只要知道结果就行了。
 </p>
 
 <p>
