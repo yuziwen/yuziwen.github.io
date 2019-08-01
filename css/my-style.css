@@ -1,0 +1,9 @@
+@import url("./fonts.css");
+
+
+html {
+    font-family: 'Charter-Racket', serif !important;
+}
+pre {
+    font-family: 'Fira-Mono', monospace !important;
+}

@@ -1,11 +1,14 @@
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Droid+Serif);
+/* @import url(https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Droid+Serif); */
+
+
+@import url("./my-style.css");
 
 @media all
 {
     html {
 	margin: 0;
-	font: .9em/1.6em "Droid Serif", Cambria, Georgia, "DejaVu Serif", serif;
-	background-image: url(/img/org-mode-unicorn-logo-worg.png);
+	/* font: .9em/1.6em "Droid Serif", Cambria, Georgia, "DejaVu Serif", serif; */
+	/* background-image: url(/img/org-mode-unicorn-logo-worg.png); */
 	background-attachment: fixed;
 	background-position: right bottom;
 	background-repeat: no-repeat;
@@ -22,7 +25,7 @@
     body #content {
 	padding-top: 0px;
 	max-width: 80%;
-	min-width: 700px;
+	/* min-width: 700px; */
 	margin-left: 20px;
 	background-color: white;
 	padding: 2em;
@@ -80,15 +83,11 @@
     }
 
     h1 {
-	/*
-	  font-family:Sans;
-	  font-weight:bold; */
 	font-size:2.1em;
 	padding:0 0 30px 0;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	margin-right: 7%;
-	/*    color: #6C5D4F; */
 	color: grey;
     }
 
@@ -183,7 +182,8 @@ content: "*** "
     code {
 	font-size: 100%;
 	color: black;
-	border: 1px solid #DEDEDE;
+	/* border: 1px solid #DEDEDE; */
+    border: none;
 	padding: 0px 0.2em;
     }
 
@@ -225,13 +225,18 @@ content: "*** "
     /*  } */
 
     pre {
-	font-family: Droid Sans Mono, Monaco, Consolas, "Lucida Console", monospace;
+	/* font-family: Droid Sans Mono, Monaco, Consolas, "Lucida Console", monospace; */
 	color: black;
-	font-size: 90%;
+	/* font-size: 90%; */
 	background-color: #ffffff;
-	padding: 1.2em;
-	border: 2px solid #dddddd;
-	overflow: auto;
+	/* padding: 1.2em; */
+	/* border: 2px solid #dddddd; */
+    border-left: 1px dotted black;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left: 0em;
+    margin-right: 2em;
+    overflow: auto;
     }
 
     .org-info-box {
@@ -959,3 +964,5 @@ content: "*** "
 	overflow: auto;
     }
 } /* END OF @media screen */
+
+

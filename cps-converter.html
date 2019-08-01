@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-17 Wed 16:07 -->
+<!-- 2019-08-01 Thu 09:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>自动 CPS 变换</title>
@@ -355,12 +355,18 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
  <span style="color: #93a8c6;">(</span><span style="color: #262680;">define</span> <span style="color: black;">v-rator</span> <span style="color: #b0b1a3;">(</span>fv<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
  <span style="color: #93a8c6;">(</span><span style="color: #262680;">define</span> <span style="color: black;">v-rand</span> <span style="color: #b0b1a3;">(</span>fv<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
  <span style="color: #93a8c6;">(</span>cps1 rator
-       <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&#955;</span><span style="color: #97b098;">(</span>out-rator<span style="color: #97b098;">)</span> <span style="color: #97b098;">(</span>cps1 rand
-                           <span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b0b3;">(</span>out-rand<span style="color: #b0b0b3;">)</span> `<span style="color: #b0b0b3;">(</span>,out-rator ,out-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
-                           `<span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b0b3;">(</span>,v-rand<span style="color: #b0b0b3;">)</span> <span style="color: #b0b0b3;">(</span>,out-rator ,v-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
-       `<span style="color: #b0b1a3;">(</span><span style="color: #262680;">&#955;</span><span style="color: #97b098;">(</span>,v-rator<span style="color: #97b098;">)</span> ,<span style="color: #97b098;">(</span>cps1 rand
-                            <span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b0b3;">(</span>out-rand<span style="color: #b0b0b3;">)</span> `<span style="color: #b0b0b3;">(</span>,v-rator ,out-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
-                            `<span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b0b3;">(</span>,v-rand<span style="color: #b0b0b3;">)</span> <span style="color: #b0b0b3;">(</span>,v-rator ,v-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">]</span>
+       <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #97b098;">(</span>out-rator<span style="color: #97b098;">)</span>
+         <span style="color: #97b098;">(</span>cps1 rand
+               <span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b0b3;">(</span>out-rand<span style="color: #b0b0b3;">)</span>
+                 `<span style="color: #b0b0b3;">(</span>,out-rator ,out-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
+               `<span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b0b3;">(</span>,v-rand<span style="color: #b0b0b3;">)</span>
+                  <span style="color: #b0b0b3;">(</span>,out-rator ,v-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
+       `<span style="color: #b0b1a3;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #97b098;">(</span>,v-rator<span style="color: #97b098;">)</span>
+          ,<span style="color: #97b098;">(</span>cps1 rand
+                 <span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b0b3;">(</span>out-rand<span style="color: #b0b0b3;">)</span>
+                   `<span style="color: #b0b0b3;">(</span>,v-rator ,out-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
+                 `<span style="color: #aebed8;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b0b3;">(</span>,v-rand<span style="color: #b0b0b3;">)</span>
+                    <span style="color: #b0b0b3;">(</span>,v-rator ,v-rand ,ctx-a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">]</span>
 </pre>
 </div>
 <p>

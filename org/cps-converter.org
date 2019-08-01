@@ -227,16 +227,22 @@ case 3:但如果是函数调用，这时ctx在参数的位置( =(vf vx ctx)= )
 其中有大量重复的代码，但是不管怎么说，先把代码写出来才是正道
 (以下代码会需要一点耐心)
 #+BEGIN_SRC racket
- [`(,rator ,rand)
-  (define v-rator (fv))
-  (define v-rand (fv))
-  (cps1 rator
-        (λ(out-rator) (cps1 rand
-                            (λ(out-rand) `(,out-rator ,out-rand ,ctx-a))
-                            `(λ(,v-rand) (,out-rator ,v-rand ,ctx-a))))
-        `(λ(,v-rator) ,(cps1 rand
-                             (λ(out-rand) `(,v-rator ,out-rand ,ctx-a))
-                             `(λ(,v-rand) (,v-rator ,v-rand ,ctx-a)))))]
+[`(,rator ,rand)
+ (define v-rator (fv))
+ (define v-rand (fv))
+ (cps1 rator
+       (λ (out-rator)
+         (cps1 rand
+               (λ (out-rand)
+                 `(,out-rator ,out-rand ,ctx-a))
+               `(λ (,v-rand)
+                  (,out-rator ,v-rand ,ctx-a))))
+       `(λ (,v-rator)
+          ,(cps1 rand
+                 (λ (out-rand)
+                   `(,v-rator ,out-rand ,ctx-a))
+                 `(λ (,v-rand)
+                    (,v-rator ,v-rand ,ctx-a)))))]
 #+END_SRC
 令人惊讶的是，这个 =cps= 函数就这么完成了!
 跟前面的结果对照一下就会看出明显区别了。
