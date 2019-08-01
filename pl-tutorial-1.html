@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-01 Thu 11:46 -->
+<!-- 2019-08-01 Thu 14:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第一章 人和机器</title>
@@ -1025,6 +1025,139 @@ DrRacket 会添加在你的桌面应用里面。
     <span style="color: #b0b1a3;">(</span><span style="color: #262680;">*</span> <span style="color: #262680;">pi</span> <span style="color: #97b098;">(</span><span style="color: #262680;">sqr</span> radius<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
+
+<p>
+想了想还是加几道习题吧，安装了 Racket 的人一定要打代码啊
+</p>
+
+<p>
+自己写一遍平方函数，在省略号中填空
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">sqr</span>
+  ......<span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+同样，3次方和4次方
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">cube</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">3&#27425;&#26041;</span>
+  ....<span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">power4-v1</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">4&#27425;&#26041;&#65292;&#29256;&#26412;1&#65292;&#21482;&#29992;&#20056;&#27861;</span>
+  ....<span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">power4-v2</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#29256;&#26412;2&#65292;&#29992; sqr &#20989;&#25968;</span>
+  ....<span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+(如果有谁想出来了4次方更好的名字，请告诉我一声)
+</p>
+
+<p>
+测试你的代码
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>cube <span style="color: #228b22;">0</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">0</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>cube <span style="color: #228b22;">1.234</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">1.879080904</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>cube <span style="color: #228b22;">10000</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">1000000000000</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>cube <span style="color: #228b22;">-10</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">-1000</span>
+......
+......
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#27491;&#25968;&#12289;&#36127;&#25968;&#12289;&#25972;&#25968;&#12289;&#23567;&#25968;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">power4 &#21516;&#29702;</span>
+</pre>
+</div>
+<p>
+虽然现在代码简单，这种测试确实没必要，
+这只是教你一个测试的好习惯，不要漏了什么<br />
+(但对于初学者，说不定就发现自己哪里打错了)
+</p>
+
+<p>
+把下面代码的图画出来
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>power4-v1 <span style="color: #228b22;">3</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">81</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>power4-v2 <span style="color: #228b22;">3</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">81</span>
+</pre>
+</div>
+<p>
+假设每次乘法的时间相同，函数调用不需要时间，
+能看出效率的差异吗(就相当于比较乘法次数)? 
+如果是 <code>power8</code>, <code>power16</code>&#x2026; 呢?
+</p>
+
+<p>
+数学好的人很快就明白了吧，以后写了通用的乘方函数，
+再来详细地讨论这个问题。
+</p>
+
+<p>
+最后是一个大概下下下章会讲的内容
+</p>
+
+<p>
+既然函数可以像数字一样传递，那是不是也可以作为函数的参数和返回值呢
+举个例子，
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">value-at-100</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>f<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>f <span style="color: #228b22;">100</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+我们可以这样使用
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>value-at-100 <span style="color: #262680;">sqr</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">10000</span>
+</pre>
+</div>
+<p>
+这会有点颠覆你的想象，用它可以干很多有趣的事。
+</p>
+
+<p>
+函数组合
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">compose</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>f g<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #97b098;">(</span>x<span style="color: #97b098;">)</span>
+      <span style="color: #97b098;">(</span>f g x<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add1-and-sqr</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">compose</span> <span style="color: #262680;">sqr</span> <span style="color: #262680;">add1</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>add1-and-sqr <span style="color: #228b22;">4</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">25</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#30456;&#24403;&#20110; (sqr (add1 4))</span>
+</pre>
+</div>
+<p>
+哈哈，现在看不懂无所谓，注意 <code>compose</code> 里的第一个 <code>λ</code>
+是定义为 <code>compose</code> 的这个函数，第二个 <code>λ</code> 是函数输出的值。
+</p>
+
+<p>
+剧透有点多了，就到这里了。
+</p>
+
+<p>
+有什么意见欢迎提出，我正尝试在给博客加上评论系统，
+暂时可以使用 Github 上提 issue 的功能:
+<a href="https://github.com/yuziwen/yuziwen.github.io/issues">https://github.com/yuziwen/yuziwen.github.io/issues</a>
+登录 Github 然后点 New Issue 就可以了。
+</p>
+
+<p>
+(这一篇博客就写了好几个整天，好心累啊)</p>
 </div>
 </div>
 </div>

@@ -632,3 +632,94 @@ $f(f(f(...f(1))))$ ，得到的结果就会越来越接近于 $\sqrt{a}$ 。
   (λ (radius)
     (* pi (sqr radius))))
 #+END_SRC
+
+想了想还是加几道习题吧，安装了 Racket 的人一定要打代码啊
+
+自己写一遍平方函数，在省略号中填空
+#+BEGIN_SRC racket
+(define sqr
+  ......)
+#+END_SRC
+同样，3次方和4次方
+#+BEGIN_SRC racket
+(define cube ;; 3次方
+  ....)
+(define power4-v1 ;; 4次方，版本1，只用乘法
+  ....)
+(define power4-v2 ;; 版本2，用 sqr 函数
+  ....)
+#+END_SRC
+(如果有谁想出来了4次方更好的名字，请告诉我一声)
+
+测试你的代码
+#+BEGIN_SRC racket
+> (cube 0)
+0
+> (cube 1.234)
+1.879080904
+> (cube 10000)
+1000000000000
+> (cube -10)
+-1000
+......
+......
+;; 正数、负数、整数、小数
+;; power4 同理
+#+END_SRC
+虽然现在代码简单，这种测试确实没必要，
+这只是教你一个测试的好习惯，不要漏了什么\\
+(但对于初学者，说不定就发现自己哪里打错了)
+
+把下面代码的图画出来
+#+BEGIN_SRC racket
+> (power4-v1 3)
+81
+> (power4-v2 3)
+81
+#+END_SRC
+假设每次乘法的时间相同，函数调用不需要时间，
+能看出效率的差异吗(就相当于比较乘法次数)? 
+如果是 =power8=, =power16=... 呢?
+
+数学好的人很快就明白了吧，以后写了通用的乘方函数，
+再来详细地讨论这个问题。
+
+最后是一个大概下下下章会讲的内容
+
+既然函数可以像数字一样传递，那是不是也可以作为函数的参数和返回值呢
+举个例子，
+#+BEGIN_SRC racket
+(define value-at-100
+  (λ (f)
+    (f 100)))
+#+END_SRC
+我们可以这样使用
+#+BEGIN_SRC racket
+> (value-at-100 sqr)
+10000
+#+END_SRC
+这会有点颠覆你的想象，用它可以干很多有趣的事。
+
+函数组合
+#+BEGIN_SRC racket
+(define compose
+  (λ (f g)
+    (λ (x)
+      (f g x))))
+(define add1-and-sqr
+  (compose sqr add1))
+> (add1-and-sqr 4)
+25
+;; 相当于 (sqr (add1 4))
+#+END_SRC
+哈哈，现在看不懂无所谓，注意 =compose= 里的第一个 =λ=
+是定义为 =compose= 的这个函数，第二个 =λ= 是函数输出的值。
+
+剧透有点多了，就到这里了。
+
+有什么意见欢迎提出，我正尝试在给博客加上评论系统，
+暂时可以使用 Github 上提 issue 的功能:
+[[https://github.com/yuziwen/yuziwen.github.io/issues]]
+登录 Github 然后点 New Issue 就可以了。
+
+(这一篇博客就写了好几个整天，好心累啊)
