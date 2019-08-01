@@ -37,9 +37,10 @@
     }
 
     #org-div-home-and-up{
-	position: fixed;
-	right: 0;
-	top: 8em;
+        display: none;
+	/* position: fixed; */
+	/* right: 0; */
+	/* top: 8em; */
     }
 
     /* TOC inspired by http://jashkenas.github.com/coffee-script */
@@ -234,9 +235,9 @@ content: "*** "
 	/* border: 2px solid #dddddd; */
     border-left: 1px dotted black;
     padding-left: 1em;
-    padding-right: 1em;
+    padding-right: 0em;
     margin-left: 0em;
-    margin-right: 2em;
+    margin-right: 0em;
     overflow: auto;
     }
 
