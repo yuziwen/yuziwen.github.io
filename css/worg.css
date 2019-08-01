@@ -16,40 +16,40 @@
     }
 
     body {
-	font-size: 12pt;
-	line-height: 18pt;
+	font-size: 13pt;
+	line-height: 20pt;
 	color: black;
 	margin-top: 0;
 
     }
     body #content {
 	padding-top: 0px;
-	max-width: 80%;
 	/* min-width: 700px; */
-	margin-left: 20px;
+	/* margin-left: 20px; */
 	background-color: white;
-	padding: 2em;
+    padding-top: 2.5em;
+    padding-bottom: 2em;
 	/* box-shadow: 3px 3px 5px #888; */
     }
     body .title {
 	margin-left: 0px;
-	font-size: 22pt;
+	font-size: 24pt;
     }
 
     #org-div-home-and-up{
 	position: fixed;
 	right: 0;
-	top: 4em;
+	top: 8em;
     }
 
     /* TOC inspired by http://jashkenas.github.com/coffee-script */
     #table-of-contents {
-	font-size: 10pt;
+	font-size: 11pt;
 	position: fixed;
 	right: 0em;
 	top: 0em;
 	background: white;
-	line-height: 12pt;
+	line-height: 14pt;
 	text-align: right;
 	box-shadow: 0 0 1em #777777;
 	-webkit-box-shadow: 0 0 1em #777777;
@@ -89,6 +89,7 @@
 	margin-bottom: 10px;
 	margin-right: 7%;
 	color: grey;
+    line-height: 1.5;
     }
 
     /*
@@ -227,7 +228,7 @@ content: "*** "
     pre {
 	/* font-family: Droid Sans Mono, Monaco, Consolas, "Lucida Console", monospace; */
 	color: black;
-	/* font-size: 90%; */
+	font-size: 90%;
 	background-color: #ffffff;
 	/* padding: 1.2em; */
 	/* border: 2px solid #dddddd; */
@@ -960,7 +961,7 @@ content: "*** "
     #table-of-contents {
 	float: right;
 	border: 1px solid #CCC;
-	max-width: 50%;
+	/* max-width: 50%; */
 	overflow: auto;
     }
 } /* END OF @media screen */
