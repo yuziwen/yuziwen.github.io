@@ -49,3 +49,6 @@ img {
     position: relative !important;
     margin-top: 8em;
 }
+.utterances {
+    height: 100% !important;
+}
