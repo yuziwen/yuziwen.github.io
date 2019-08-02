@@ -685,3 +685,14 @@ case 3:但如果是函数调用，这时ctx在参数的位置( =(vf vx ctx)= )
                     (λ(v) (recur (cdr exprs) `(,@acc ,v))))))]))
    (cps1 expr id))
 #+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://utteranc.es/client.js"
+        repo="yuziwen/yuziwen.github.io"
+        issue-term="pathname"
+        label="comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+#+END_EXPORT

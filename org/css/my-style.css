@@ -43,3 +43,9 @@ img {
         marign-right: 1em;
     }
 }
+
+.utterances-frame {
+    height: 300px !important;
+    position: relative !important;
+    margin-top: 8em;
+}

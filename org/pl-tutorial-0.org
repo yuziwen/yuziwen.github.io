@@ -1,5 +1,4 @@
 #+TITLE: 前言 关于程序语言理论
-#+OPTIONS: toc:f
 
 ** Tower of Babel
 #+BEGIN_QUOTE
@@ -557,3 +556,13 @@ TI的人回答道：“第一代 TTL（逻辑门电路）
 但正因如此，人才会努力去了解自己和他人，所以人生才会有趣啊。
 #+END_QUOTE
 人也是，人类的科技也是，你说的话也是。
+#+BEGIN_EXPORT html
+<script src="https://utteranc.es/client.js"
+        repo="yuziwen/yuziwen.github.io"
+        issue-term="pathname"
+        label="comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+#+END_EXPORT

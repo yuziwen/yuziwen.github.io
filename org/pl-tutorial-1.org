@@ -1,5 +1,4 @@
 #+TITLE: PL教程 第一章 人和机器
-#+OPTIONS: toc:f
 
 * 我们的机器
 
@@ -687,6 +686,7 @@ $f(f(f(...f(1))))$ ，得到的结果就会越来越接近于 $\sqrt{a}$ 。
 最后是一个大概下下下章会讲的内容
 
 既然函数可以像数字一样传递，那是不是也可以作为函数的参数和返回值呢
+
 举个例子，
 #+BEGIN_SRC racket
 (define value-at-100
@@ -723,3 +723,14 @@ $f(f(f(...f(1))))$ ，得到的结果就会越来越接近于 $\sqrt{a}$ 。
 登录 Github 然后点 New Issue 就可以了。
 
 (这一篇博客就写了好几个整天，好心累啊)
+
+#+BEGIN_EXPORT html
+<script src="https://utteranc.es/client.js"
+        repo="yuziwen/yuziwen.github.io"
+        issue-term="pathname"
+        label="comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+#+END_EXPORT
