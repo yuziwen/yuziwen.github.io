@@ -182,7 +182,7 @@ content: "*** "
     }
 
     code {
-	font-size: 100%;
+	font-size: 88%;
 	color: black;
 	/* border: 1px solid #DEDEDE; */
     border: none;
@@ -229,16 +229,17 @@ content: "*** "
     pre {
 	/* font-family: Droid Sans Mono, Monaco, Consolas, "Lucida Console", monospace; */
 	color: black;
-	font-size: 90%;
+	font-size: 88%;
 	background-color: #ffffff;
 	/* padding: 1.2em; */
 	/* border: 2px solid #dddddd; */
     border-left: 1px dotted black;
-    padding-left: 1em;
+    padding-left: 1.3em;
     padding-right: 0em;
     margin-left: 0em;
     margin-right: 0em;
     overflow: auto;
+    line-height: 1.5;
     }
 
     .org-info-box {

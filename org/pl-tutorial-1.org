@@ -506,6 +506,9 @@
 现在定义时候变量就确定了，是“静态”的。
 
 * 习题: 找规律
+  :PROPERTIES:
+  :CUSTOM_ID: intro-add-what
+  :END:
 
 这节是前面的一个复习。写几个简单的函数。
 #+BEGIN_SRC racket
