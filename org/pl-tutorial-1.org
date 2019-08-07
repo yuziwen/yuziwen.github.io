@@ -597,6 +597,9 @@ ______ ;; 请填空，3个数字的顺序注意不要反
 这一节可以说是最重要的一节。以后慢慢体会就可以了。
 
 * 在 Racket 中玩耍
+  :PROPERTIES:
+  :CUSTOM_ID: play-with-racket
+  :END:
 
 这章讲如何安装 Racket. 懒得搞这些东西的话可以直接跳过。
 
@@ -833,6 +836,8 @@ $f(f(f(...f(1))))$ ，得到的结果就会越来越接近于 $\sqrt{a}$ 。
 所以只能通过提 Issue 的方式发评论，需要先登录 Github)
 
 (这一篇博客就写了好几个整天，好心累啊)
+
+* 
 
 #+BEGIN_EXPORT html
 <script src="https://utteranc.es/client.js"

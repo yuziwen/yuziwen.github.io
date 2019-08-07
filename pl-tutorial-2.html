@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-02 Fri 10:11 -->
+<!-- 2019-08-07 Wed 22:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>第二章</title>
@@ -21,13 +21,1384 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org84230ec">私有</a></li>
+<li><a href="#org0a7dd5d">不同的包装</a></li>
+<li><a href="#org0670027">如果有如果的话</a></li>
+<li><a href="#org1007389">练习: 再来一瓶，再来一瓶</a></li>
+<li><a href="#orgc16853b">跳入梦中</a></li>
+<li><a href="#org1a29056">私有财产</a></li>
+<li><a href="#org553bbeb"></a></li>
 </ul>
 </div>
 </div>
+<p>
+首先声明一下，虽然对数字加加减减没什么意思，但要是一上来学别的东西
+会更吃不消，把这些基本概念学好了以后，大约下一章就可以摆脱数字了。
+</p>
+<div id="outline-container-org0a7dd5d" class="outline-2">
+<h2 id="org0a7dd5d">不同的包装</h2>
+<div class="outline-text-2" id="text-org0a7dd5d">
+<p>
+猜一猜这是什么
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">123</span> <span style="color: #228b22;">123</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">t &#20195;&#34920; true&#65292;&#20013;&#25991;&#19968;&#33324;&#21483;&#20570;&#8220;&#30495;&#8221;</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">123</span> <span style="color: #228b22;">100</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#f</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">f &#20195;&#34920; false&#65292;&#8220;&#20551;&#8221;</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">&gt;</span> <span style="color: #228b22;">123</span> <span style="color: #228b22;">100</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">&lt;</span> <span style="color: #228b22;">123</span> <span style="color: #228b22;">100</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#f</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#36824;&#26377; &gt;= &#21644; &lt;=&#65292;&#23427;&#20204;&#37117;&#26159;&#20989;&#25968;</span>
+</pre>
+</div>
+<p>
+很明显，它们都是比较数字大小的，分别是等于，大于，小于，大于等于，
+小于等于。(不得不说，看起来实在是怪怪的，我直到现在也觉得很难看)
+</p>
 
-<div id="outline-container-org84230ec" class="outline-2">
-<h2 id="org84230ec">私有</h2>
+<p>
+它们的返回值都是 <code>#t</code> 或 <code>#f</code>, 这两者又是跟数字、函数一样的东西，
+被称为布尔值(boolean)。(比如说 <code>123</code> 是数字类型, <code>#t</code> 和 <code>#f</code>
+就是布尔类型，具体用语是什么不重要)。
+我们把数字类型、布尔类型、函数类型，和之后会接触到的其它的类型，
+统称为“数据类型(data type)”
+</p>
+
+<p>
+Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练习，
+请自己定义一下不等于函数。
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">not</span> <span style="color: #228b22;">#t</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#f</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">not</span> <span style="color: #228b22;">#f</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">=/=</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#22914;&#26524;&#26377;&#35841;&#24819;&#20986;&#20102;&#26356;&#22909;&#30475;&#30340;&#31526;&#21495;&#65292;&#21578;&#35785;&#25105;&#19968;&#22768;</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x y<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">not</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> x y<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>=/= <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span>
+</pre>
+</div>
+<p>
+然后观察一下这些函数，它们跟我们之前讲的函数有些不一样。
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/num-and-bool.png" alt="num-and-bool.png" />
+</p>
+</div>
+
+<p>
+第二行的函数不同，不是因为返回值从数字变成了布尔。<br />
+而是因为它们把数字和布尔，这两种不同的类型混合起来了。
+</p>
+
+<p>
+从上一章的内容中可以体会到，函数都好像工厂里，流水线上的机器一样。
+产品从一边流入，经过加工(有些是对一个产品加工(一个参数)，
+有些是把一些产品揉在一起(多个参数)，有些是多个参数，
+但有主次之分)，经过加工，把加工后的产品送出来。
+把函数组合起来就能完成程序。
+</p>
+
+<p>
+但这些函数超出了一般函数的观念，它们只消耗了输入，
+但没有对它们加工，而是输出了一个判断条件，这是为了控制程序之后的走向。
+</p>
+
+<p>
+来看一下如何使用它们
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #228b22;">#t</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #8c8c8c;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#33509; #t &#21017; 1 &#21542;&#21017; 2</span>
+<span style="color: #228b22;">1</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #228b22;">#f</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">2</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">100</span> <span style="color: #228b22;">100</span><span style="color: #93a8c6;">)</span>
+      <span style="color: #93a8c6;">(</span><span style="color: #262680;">*</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#21482;&#35201;&#26159;&#20540;&#30340;&#22320;&#26041;&#37117;&#21487;&#20197;&#25442;&#25104;&#20989;&#25968;&#36816;&#31639;</span>
+      <span style="color: #228b22;">456</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">6</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">&gt;=</span> <span style="color: #228b22;">123</span> <span style="color: #228b22;">456</span><span style="color: #93a8c6;">)</span>
+      <span style="color: #93a8c6;">(</span><span style="color: #262680;">not</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+      <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">if &#30340;&#20004;&#20010;&#20998;&#25903;&#30340;&#31867;&#22411;&#19981;&#21516;&#20063;&#21487;&#20197;</span>
+<span style="color: #228b22;">3</span>
+</pre>
+</div>
+<p>
+<code>if</code> 类似于有3个参数的函数，第一个参数是判断条件，
+后两个参数是两个分支。第一个参数必须为 <code>#t</code> 或 <code>#f</code>, 如果为 <code>#t</code>
+则值为第二个参数，如果为 <code>#f</code> 则值为第3个参数，受到其它语言的影响，
+习惯上记忆为:“如果&#x2026;那么&#x2026;否则&#x2026;” <code>(if...then...else...)</code>
+</p>
+
+<p>
+不过要注意的是, <code>if</code> 不是一个函数。还记得吗，函数在调用之前，
+要先把参数都算出来。但很显然, <code>if</code> 不需要。如果第一个参数为 <code>#t</code>,
+那么只需要计算第二个参数就可以，第三个参数不管是多复杂的式子，
+都可以直接扔掉。如果第一个参数为 <code>#f</code> 那就只要计算第三个参数。
+所以 <code>if</code> 被设计成了一个特殊的语法，而不是一个函数。
+</p>
+
+<p>
+练习题: 写出绝对值函数 <code>abs</code>, 如果是正数或零则不变，负数则变正数。
+补充: <code>-</code> (减法函数)可以只有一个参数, <code>(- 123)</code> 为 <code>-123</code>
+</p>
+
+<p>
+答案有很多种，这是其中一种答案:
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">abs</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">&gt;=</span> x <span style="color: #228b22;">0</span><span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span><span style="color: #262680;">-</span> x<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+作为一个好习惯，我们想把 <code>if</code> 画出来。但怎么说呢，这玩意不好画，
+一般来讲就是个把程序分成两半的东西
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/abs.png" alt="abs.png" />
+</p>
+</div>
+
+<p>
+(说实话我也不知道怎么画)
+</p>
+
+<p>
+而且很多时候程序不像这么简单，这玩意就没法画了。
+而且这么画还没有把 <code>&gt;=</code> 这个函数画出来，而且很难看。
+由于 <code>if</code> 只是选择了一个方向，最终的流程还是函数，
+所以就不纠结这些了。
+</p>
+
+<p>
+<code>if</code> 还有比较常用的地方，是检查错误。比如说，如果给上面的 <code>abs</code>
+函数输入一个布尔类型的值
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">abs</span> <span style="color: #228b22;">#t</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">; </span><span style="color: #ff7f24;">&gt;=: contract violation</span>
+<span style="color: #ff7f24;">;   </span><span style="color: #ff7f24;">expected: real?</span>
+<span style="color: #ff7f24;">;   </span><span style="color: #ff7f24;">given: #t</span>
+<span style="color: #ff7f24;">;   </span><span style="color: #ff7f24;">argument position: 1st</span>
+<span style="color: #ff7f24;">;   </span><span style="color: #ff7f24;">other arguments...:</span>
+<span style="color: #ff7f24;">;    </span><span style="color: #ff7f24;">0</span>
+</pre>
+</div>
+<p>
+这个错误信息表示我们调用了 <code>&gt;=</code> 函数，然而它出错了(contract violation)，
+下面几行就是，它要一个实数，然而我们给了它一个 <code>#t</code>, 是第一个参数，
+它还有一个参数是 <code>0</code> 。现在看不懂这些没关系。反正这会让使用者很奇怪，
+为什么我调用了 <code>abs</code> 但给了我一个跟 <code>abs</code> 毫不相关的错误?
+</p>
+
+<p>
+所以在实际中，一般都会自己检查这类错误，防止让使用者知道，
+你这个函数原来偷偷调用了 <code>&gt;=</code> 函数。
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">abs</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#22240;&#20026;&#19981;&#33021;&#37325;&#26032;&#23450;&#20041;&#65292;&#35201;&#20808;&#25226;&#26087;&#30340;&#20989;&#25968;&#21024;&#25481;&#65292;&#37325;&#26032;&#36816;&#34892;</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">number?</span> x<span style="color: #97b098;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20005;&#26684;&#26469;&#35762;&#26159; real?</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">&gt;=</span> x <span style="color: #228b22;">0</span><span style="color: #aebed8;">)</span>
+            x
+            <span style="color: #aebed8;">(</span><span style="color: #262680;">-</span> x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">error</span> <span style="color: #228b22;">"abs: number expected, given:"</span> x<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+(注: 严格来说应该用 <code>real?</code> 而不是 <code>number?</code> 是因为 Racket 里的数字
+可以是虚数，但反正你又用不到虚数，不用管它)
+</p>
+
+<p>
+这里有好多新东西，一点一点来看。
+</p>
+
+<p>
+首先, <code>number?</code> 是一个函数，判断参数是否为数字，跟它相似的还有
+<code>boolean?</code> (是否为布尔类型)， <code>procedure?</code> (是否为函数)， 
+<code>string?</code> (是否为字符串)，字符串下面就讲。
+</p>
+
+<p>
+如果 <code>x</code> 为数字，那么就照常计算 <code>x</code> 的绝对值，如果不是就报错。
+</p>
+
+<p>
+<code>error</code> 怎么说呢，它也是个函数，但跟一般的函数意义上又不一样了，
+一旦调用这个函数，不管你在程序的什么位置调用的它，程序都会直接出错。
+它的参数就是出错信息了，第一个参数一定要是个字符串，
+剩下可以有任意个参数，随便什么都可以，统统是出错信息。
+</p>
+
+<p>
+至于字符串，下面这些都是字符串
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #228b22;">"abc"</span>
+<span style="color: #228b22;">"abc"</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #228b22;">"this is a string"</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#21487;&#20197;&#26377;&#31354;&#26684;</span>
+<span style="color: #228b22;">"this is a string"</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #228b22;">""</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#31354;&#30340;&#23383;&#31526;&#20018;</span>
+<span style="color: #228b22;">""</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #228b22;">"!@#$%^ &amp;*()~ `[]-=';"</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#22522;&#26412;&#19978;&#20160;&#20040;&#31526;&#21495;&#37117;&#34892;</span>
+<span style="color: #228b22;">"!@#$%^ &amp;*()~ `[]-=';"</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #228b22;">"(+ 1 2)"</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#36825;&#36319;&#31243;&#24207;&#30340; (+ 1 2) &#19968;&#28857;&#20851;&#31995;&#37117;&#27809;&#26377;</span>
+<span style="color: #228b22;">"(+ 1 2)"</span>
+</pre>
+</div>
+<p>
+字符串就是用来表示一段文字的，两边双引号，里面的东西会全部当成文字，
+而不是程序。所以它会原样输出。一般只会用在给人看的一段文字中。
+</p>
+
+<p>
+这样就讲完了，试验新的 <code>abs</code> 函数
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">abs</span> <span style="color: #228b22;">#t</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">; </span><span style="color: #ff7f24;">abs: number expected, given: #t</span>
+</pre>
+</div>
+<p>
+全部搞定。
+</p>
+
+<p>
+稍微补充一下，电脑不是神奇地就能区分不同的数据类型的，
+而是每个值都有一个标记，标志它的类型。
+</p>
+
+<p>
+再补充一下, <code>=</code> 这个函数只能判断数字相等，如果要其它类型，
+分别可以用 <code>boolean=?</code>, <code>string=?</code>, 没有 <code>procedure=?</code>,
+但有一个通用的函数 <code>eqv?</code>, 所有的类型它都可以比较是否相等。
+</p>
+
+<p>
+这小节可能要记的东西比较多，但不用着急，暂时能看懂就行，慢慢就记住了。
+</p>
+
+<p>
+练习题: 还记得上一章中的 <code>add-what</code> 函数吗，不记得的话回去翻一下
+(<a href="./pl-tutorial-1.html#intro-add-what">传送门</a>)。仿照上面的 <code>abs</code> 函数，检查 <code>add-what</code> 的 <code>what</code> 参数，
+确保它为0~9之间的整数。<br />
+注: 检查整数可用 <code>integer?</code>, 小于或大于号也能有多个参数，
+比如0~9可以写做 <code>(&lt;= 0 what 9)</code><br />
+请尽量写出让人能看明白的错误信息，并测试。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0670027" class="outline-2">
+<h2 id="org0670027">如果有如果的话</h2>
+<div class="outline-text-2" id="text-org0670027">
+<p>
+好了，现在是你在编程道路上的第一个难点。
+</p>
+
+<p>
+好些时候，我们会需要重复做某些事，比如，又是上一章中的 <code>add-what</code>,
+一个 <code>pie</code> 两个 <code>pie</code> 差不多是够了，但对于 <code>add-chip</code> 来说，
+有没有一个函数可以一次性加上很多个 <code>chip</code> 呢?
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    ....<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#22312; x &#19978;&#21152;&#19978; num &#20010; chip</span>
+</pre>
+</div>
+<p>
+你的第一反应很重要。
+</p>
+
+<p>
+(如果你数学真的很好的话，你会发现, <code>num</code> 个1就相当于 <code>num</code> 个9再除以9，
+然后 <code>num</code> 个9等于10<sup>num</sup> 再减1，如果你以为成功了的话，
+那请你自己写一下乘方函数，然后你就遇到同样的问题了)
+</p>
+
+<p>
+你可以慢慢尝试一下，你最后会发现，要是代码无限的话，只能这么写
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #93a8c6;">)</span> x <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20160;&#20040;&#37117;&#19981;&#21152;</span>
+    <span style="color: #93a8c6;">(</span><span style="color: #262680;">if</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> num<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>add-chip x<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#21152;1&#20010;</span>
+        <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">2</span> num<span style="color: #97b098;">)</span> <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-chip x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
+            <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">3</span> num<span style="color: #aebed8;">)</span> ....
+                ....<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+接下来就是找规律时间。我们已经知道, <code>num</code> 是多少，就调用多少次
+<code>add-chip</code>, 但要把它向电脑表达清楚。
+</p>
+
+<p>
+那么问题就是，什么叫做“调用 <code>num</code> 次 <code>add-chip</code> ”?
+</p>
+
+<p>
+经过研究，我们发现我们没法把 <code>num</code> 个 <code>add-chip</code> 写出来，
+但是我们看看上面的那一堆 <code>if</code>, 我们发现了规律:<br />
+如果 <code>num</code> 多了1，那么 <code>add-chip</code> 也多调用1次。
+</p>
+
+<p>
+有人说，这不是废话吗。但这就是“调用 <code>num</code> 次”的本质。
+</p>
+
+<p>
+我先不多说，但你可以从现在开始思考一下，自然数是怎么来的。
+其实你小时候，数数的时候，就明白了，但现在又忘了而已。
+</p>
+
+<p>
+数字就是这么数出来的。<br />
+如果 <code>num</code> 是0呢? <code>add-chip</code> 调用0次。<br />
+如果 <code>num</code> 比0多1呢? <code>add-chip</code> 多调用1次，就是1次。<br />
+如果 <code>num</code> 再比1多1呢? <code>add-chip</code> 再多调用1次，就是2次。<br />
+如果 <code>num</code> 再比2多1呢? <code>add-chip</code> 再多调用1次，就是3次。<br />
+&#x2026;&#x2026;
+</p>
+
+<p>
+于是对任意的 <code>num</code> 都可以了。
+</p>
+
+<p>
+程序把上面的过程反过来就可以了。
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-many-chips
+                   <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> num <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span> x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+你可能会感到有些惊奇，为什么 <code>add-many-chips</code>
+里面还能调用它自己。前面做了那么多铺垫，其实就是为了讲这个。
+</p>
+
+<p>
+首先，来理解一下这段程序。如果 <code>num</code> 为0，就直接返回 <code>x</code>, 
+什么都不加; 如果 <code>num</code> 大于0，就先调用 <code>add-many-chips</code>
+给它加上 <code>num-1</code> 个1，然后再加一个1.
+</p>
+
+<p>
+你问我为什么 <code>(add-many-chips (- num 1) x)</code> 神奇般地就完成了?
+因为如果 <code>num-1</code> 是0，那它就完成了，否则就继续减1，
+一直重复，直到减到0了为止。
+</p>
+
+<p>
+我们需要从程序的角度详细解释一下。
+首先，我们都说它是“自己调用自己”，其实函数是没有自己调用自己一说的。
+还记得上一章讲的，函数是存在变量里的吗。只是变量把它给复制了
+无数次而已。就像这样
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips1</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-many-chips2
+                   <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> num <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span> x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips2</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-many-chips3
+                   <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> num <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span> x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips3</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-many-chips4
+                   <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> num <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span> x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+......
+</pre>
+</div>
+<p>
+有无数个这样的函数。比如调用 <code>(add-many-chips 3 666)</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>add-many-chips1 <span style="color: #228b22;">3</span> <span style="color: #228b22;">666</span><span style="color: #8c8c8c;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#27599;&#19968;&#34892;&#37117;&#26159;&#19968;&#27493;&#35843;&#29992;&#36807;&#31243;</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>add-chip <span style="color: #93a8c6;">(</span>add-many-chips2 <span style="color: #228b22;">2</span> <span style="color: #228b22;">666</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>add-chip <span style="color: #93a8c6;">(</span>add-chip <span style="color: #b0b1a3;">(</span>add-many-chips3 <span style="color: #228b22;">1</span> <span style="color: #228b22;">666</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>add-chip <span style="color: #93a8c6;">(</span>add-chip <span style="color: #b0b1a3;">(</span>add-chip <span style="color: #97b098;">(</span>add-many-chips4 <span style="color: #228b22;">0</span> <span style="color: #228b22;">666</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>add-chip <span style="color: #93a8c6;">(</span>add-chip <span style="color: #b0b1a3;">(</span>add-chip <span style="color: #228b22;">666</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>add-chip <span style="color: #93a8c6;">(</span>add-chip <span style="color: #228b22;">6661</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>add-chip <span style="color: #228b22;">66611</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #228b22;">666111</span>
+</pre>
+</div>
+<p>
+其实就是这样，这就是函数神奇的地方。
+</p>
+
+<p>
+画图就看得比较清楚了。直到现在，我自己还是这么想象它的。
+</p>
+
+<p>
+比如说我们调用了 <code>(add-many-chips 3 666)</code>, 首先，判断 <code>num</code> 是不是0.
+(为了方便我竖着画)
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/add-many-chips-3-1.png" alt="add-many-chips-3-1.png" />
+</p>
+</div>
+
+<p>
+不是0，所以先调用 <code>add-many-chips</code>, 不过要记得完了还要加个 <code>add-chip</code>
+(有些箭头画不下了，省略了)
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/add-many-chips-3-2.png" alt="add-many-chips-3-2.png" />
+</p>
+</div>
+
+<p>
+然后我们就要开始计算 <code>(add-many-chips 2 666)</code>, 因为2不为0，所以接着调用一层
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/add-many-chips-3-3.png" alt="add-many-chips-3-3.png" />
+</p>
+</div>
+
+<p>
+然后需要计算 <code>(add-many-chips 1 666)</code>, 同理，1不为0，再调用一层
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/add-many-chips-3-4.png" alt="add-many-chips-3-4.png" />
+</p>
+</div>
+
+<p>
+好了，现在最底下的这个函数终于发现它的参数是0了，于是它很高兴地返回了666.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/add-many-chips-3-5.png" alt="add-many-chips-3-5.png" />
+</p>
+</div>
+
+<p>
+接下来就明白了，这个666经过了3个 <code>add-chip</code> 最后得到了结果。
+</p>
+
+<p>
+有人可能想问，那在最下面的函数计算的过程中，上面的那些函数干什么呢?
+</p>
+
+<p>
+干等着。每一个函数都在等下面的那个函数返回结果，好继续自己的计算。
+这不是调用自己才这样的，前面讲的普通的函数也是这样的。
+</p>
+
+<p>
+现在你应该大致能想象出这个流程了。我以前看书自学的时候，
+所有的教程都是一上来就说“自己调用自己”，这本来就是个误导。
+然后又开始讲各种高级的概念，比如“栈”，让我看得一头雾水。
+就这么个东西，我大概整了两年才搞懂。上面就是我现在自己的理解。
+</p>
+
+<p>
+我现在不想提计算机到底是怎么实现函数一层层调用的，
+反正就可以当它是自动发生的。不过我们依然可以看出，
+每调用一层函数，它就会多占用一些内存，比如每层 <code>add-many-chips</code>
+函数中都有自己的 <code>num</code> 和 <code>x</code> 参数，当调用的非常非常多时，
+内存就存不下了。对于想知道术语的人: 这就叫做“栈溢出”。
+其它语言里这个问题很普遍，因为栈是内存中固定的一部分。但 Racket 里就没有
+(除非你真的把电脑所有的内存都用完了)，这也是我用 Racket 的一个原因，
+你可以专心地学习，不用担心调用的次数多了就出问题。
+</p>
+
+<p>
+所以我们可以来玩一下。
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>add-many-chips <span style="color: #228b22;">10000</span> <span style="color: #228b22;">666</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">6661111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</span>
+</pre>
+</div>
+<p>
+这在我的电脑上也是瞬间的事(DrRacket 中可能比较慢，
+是因为它把这个数字输出到屏幕上很慢，但开始输出的时候它就已经算出结果了)。
+电脑的速度一般都比你想象中要快很多。所以我一直想知道，
+那些能让我的电脑变得很卡的软件究竟干了些什么&#x2026;
+</p>
+
+<p>
+思考题: (请先保存好你的代码，否则后果自负)。
+给 <code>add-many-chips</code> 输入一个很大的数，内存可能就爆了，比如，
+我给了它一个亿&#x2026;然后它3秒钟后占到了3.2G的内存然后卡住了&#x2026;<br />
+好。这说明我们要量力而行，那给它一个小一点的数，比如2.5吧
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>add-many-chips <span style="color: #228b22;">2.5</span> <span style="color: #228b22;">666</span><span style="color: #8c8c8c;">)</span>
+
+</pre>
+</div>
+<p>
+为什么它又卡死了?
+</p>
+
+<p>
+手动模拟。它要计算1.5，然后0.5，然后&#x2026;-0.5，然后-1.5，-2.5，&#x2026;
+</p>
+
+<p>
+同理，如果输入是负数的话也会死循环。
+</p>
+
+<p>
+那就加点错误处理吧
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#25226;&#21407;&#26469;&#30340;&#20989;&#25968;&#37325;&#21629;&#21517;&#20026; add-many-chips-unsafe</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#35760;&#24471;&#25226;&#37324;&#38754;&#30340;&#20063;&#37325;&#21629;&#21517;&#20102;</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">&lt;</span> num <span style="color: #228b22;">0</span><span style="color: #97b098;">)</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">error</span> <span style="color: #228b22;">"add-many-chips: invalid first argument, expected: positive, given:"</span> num<span style="color: #97b098;">)</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">not</span> <span style="color: #b0b0b3;">(</span><span style="color: #262680;">integer?</span> num<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
+            <span style="color: #aebed8;">(</span><span style="color: #262680;">error</span> <span style="color: #228b22;">"add-many-chips: invalid first argument, expected: natural number, given:"</span> num<span style="color: #aebed8;">)</span>
+            <span style="color: #aebed8;">(</span>add-many-chips-unsafe num x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+当然，要详细地写，还要先检查参数是否为数字，否则 <code>(&lt; num 0)</code> 又会报错&#x2026;
+然后你就会被烦死。总之你永远也阻止不了别人错误地使用你的程序。
+</p>
+
+<p>
+当然，你在用别人的程序时也一样，别人检查地再怎么仔细，
+如果你边打盹边打代码，就不要指望程序是正确的了。
+</p>
+
+<p>
+以后我就很少再提错误检查了。因为代码这么短，动不动就检查反倒没必要。
+这节就这么结束了。
+</p>
+
+<p>
+思考题: 有人可能认为没必要写两个函数，都写在一个函数里就可以
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">&lt;</span> num <span style="color: #228b22;">0</span><span style="color: #97b098;">)</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">error</span> <span style="color: #228b22;">"add-many-chips: invalid first argument, expected: positive, given:"</span> num<span style="color: #97b098;">)</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">not</span> <span style="color: #b0b0b3;">(</span><span style="color: #262680;">integer?</span> num<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
+            <span style="color: #aebed8;">(</span><span style="color: #262680;">error</span> <span style="color: #228b22;">"add-many-chips: invalid first argument, expected: natural number, given:"</span> num<span style="color: #aebed8;">)</span>
+            <span style="color: #aebed8;">(</span><span style="color: #262680;">if</span> <span style="color: #b0b0b3;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #b0b0b3;">)</span>
+                x
+                <span style="color: #b0b0b3;">(</span>add-chip <span style="color: #90a890;">(</span>add-many-chips
+                           <span style="color: #a2b6da;">(</span><span style="color: #262680;">-</span> num <span style="color: #228b22;">1</span><span style="color: #a2b6da;">)</span> x<span style="color: #90a890;">)</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+第一，这段代码正确吗?
+</p>
+
+<p>
+第二，如果正确的话，请手动模拟，比如调用 <code>(add-many-chips 3 666)</code>,
+两个版本分别检查了多少次错误? 效率上是否会有不同?
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1007389" class="outline-2">
+<h2 id="org1007389">练习: 再来一瓶，再来一瓶</h2>
+<div class="outline-text-2" id="text-org1007389">
+<p>
+(WARNING: 这章会用到一点数学，因为我实在想不出不用数学的例子了，
+如果有谁想出来了请一定要告诉我一声)
+</p>
+
+<p>
+像上一节中所说的，函数调用自己的这种模式有一个名字，叫做“递归(recursion)”。
+</p>
+
+<p>
+准确来说，函数除了直接调用自己，还可以间接调用自己，
+比如 <code>f</code> 调用了 <code>g</code>, <code>g</code> 又调用 <code>f</code>.
+</p>
+
+<p>
+上一节中也看到了，递归跟普通的函数调用是一样的，
+没什么特殊的。唯一的区别就是它可能导致程序死循环。
+因为它相当于你写无数个函数嘛。
+</p>
+
+<p>
+下面是两个练习
+</p>
+
+<p>
+第一个是上节提到的乘方函数。
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">expt</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">b &#30340; n &#27425;&#26041;&#65292;&#21482;&#32771;&#34385; n &#20026;&#33258;&#28982;&#25968;</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>b n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> n<span style="color: #97b098;">)</span>
+        <span style="color: #228b22;">1</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">*</span> b <span style="color: #aebed8;">(</span><span style="color: #262680;">expt</span> b <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+如果你还不理解函数的原理，请复习上一节。
+但知道这个函数是正确的还没有用，因为要学会自己写。
+</p>
+
+<p>
+要写 b<sup>n</sup>，先来分析一下这个函数。首先，用自己能看懂的方式写出来
+</p>
+
+<p>
+b<sup>n</sup> = b*b*&#x2026;*b，共 n 个 b
+</p>
+
+<p>
+然后改递归(当然，你要先确定没有更简单的方式了。
+比如写 1+2+&#x2026;+n，当然就直接套公式了)
+</p>
+
+<p>
+首先，考虑省略号中是什么?
+</p>
+
+<p>
+就是 n 个 b，没错吧。而 b 就永远都是 b 这个定值，所以对 n 递归。
+</p>
+
+<p>
+所以 n 的范围是什么?
+</p>
+
+<p>
+我们只考虑自然数，所以是 0,1,2,3&#x2026; 这些数字。
+</p>
+
+<p>
+接下来就要找到一个方法，让我们不管输入什么 n，程序都不会死循环。
+然后用这个递归方法，把函数写出来。
+</p>
+
+<p>
+对自然数来说，大多时候都是每次减1，一直减到0，
+根据情况有例外，下面就会举一个例子。
+</p>
+
+<p>
+好，那就根据我们的这个递归方案，试一下能不能写出程序。
+</p>
+
+<p>
+b<sup>0</sup> = 1，这种情况很简单。<br />
+若 n&gt;0, b<sup>n</sup> 要先调用 b<sup>(n-1)</sup>，然后只要再乘个 b 就行了。<br />
+b<sup>n</sup> = b*b<sup>(n-1)</sup>
+</p>
+
+<p>
+然后写成上面的程序就完成了。
+</p>
+
+<p>
+练习题:
+</p>
+<ol class="org-ol">
+<li>如果把 b<sup>0</sup> 的情况改成 b<sup>3</sup> = b*b*b 会怎么样?</li>
+<li>如果把递归的情况写成 b<sup>n</sup> = b<sup>(n+1)</sup>/b 会怎么样?</li>
+<li>如果把递归的情况写成 b<sup>n</sup> = b*b*b<sup>(n-2)</sup> 会怎么样?</li>
+<li>把递归的情况写成第3题所示，怎样让函数总能停止?(提示: 两次 <code>if</code>)</li>
+</ol>
+
+<p>
+练习题:<br />
+写出阶乘函数: <code>factorial(n)=1*2*3*4*...*n , n&gt;=1</code>
+</p>
+
+<p>
+根据上面的方法，我们要把 <code>1*2*3*...*n</code> 改成一个递归式，
+比如先尝试 <code>1*(2*3*...*n)</code>, 然后会发现失败了，因为
+<code>(2*3*...*n)</code> 还是跟 <code>n</code> 有关，而不是跟 <code>n-1</code> 有关，
+所以会发现递归式应该是 <code>n*(n-1*...*3*2*1)</code> 即
+<code>n*factorial(n-1)</code>
+</p>
+
+<p>
+这样代码就完成了
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">factorial</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> n<span style="color: #97b098;">)</span>
+        <span style="color: #228b22;">1</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">*</span> n <span style="color: #aebed8;">(</span>factorial <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">test</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>factorial <span style="color: #228b22;">10</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">3628800</span>
+</pre>
+</div>
+
+<p>
+练习题:<br />
+写出函数 <code>biggest-odd-divisor</code>, 找出一个数字最大的奇数因数
+(比如6有因数1,2,3,6，最大的奇数是3)<br />
+(Racket 提供了函数 <code>odd?</code> 判断一个整数是否是奇数)
+</p>
+
+<p>
+当然，最简单的是一直除以2，直到把2全除掉，剩个奇数为止
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">biggest-odd-divisor</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">odd?</span> n<span style="color: #97b098;">)</span>
+        n
+        <span style="color: #97b098;">(</span>biggest-odd-divisor <span style="color: #aebed8;">(</span><span style="color: #262680;">/</span> n <span style="color: #228b22;">2</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+当然，还有一个慢得多的方法，因为是找最大，所以我们
+从大到小找下去。
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">biggest-odd-divisor</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>search n
+            <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">odd?</span> n<span style="color: #aebed8;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#30830;&#20445;&#20174;&#22855;&#25968;&#24320;&#22987;&#25628;&#32034;</span>
+                n
+                <span style="color: #aebed8;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">search</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n x<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#25214;&#21040;&#26368;&#22823;&#30340;&#22855;&#25968; x &#20351; n/x &#26159;&#25972;&#25968;</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">integer?</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">/</span> n x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span>search n <span style="color: #aebed8;">(</span><span style="color: #262680;">-</span> x <span style="color: #228b22;">2</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+先看懂这段代码吧。这也揭示了一个道理: 往往简单的代码反倒更快。
+这也很好理解，每次除以2除到一个数，跟每次减2减到同一个数，
+很明显前一个快得多吧。
+</p>
+
+<p>
+下面考虑 <code>search</code> 这个递归函数。
+</p>
+
+<p>
+问题1: 既然x是奇数而且每次减2，为什么不检查 <code>(= 1 x)</code> 而是只判断
+<code>(integer? (/ n x))</code> 呢?
+</p>
+
+<p>
+这是数学知识告诉我们的。总会有一个奇数满足这个条件，如果一直没有，
+最后 <code>x</code> 就减到1了，那 <code>(/ n x)</code> 就是 <code>n</code>, 一定是整数，
+所以程序一定会停止。
+</p>
+
+<p>
+问题2: 为什么这个函数的终止的情况是跟 <code>x</code> 这个递归的变量有关的，
+但之前的 <code>expt</code>, <code>factorial</code> 等函数的终止的情况就是个常数?
+</p>
+
+<p>
+因为这都要看情况. <code>expt</code>, <code>factorial</code> 的终止条件就是 <code>(= ? n)</code>,
+所以当终止时, <code>n</code> 就是个定值了，但 <code>search</code> 终止时，
+<code>x</code> 不是固定的。
+</p>
+
+<p>
+当然就算 <code>x</code> 不固定，结果也不一定需要它，比如
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">power-of-divisor-two</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">odd?</span> x<span style="color: #97b098;">)</span>
+        <span style="color: #228b22;">0</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #aebed8;">(</span>power-of-divisor-two <span style="color: #b0b0b3;">(</span><span style="color: #262680;">/</span> x <span style="color: #228b22;">2</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+这个函数就是，把 <code>x</code> 除以多少个2就会变成奇数。
+</p>
+
+<p>
+所以所谓的递归并没有什么固定的模式，以后有很复杂的问题，
+有些递归会非常神奇，完全考验人的智力(动态规划)。
+但还是有一些基本原则可以遵守的，上面大致都提到了。
+你可以想到，递归基本上什么都能做，它在很多时候是程序最重要的部分。
+这还有很多东西要讲。
+</p>
+
+<p>
+思考题:<br />
+如果 <code>if</code> 不是个特殊语法，而是个函数的话，比如我们重新定义
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">my-if</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">pred</span> conseq alter<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #262680;">pred</span> conseq alter<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+然后用这个 <code>my-if</code> 重新定义前面的递归函数，会发生什么?
+</p>
+
+<hr />
+
+<p>
+最后作为一个练习，如果你还不太理解递归，就把前面的函数画画图吧。
+</p>
+
+<p>
+当我学到递归的时候，我晚上做的梦都是递归的，我天天都意识到我在梦里做梦。
+现在只能祝你今天有个好梦了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc16853b" class="outline-2">
+<h2 id="orgc16853b">跳入梦中</h2>
+<div class="outline-text-2" id="text-orgc16853b">
+<p>
+再给出上一节中的 <code>add-many-chips</code> 和 <code>factorial</code> 函数。(上一节中的几个函数都是一样的道理)
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-many-chips
+                   <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> num <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span> x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">factorial</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> n<span style="color: #97b098;">)</span>
+        <span style="color: #228b22;">1</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">*</span> n <span style="color: #aebed8;">(</span>factorial <span style="color: #b0b0b3;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+下面是另一个 <code>add-many-chips</code> 的实现方式
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #97b098;">)</span>
+        x
+        <span style="color: #97b098;">(</span>add-many-chips <span style="color: #aebed8;">(</span><span style="color: #262680;">-</span> num <span style="color: #228b22;">1</span><span style="color: #aebed8;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#36825;&#20004;&#34892;&#25913;&#21464;&#20102;</span>
+                        <span style="color: #aebed8;">(</span>add-chip x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+当然，先看懂它。
+</p>
+
+<p>
+然后对比上一节中的图，我们画一下新版 <code>(add-many-chips 3 666)</code> 的图。
+(我就只画最终的情况了)
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/new-add-many-chips.png" alt="new-add-many-chips.png" />
+</p>
+</div>
+
+<p>
+你可能发现了什么，我们的函数被串成一条直线了，也就是说，
+下面的 <code>add-many-chips</code> 函数返回了以后就没有别的事了。
+这个结果可以直接拿去输出。
+</p>
+
+<p>
+这有什么区别呢? 在现在很多流行语言里，没有区别，但是在 Racket 里，
+前面说过了，如果给一个很大的输入，旧的版本会占非常大的内存，
+但你试一下新的版本? 它居然几乎不占内存! 不管多大的输入都一样
+(除了我电脑的风扇转得飞快，CPU飙升到60多度&#x2026;)
+</p>
+
+<p>
+这就要提一个新的概念了，仔细看新版的那幅图，你会发现，
+因为下面的那个函数的返回值可以直接输出，所以当我们往下递归一次时，
+上面的函数就已经都没有用了。所以 Racket 很机智地就把这些函数都扔掉了，
+只留了下面那一个有用的。名副其实的功利主义者啊。
+</p>
+
+<p>
+你用 DrRacket 的话，右下角可以看它占的内存，你会发现内存一会儿上升
+一会儿又下降了，然后又慢慢上升&#x2026;因为为了效率，Racket 不是一边计算
+一边扔没用的内存，而是过一段时间统一扔一次。这是一种计算机自动管理
+内存的方式，叫“垃圾回收(garbage collection)”，下面还会讲到。
+</p>
+
+<p>
+然后，由于这种递归是不会越来越占内存的，甚至比以前的递归方式效率还高，
+所以它专门有个名字，叫“尾递归(tail recursion)”。
+我现在不给详细的定义，但很显然，必须是要能把之前的东西全部扔掉的递归
+才能叫尾递归，对吧。(我这里其实撒了个谎，尾递归也有可能越来越占内存，
+比如有闭包的时候，但这个以后再说吧，现在这么理解是没问题的)
+</p>
+
+<p>
+下面做个挑战，把 <code>factorial</code> 函数改成尾递归模式。
+</p>
+
+<p>
+你会发现这个很困难。首先，因为是尾递归，所以当然要给它加一个参数。
+然后&#x2026;然后我还是直接给答案吧，自己体会
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">factorial</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>fact-iter n <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">fact-iter</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">iterate&#65292;&#21487;&#20197;&#29702;&#35299;&#20026;&#24490;&#29615;</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n acc<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">acc: accumulate &#32047;&#31215;&#30340;&#32467;&#26524;</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> n<span style="color: #97b098;">)</span>
+        acc
+        <span style="color: #97b098;">(</span>fact-iter <span style="color: #aebed8;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #aebed8;">)</span>
+                   <span style="color: #aebed8;">(</span><span style="color: #262680;">*</span> n acc<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">test</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>factorial <span style="color: #228b22;">4</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>fact-iter <span style="color: #228b22;">4</span> <span style="color: #228b22;">1</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>fact-iter <span style="color: #228b22;">3</span> <span style="color: #228b22;">4</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>fact-iter <span style="color: #228b22;">2</span> <span style="color: #228b22;">12</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>fact-iter <span style="color: #228b22;">1</span> <span style="color: #228b22;">24</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">24</span>
+</pre>
+</div>
+<p>
+这个真的讲不来，只能靠你自己体会了。
+</p>
+
+<hr />
+<p>
+拓展内容:
+</p>
+
+<p>
+其实这个函数跟原来的 <code>factorial</code> 不是完全对应的，
+它利用了乘法的什么什么律。原来是从1乘到n，现在是从n乘到1.
+要跟原来计算顺序对应，可以这么写
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">factorial</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>fact-iter n <span style="color: #228b22;">1</span> <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">fact-iter</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n counter acc<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> n counter<span style="color: #97b098;">)</span>
+        acc
+        <span style="color: #97b098;">(</span>fact-iter n
+                   <span style="color: #aebed8;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> counter<span style="color: #aebed8;">)</span>
+                   <span style="color: #aebed8;">(</span><span style="color: #262680;">*</span> counter acc<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+为什么要提这个呢? 因为我们不用任何特殊的定律就可以转换，
+也就是说，我们有固定的方案转换这种递归!大致就是这样
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">f</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> stop x<span style="color: #97b098;">)</span>
+        stop-value
+        <span style="color: #97b098;">(</span>g x <span style="color: #aebed8;">(</span>f <span style="color: #b0b0b3;">(</span>h x<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">f</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>f-iter x stop stop-value<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">f-iter</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x counter acc<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> x counter<span style="color: #97b098;">)</span>
+        acc
+        <span style="color: #97b098;">(</span>f-iter x <span style="color: #aebed8;">(</span>h' counter<span style="color: #aebed8;">)</span> <span style="color: #aebed8;">(</span>g <span style="color: #b0b0b3;">(</span>h' counter<span style="color: #b0b0b3;">)</span> acc<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+其中 <code>h'</code> 是 <code>h</code> 的反函数，比如 <code>h(x)=x-1</code>, 那么 <code>h'(x)=x+1</code>.
+<code>g</code> 可以是任意函数。
+</p>
+
+<p>
+比如我们举个例子吧，取 <code>h(x)=x-1</code>, <code>stop=0</code> 简单理解一下
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#38750;&#23614;&#36882;&#24402;</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>f <span style="color: #228b22;">3</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>g <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span>f <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>g <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span>g <span style="color: #228b22;">2</span> <span style="color: #b0b1a3;">(</span>f <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>g <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span>g <span style="color: #228b22;">2</span> <span style="color: #b0b1a3;">(</span>g <span style="color: #228b22;">1</span> <span style="color: #97b098;">(</span>f <span style="color: #228b22;">0</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>g <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span>g <span style="color: #228b22;">2</span> <span style="color: #b0b1a3;">(</span>g <span style="color: #228b22;">1</span> stop-value<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#23614;&#36882;&#24402;</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>f <span style="color: #228b22;">3</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>f-iter <span style="color: #228b22;">3</span> <span style="color: #228b22;">0</span> stop-value<span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>f-iter <span style="color: #228b22;">3</span> <span style="color: #228b22;">1</span> <span style="color: #93a8c6;">(</span>g <span style="color: #228b22;">1</span> stop-value<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>f-iter <span style="color: #228b22;">3</span> <span style="color: #228b22;">2</span> <span style="color: #93a8c6;">(</span>g <span style="color: #228b22;">2</span> <span style="color: #b0b1a3;">(</span>g <span style="color: #228b22;">1</span> stop-value<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>f-iter <span style="color: #228b22;">3</span> <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span>g <span style="color: #228b22;">3</span> <span style="color: #b0b1a3;">(</span>g <span style="color: #228b22;">2</span> <span style="color: #97b098;">(</span>g <span style="color: #228b22;">1</span> stop-value<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span>g <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span>g <span style="color: #228b22;">2</span> <span style="color: #b0b1a3;">(</span>g <span style="color: #228b22;">1</span> stop-value<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+
+<hr />
+
+<p>
+练习题: 照着上面的 <code>factorial</code> 函数，把 <code>expt</code> 函数也转换成这种形式。
+</p>
+
+<p>
+答案:
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">expt</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>b n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>expt-iter b n <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">expt-iter</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>b n acc<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> n<span style="color: #97b098;">)</span>
+        acc
+        <span style="color: #97b098;">(</span>expt-iter b
+                   <span style="color: #aebed8;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #aebed8;">)</span>
+                   <span style="color: #aebed8;">(</span><span style="color: #262680;">*</span> b acc<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+下面的习题会告诉你自然数是怎么定义出来的。
+</p>
+
+<p>
+首先，我们有一个0，然后，我们有一个函数 <code>add1</code>, 它能把一个数加1.
+</p>
+
+<p>
+好了，所有的自然数我们都有了，就像这样
+(当然不要输到电脑里，这不是合法的程序，只是让你意会一下)
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #228b22;">1</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">add1</span> <span style="color: #228b22;">0</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #228b22;">2</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">add1</span> <span style="color: #228b22;">1</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+....
+</pre>
+</div>
+<p>
+然后我们来定义加减乘除吧。
+</p>
+
+<p>
+首先的难点就是，如何定义一个减1的函数 <code>sub1</code>
+</p>
+
+<p>
+方法就是从0加上去，如果发现某个数加1以后等于参数，那么返回这个数
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">sub1</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> x<span style="color: #97b098;">)</span>
+        <span style="color: #97b098;">(</span><span style="color: #262680;">error</span> <span style="color: #228b22;">"sub1: invalid argument. expected: positive integer, given: 0"</span><span style="color: #97b098;">)</span>
+        <span style="color: #97b098;">(</span>sub1-iter x <span style="color: #228b22;">0</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">sub1-iter</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x result<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> x <span style="color: #aebed8;">(</span><span style="color: #262680;">add1</span> result<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
+        result
+        <span style="color: #97b098;">(</span>sub1-iter x <span style="color: #aebed8;">(</span><span style="color: #262680;">add1</span> result<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+然后定义加法
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">+</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>a b<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> a<span style="color: #97b098;">)</span>
+        b
+        <span style="color: #97b098;">(</span><span style="color: #262680;">add1</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">+</span> <span style="color: #b0b0b3;">(</span><span style="color: #262680;">sub1</span> a<span style="color: #b0b0b3;">)</span> b<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#26356;&#22909;&#30340;&#23614;&#36882;&#24402;&#26041;&#27861;</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">+</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>a b<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> a<span style="color: #97b098;">)</span>
+        b
+        <span style="color: #97b098;">(</span><span style="color: #262680;">+</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">sub1</span> a<span style="color: #aebed8;">)</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">add1</span> b<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+练习题: 照同样的方式定义减法、乘法、除法，除法会略麻烦，
+因为有除不尽的情况。
+</p>
+
+<p>
+练习题: 写出函数 <code>gcd?</code>, 找出两个数的最大公约数
+(求两个数相除的余数是 <code>remainder</code>, 比如 <code>(remainder 5 3)</code>
+为2。求最大公约数的方法自己去网上查)
+</p>
+
+<p>
+练习题: 写出函数 <code>prime?</code>, 判断一个数是否为质数
+(方法: 从小到大找，如果找到一个因数就说明不是质数，
+如果一直找到足够大都没找到，说明是质数)
+</p>
+
+<p>
+练习题: 上一章中的<a href="./pl-tutorial-1.html#play-with-racket">倒数第二节</a>的最后我们实现了一个开平方根的函数，
+现在修改它，让它最终精确到某个精确度而不是重复几次。
+用很小的小数和很大的数测试，确保都能得出适当的结果。
+因为计算机只能保存有限位小数，如果实现不恰当，
+有可能太大或太小的数就会陷入死循环。
+判断相邻两次递归结果不变时终止也不一定可行，
+因为可能最后几位小数一直来回摆动。
+总之自己去试吧。
+</p>
+
+<p>
+这几题还是有点难度的，我不想给答案了，当时我都是自己写出来的。
+写出来以后记得测试，但不要依赖于测试，在测试之前就要确保它是对的。
+(是不是听起来很矛盾)
+</p>
+
+<p>
+好了，数学部分终于结束了
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1a29056" class="outline-2">
+<h2 id="org1a29056">私有财产</h2>
+<div class="outline-text-2" id="text-org1a29056">
+<p>
+回顾一下到现在为止 <code>λ</code> 函数的作用有哪些:<br />
+把一段程序的细节隐藏起来，提取重复的代码，和 <code>define</code> 结合起来可以递归。
+</p>
+
+<p>
+是的, <code>λ</code> 还有跟 <code>define</code> 一样的作用，就是创造新的变量名字。
+</p>
+
+<p>
+比如这样
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">*</span> x x<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+   <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+这样也实现了 <code>(+ 1 2)</code> 的平方，应该没有疑问了吧。
+</p>
+
+<p>
+它的用处在哪里呢? 在函数里，或者 <code>if</code> 的分支中，
+即使你现在没想过，迟早你会想要定义一些临时的变量或函数的。
+一个很直接的想法就是，比如尾递归式的 <code>factorial</code> 等函数，
+不要让它们的 <code>iter</code> 函数暴露在外面。
+</p>
+
+<p>
+其实 Racket 就提供了这种策略。一个 <code>λ</code> 函数内可以
+先有一些 <code>define</code> 语句，最后跟着输出，比如
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">factorial</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">define</span> <span style="color: black;">fact-iter</span>
+      <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #aebed8;">(</span>n acc<span style="color: #aebed8;">)</span>
+        <span style="color: #aebed8;">(</span><span style="color: #262680;">if</span> <span style="color: #b0b0b3;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> n<span style="color: #b0b0b3;">)</span>
+            acc
+            <span style="color: #b0b0b3;">(</span>fact-iter <span style="color: #90a890;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #90a890;">)</span>
+                       <span style="color: #90a890;">(</span><span style="color: #262680;">*</span> n acc<span style="color: #90a890;">)</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>fact-iter n <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+这里，我们就是简单地把 <code>fact-iter</code> 的定义拿进来了，
+所以除了 <code>factorial</code>, 别的人就看不到它了。
+你需要先回忆一下上一章的内容，理解一下里面的 <code>n</code> 都是哪个 <code>n</code>,
+DrRacket 做得很好，你把鼠标移到变量上，它就会显示出这个变量来自哪里。
+</p>
+
+
+<div class="figure">
+<p><img src="./img/plt2/drracket-example.png" alt="drracket-example.png" />
+</p>
+</div>
+
+<p>
+注: 可能有人想要定义一个函数，它能帮他定义很多东西，比如
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">f</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">()</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">define</span> <span style="color: black;">a</span> <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span>
+    <span style="color: #228b22;">"define a"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>f<span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">"define a"</span>
+<span style="color: #262680;">&gt;</span> a
+<span style="color: #ff7f24;">; </span><span style="color: #ff7f24;">a: undefined;</span>
+<span style="color: #ff7f24;">;  </span><span style="color: #ff7f24;">cannot reference an identifier before its definition</span>
+</pre>
+</div>
+<p>
+虽然 <code>a</code> 是在 <code>f</code> 中定义的，但跟 <code>f</code> 的参数是一样的，
+在 <code>f</code> 结束后就一起消失了。有想要这么干的人，请去网上搜
+“Racket 宏(macro)”，不保证能看懂。
+</p>
+
+<hr />
+
+<p>
+也许你会觉得把一个函数挪进来没什么用，但反正作为一个好习惯，
+因为 <code>fact-iter</code> 也是 <code>factorial</code> 的实现细节，所以就不应该让别人看到，
+就先这么理解着吧。
+</p>
+
+<p>
+对于一些函数来说，能够简化代码，比如
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">expt</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>b n<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">define</span> <span style="color: black;">expt-iter</span>
+      <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #aebed8;">(</span>n acc<span style="color: #aebed8;">)</span>
+        <span style="color: #aebed8;">(</span><span style="color: #262680;">if</span> <span style="color: #b0b0b3;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> n<span style="color: #b0b0b3;">)</span>
+            acc
+            <span style="color: #b0b0b3;">(</span>expt-iter <span style="color: #90a890;">(</span><span style="color: #262680;">-</span> n <span style="color: #228b22;">1</span><span style="color: #90a890;">)</span>
+                       <span style="color: #90a890;">(</span><span style="color: #262680;">*</span> b acc<span style="color: #90a890;">)</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>expt-iter n <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+跟前面的 <code>expt-iter</code> 对比一下，你会发现我们可以省略一个参数 <code>b</code>,
+因为它一直是不变的，只是传来传去而已。
+</p>
+
+<p>
+练习题: 同样的，把 <code>sqrt</code> 函数用到的所有的函数都拿进来，
+尽可能地减少函数的参数。(原来的 <code>f</code> 有一个 <code>a</code> 一直传，
+现在可以消灭掉了)
+</p>
+
+<p>
+另外，因为接在 <code>if</code> 两个分支处要定义变量的情况非常普遍，
+Racket 还提供了一个语法叫 <code>cond</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">abs</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">cond</span>
+      <span style="color: #97b098;">[</span><span style="color: #aebed8;">(</span><span style="color: #262680;">&gt;=</span> x <span style="color: #228b22;">0</span><span style="color: #aebed8;">)</span> x<span style="color: #97b098;">]</span>
+      <span style="color: #97b098;">[</span><span style="color: #262680;">else</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">-</span> x<span style="color: #aebed8;">)</span><span style="color: #97b098;">]</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">prime?</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">define</span> <span style="color: black;">divisor?</span>
+      <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #aebed8;">(</span>a b<span style="color: #aebed8;">)</span>
+        <span style="color: #aebed8;">(</span><span style="color: #262680;">integer?</span> <span style="color: #b0b0b3;">(</span><span style="color: #262680;">/</span> b a<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">define</span> <span style="color: black;">search</span>
+      <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #aebed8;">(</span>n<span style="color: #aebed8;">)</span>
+        <span style="color: #aebed8;">(</span><span style="color: #262680;">cond</span>
+          <span style="color: #b0b0b3;">[</span><span style="color: #90a890;">(</span><span style="color: #262680;">&gt;</span> n <span style="color: #a2b6da;">(</span><span style="color: #262680;">sqrt</span> x<span style="color: #a2b6da;">)</span><span style="color: #90a890;">)</span> <span style="color: #228b22;">#t</span><span style="color: #b0b0b3;">]</span>
+          <span style="color: #b0b0b3;">[</span><span style="color: #90a890;">(</span>divisor? n x<span style="color: #90a890;">)</span> <span style="color: #228b22;">#f</span><span style="color: #b0b0b3;">]</span>
+          <span style="color: #b0b0b3;">[</span><span style="color: #262680;">else</span> <span style="color: #90a890;">(</span>search <span style="color: #a2b6da;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> n<span style="color: #a2b6da;">)</span><span style="color: #90a890;">)</span><span style="color: #b0b0b3;">]</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>search <span style="color: #228b22;">2</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">test</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>prime? <span style="color: #228b22;">19260817</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>prime? <span style="color: #228b22;">10000000</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#f</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>prime? <span style="color: #228b22;">2</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#25105;&#20889;&#23436;&#36825;&#31181;&#20195;&#30721;&#37117;&#19981;&#25954;&#35828;&#19968;&#23450;&#26159;&#23545;&#30340;&#65292;&#19968;&#23450;&#35201;&#27979;&#35797;&#19968;&#19979;&#65292;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#19981;&#28982;&#20889;&#21338;&#23458;&#34987;&#25171;&#33080;&#20102;&#24590;&#20040;&#21150;</span>
+</pre>
+</div>
+<p>
+<code>cond</code> 的语法大致是这样
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">cond</span>
+  <span style="color: #93a8c6;">[</span>?1 v1<span style="color: #93a8c6;">]</span>
+  <span style="color: #93a8c6;">[</span>?2 v2<span style="color: #93a8c6;">]</span>
+  <span style="color: #93a8c6;">[</span>?3 v3<span style="color: #93a8c6;">]</span>
+  ....
+  <span style="color: #93a8c6;">[</span><span style="color: #262680;">else</span> v-else<span style="color: #93a8c6;">]</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">?n &#21644; vn &#37117;&#21487;&#20197;&#26159;&#20219;&#24847;&#34920;&#36798;&#24335;</span>
+
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#33509; ?1 &#21017; v1&#65292;&#21542;&#21017;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#33509; ?2 &#21017; v2&#65292;&#21542;&#21017;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">....</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#26368;&#32456;&#65292;&#22914;&#26524;&#19978;&#38754;&#37117;&#19981;&#28385;&#36275;&#65292;&#20540;&#20026; v-else</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">else &#36825;&#19968;&#34892;&#20063;&#21487;&#20197;&#30465;&#30053;</span>
+
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20063;&#21487;&#20197;&#36319;&#22810;&#20010;&#34920;&#36798;&#24335;</span>
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">cond</span>
+  <span style="color: #93a8c6;">[</span>?1 def1 def2 .... defn v1<span style="color: #93a8c6;">]</span>
+  ....<span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20854;&#20013; ?1 &#26159;&#21028;&#26029;&#26465;&#20214;&#65292;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">def1 ~ defn &#26159; define &#35821;&#21477;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">v1 &#26159;&#26368;&#32456;&#30340;&#20540;</span>
+</pre>
+</div>
+<p>
+(注: 其实在 Racket 中，方括号和圆括号是不分的，只要它们能配对就行，
+但作为好习惯，这些函数调用和提供的语法都用圆括号，
+像 <code>cond</code> 中这些不表示一个“动作”的东西就用方括号，
+这样看起来会清楚得多)
+</p>
+
+<p>
+这个语法可能有点麻烦。一般来说，语法都是有统一的格式的，
+记住一个以后，类似的就都记住了。
+</p>
+
+<p>
+这就是所有的内容了，这章目前只是草稿，还有待修改和完善，
+另外如果有谁想出了更好的题目欢迎在下方评论。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org553bbeb" class="outline-2">
+<h2 id="org553bbeb"></h2>
+<div class="outline-text-2" id="text-org553bbeb">
+<script src="https://utteranc.es/client.js"
+        repo="yuziwen/yuziwen.github.io"
+        issue-term="pathname"
+        label="comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
 </div>
 </div>
 </body>
