@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-07 Wed 22:18 -->
+<!-- 2019-11-14 Thu 20:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第二章 停下来!</title>
@@ -34,6 +34,7 @@
 首先声明一下，虽然对数字加加减减没什么意思，但要是一上来学别的东西
 会更吃不消，把这些基本概念学好了以后，大约下一章就可以摆脱数字了。
 </p>
+
 <div id="outline-container-org0a7dd5d" class="outline-2">
 <h2 id="org0a7dd5d">不同的包装</h2>
 <div class="outline-text-2" id="text-org0a7dd5d">
@@ -107,6 +108,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <p>
 但这些函数超出了一般函数的观念，它们只消耗了输入，
 但没有对它们加工，而是输出了一个判断条件，这是为了控制程序之后的走向。
+所谓的布尔值 <code>#t</code> 和 <code>#f</code> 就是因此诞生的。
 </p>
 
 <p>
@@ -123,7 +125,8 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <span style="color: #228b22;">6</span>
 <span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">&gt;=</span> <span style="color: #228b22;">123</span> <span style="color: #228b22;">456</span><span style="color: #93a8c6;">)</span>
       <span style="color: #93a8c6;">(</span><span style="color: #262680;">not</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
-      <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">if &#30340;&#20004;&#20010;&#20998;&#25903;&#30340;&#31867;&#22411;&#19981;&#21516;&#20063;&#21487;&#20197;</span>
+      <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">if &#30340;&#20004;&#20010;&#20998;&#25903;&#30340;&#31867;&#22411;&#19981;&#21516;&#20063;&#21487;&#20197;&#65292;</span>
+               <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#34429;&#28982;&#19968;&#33324;&#26469;&#35762;&#27809;&#20160;&#20040;&#24847;&#20041;</span>
 <span style="color: #228b22;">3</span>
 </pre>
 </div>
@@ -196,8 +199,9 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 <p>
 这个错误信息表示我们调用了 <code>&gt;=</code> 函数，然而它出错了(contract violation)，
-下面几行就是，它要一个实数，然而我们给了它一个 <code>#t</code>, 是第一个参数，
-它还有一个参数是 <code>0</code> 。现在看不懂这些没关系。反正这会让使用者很奇怪，
+下面几行就是，它要一个实数(real)，然而我们给了它一个 <code>#t</code>,
+是它的第一个参数，它还有一个参数是 <code>0</code>.
+现在看不懂这些没关系。反正这会让使用者很奇怪，
 为什么我调用了 <code>abs</code> 但给了我一个跟 <code>abs</code> 毫不相关的错误?
 </p>
 
@@ -282,11 +286,24 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <p>
 再补充一下, <code>=</code> 这个函数只能判断数字相等，如果要其它类型，
 分别可以用 <code>boolean=?</code>, <code>string=?</code>, 没有 <code>procedure=?</code>,
+因为两个长得一模一样的函数是不相等的，原因见上一章。
+为了避免误导，就没有提供这个函数。
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">f</span>
+    <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">+</span> x <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">g</span>
+    <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">+</span> x <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">eqv?</span> f g<span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#f</span>
+</pre>
+</div>
+<p>
 但有一个通用的函数 <code>eqv?</code>, 所有的类型它都可以比较是否相等。
 </p>
 
 <p>
-这小节可能要记的东西比较多，但不用着急，暂时能看懂就行，慢慢就记住了。
+这小节可能要记的东西比较多，但不用着急去记，暂时能看懂就行，慢慢就记住了。
 </p>
 
 <p>
@@ -294,7 +311,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 (<a href="./pl-tutorial-1.html#intro-add-what">传送门</a>)。仿照上面的 <code>abs</code> 函数，检查 <code>add-what</code> 的 <code>what</code> 参数，
 确保它为0~9之间的整数。<br />
 注: 检查整数可用 <code>integer?</code>, 小于或大于号也能有多个参数，
-比如0~9可以写做 <code>(&lt;= 0 what 9)</code><br />
+比如 <code>what</code> 在0~9之间，可以写做 <code>(&lt;= 0 what 9)</code><br />
 请尽量写出让人能看明白的错误信息，并测试。
 </p>
 </div>
@@ -335,8 +352,8 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">0</span> num<span style="color: #93a8c6;">)</span> x <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20160;&#20040;&#37117;&#19981;&#21152;</span>
     <span style="color: #93a8c6;">(</span><span style="color: #262680;">if</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">1</span> num<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>add-chip x<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#21152;1&#20010;</span>
-        <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">2</span> num<span style="color: #97b098;">)</span> <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-chip x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
-            <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">3</span> num<span style="color: #aebed8;">)</span> ....
+        <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">2</span> num<span style="color: #97b098;">)</span> <span style="color: #97b098;">(</span>add-chip <span style="color: #aebed8;">(</span>add-chip x<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#21152;2&#20010;</span>
+            <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">=</span> <span style="color: #228b22;">3</span> num<span style="color: #aebed8;">)</span> .... <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#21152;3&#20010;</span>
                 ....<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
@@ -409,8 +426,8 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <p>
 我们需要从程序的角度详细解释一下。
 首先，我们都说它是“自己调用自己”，其实函数是没有自己调用自己一说的。
-还记得上一章讲的，函数是存在变量里的吗。只是变量把它给复制了
-无数次而已。就像这样
+还记得上一章讲的，函数是存在变量里的吗。
+只是变量把它给复制了无数次而已。就像这样
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips1</span>
@@ -518,7 +535,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 
 <p>
 干等着。每一个函数都在等下面的那个函数返回结果，好继续自己的计算。
-这不是调用自己才这样的，前面讲的普通的函数也是这样的。
+这不是只有调用自己才会这样的，前面讲的普通的函数也是这样的。
 </p>
 
 <p>
@@ -534,9 +551,10 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 每调用一层函数，它就会多占用一些内存，比如每层 <code>add-many-chips</code>
 函数中都有自己的 <code>num</code> 和 <code>x</code> 参数，当调用的非常非常多时，
 内存就存不下了。对于想知道术语的人: 这就叫做“栈溢出”。
-其它语言里这个问题很普遍，因为栈是内存中固定的一部分。但 Racket 里就没有
-(除非你真的把电脑所有的内存都用完了)，这也是我用 Racket 的一个原因，
-你可以专心地学习，不用担心调用的次数多了就出问题。
+其它绝大多数语言里这个问题很普遍，因为栈是内存中固定的一部分。
+但 Racket 里就没有这玩意(除非你真的把电脑所有的内存都用完了)，
+这也是我用 Racket 的一个原因，你可以专心地学习，
+不用担心函数调用的次数太多这类稀奇古怪的问题。
 </p>
 
 <p>
@@ -549,13 +567,14 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 <p>
 这在我的电脑上也是瞬间的事(DrRacket 中可能比较慢，
-是因为它把这个数字输出到屏幕上很慢，但开始输出的时候它就已经算出结果了)。
-电脑的速度一般都比你想象中要快很多。所以我一直想知道，
+是因为它把这个数字输出到屏幕上很慢，但开始输出的瞬间它就已经算出结果了)。
+电脑的速度真的比你想象中要快得多得多得多&#x2026;所以我一直想知道，
 那些能让我的电脑变得很卡的软件究竟干了些什么&#x2026;
 </p>
 
 <p>
-思考题: (请先保存好你的代码，否则后果自负)。
+思考题: (请先保存好你的代码，否则后果自负，
+不过除非你的操作系统有 bug，不然并不会影响系统和其它软件)。
 给 <code>add-many-chips</code> 输入一个很大的数，内存可能就爆了，比如，
 我给了它一个亿&#x2026;然后它3秒钟后占到了3.2G的内存然后卡住了&#x2026;<br />
 好。这说明我们要量力而行，那给它一个小一点的数，比如2.5吧
@@ -582,7 +601,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#25226;&#21407;&#26469;&#30340;&#20989;&#25968;&#37325;&#21629;&#21517;&#20026; add-many-chips-unsafe</span>
-<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#35760;&#24471;&#25226;&#37324;&#38754;&#30340;&#20063;&#37325;&#21629;&#21517;&#20102;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#35760;&#24471;&#25226;&#20989;&#25968;&#37324;&#38754;&#35843;&#29992;&#23427;&#33258;&#24049;&#30340;&#20063;&#37325;&#21629;&#21517;&#20102;</span>
 <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-many-chips</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>num x<span style="color: #b0b1a3;">)</span>
     <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #97b098;">(</span><span style="color: #262680;">&lt;</span> num <span style="color: #228b22;">0</span><span style="color: #97b098;">)</span>
@@ -638,7 +657,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <h2 id="org1007389">练习: 再来一瓶，再来一瓶</h2>
 <div class="outline-text-2" id="text-org1007389">
 <p>
-(WARNING: 这章会用到一点数学，因为我实在想不出不用数学的例子了，
+(WARNING: 这章会用到一点数学知识，因为我实在想不出不用数学的例子了，
 如果有谁想出来了请一定要告诉我一声)
 </p>
 
@@ -674,7 +693,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 <p>
 如果你还不理解函数的原理，请复习上一节。
-但知道这个函数是正确的还没有用，因为要学会自己写。
+但只知道这个函数是正确的还没有用，还需要学会自己写。
 </p>
 
 <p>
@@ -687,7 +706,7 @@ b<sup>n</sup> = b*b*&#x2026;*b，共 n 个 b
 
 <p>
 然后改递归(当然，你要先确定没有更简单的方式了。
-比如写 1+2+&#x2026;+n，当然就直接套公式了)
+比如写 1+2+&#x2026;+n，当然就直接套求和公式了)
 </p>
 
 <p>
@@ -865,12 +884,16 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">my-if</span>
-  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">pred</span> conseq alter<span style="color: #b0b1a3;">)</span>
-    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #262680;">pred</span> conseq alter<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">pred</span> conseq alt<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> <span style="color: #262680;">pred</span> conseq alt<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 <p>
 然后用这个 <code>my-if</code> 重新定义前面的递归函数，会发生什么?
+</p>
+
+<p>
+这也是为什么 <code>if</code> 只能是一个特殊语法，而不是一个函数。
 </p>
 
 <hr />
@@ -955,10 +978,11 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </p>
 
 <p>
-你用 DrRacket 的话，右下角可以看它占的内存，你会发现内存一会儿上升
-一会儿又下降了，然后又慢慢上升&#x2026;因为为了效率，Racket 不是一边计算
-一边扔没用的内存，而是过一段时间统一扔一次。这是一种计算机自动管理
-内存的方式，叫“垃圾回收(garbage collection)”，下面还会讲到。
+(你用 DrRacket 的话，右下角可以看它占的内存，你会发现内存一会儿上升
+一会儿又下降了，然后又慢慢上升&#x2026;因为为了效率和简单性，
+Racket 不是一边计算一边扔没用的内存，而是过一段时间统一扔一次。
+这是一种计算机自动管理内存的方式，叫“垃圾回收(garbage collection)”，
+下面还会讲到。)
 </p>
 
 <p>
@@ -966,7 +990,8 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 所以它专门有个名字，叫“尾递归(tail recursion)”。
 我现在不给详细的定义，但很显然，必须是要能把之前的东西全部扔掉的递归
 才能叫尾递归，对吧。(我这里其实撒了个谎，尾递归也有可能越来越占内存，
-比如有闭包的时候，但这个以后再说吧，现在这么理解是没问题的)
+比如参数引用了应该被扔掉的东西的时候，但这个以后再说吧，
+现在这么理解是没问题的)
 </p>
 
 <p>
@@ -974,7 +999,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </p>
 
 <p>
-你会发现这个很困难。首先，因为是尾递归，所以当然要给它加一个参数。
+你会发现这个有些难度。首先，因为是尾递归，所以当然要给它加一个参数。
 然后&#x2026;然后我还是直接给答案吧，自己体会
 </p>
 <div class="org-src-container">
@@ -1001,6 +1026,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </p>
 
 <hr />
+
 <p>
 拓展内容:
 </p>
@@ -1102,7 +1128,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 
 <p>
 好了，所有的自然数我们都有了，就像这样
-(当然不要输到电脑里，这不是合法的程序，只是让你意会一下)
+(当然不要输到电脑里，因为数字不能做变量名，只是让你意会一下)
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #228b22;">1</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">add1</span> <span style="color: #228b22;">0</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
@@ -1153,7 +1179,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </div>
 <p>
 练习题: 照同样的方式定义减法、乘法、除法，除法会略麻烦，
-因为有除不尽的情况。
+因为有除不尽的情况，你可以选择向下取整。
 </p>
 
 <p>
@@ -1164,8 +1190,8 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 
 <p>
 练习题: 写出函数 <code>prime?</code>, 判断一个数是否为质数
-(方法: 从小到大找，如果找到一个因数就说明不是质数，
-如果一直找到足够大都没找到，说明是质数)
+(方法: 从小到大找，如果找到一个因数(remainder 为0)就说明不是质数，
+如果一直找到足够大(自己思考是多大)都没找到，说明是质数)
 </p>
 
 <p>
@@ -1180,9 +1206,9 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </p>
 
 <p>
-这几题还是有点难度的，我不想给答案了，当时我都是自己写出来的。
-写出来以后记得测试，但不要依赖于测试，在测试之前就要确保它是对的。
-(是不是听起来很矛盾)
+这几题还是有点难度的，我不想给答案了，当时我都是自己写出来的，
+你们应该也有能力完成的。写出来以后记得稍微测试一下，
+但不要依赖于测试，在测试之前就要确保它是对的。(是不是听起来很矛盾)
 </p>
 
 <p>
@@ -1269,7 +1295,7 @@ DrRacket 做得很好，你把鼠标移到变量上，它就会显示出这个�
 <p>
 虽然 <code>a</code> 是在 <code>f</code> 中定义的，但跟 <code>f</code> 的参数是一样的，
 在 <code>f</code> 结束后就一起消失了。有想要这么干的人，请去网上搜
-“Racket 宏(macro)”，不保证能看懂。
+“Racket 宏(macro)”，不保证你们能看懂。
 </p>
 
 <hr />
@@ -1308,7 +1334,7 @@ DrRacket 做得很好，你把鼠标移到变量上，它就会显示出这个�
 
 <p>
 另外，因为接在 <code>if</code> 两个分支处要定义变量的情况非常普遍，
-Racket 还提供了一个语法叫 <code>cond</code>
+有好几重 <code>if</code> 判断的情况也很普遍，Racket 还提供了一个语法叫 <code>cond</code>
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">abs</span>
@@ -1357,7 +1383,8 @@ Racket 还提供了一个语法叫 <code>cond</code>
 <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#33509; ?2 &#21017; v2&#65292;&#21542;&#21017;</span>
 <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">....</span>
 <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#26368;&#32456;&#65292;&#22914;&#26524;&#19978;&#38754;&#37117;&#19981;&#28385;&#36275;&#65292;&#20540;&#20026; v-else</span>
-<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">else &#36825;&#19968;&#34892;&#20063;&#21487;&#20197;&#30465;&#30053;</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">else &#36825;&#19968;&#34892;&#20063;&#21487;&#20197;&#30465;&#30053;&#65292;&#20250;&#40664;&#35748;&#21464;&#25104;&#19968;&#20010;&#25253;&#38169;&#35821;&#21477;:</span>
+<span style="color: #ff7f24;">;;      </span><span style="color: #ff7f24;">&#27809;&#26377;&#28385;&#36275;&#30340;&#26465;&#20214;</span>
 
 <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20063;&#21487;&#20197;&#36319;&#22810;&#20010;&#34920;&#36798;&#24335;</span>
 <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cond</span>
