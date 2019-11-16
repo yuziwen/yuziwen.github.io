@@ -1,6 +1,8 @@
 #+TITLE: Ziwen's Blog Homepage
 
 -----
+ [[./skip-school-experience.html][记我的逃学经历]]
+-----
  [[./pl-tutorial-2.html][PL教程 第二章 停下来!]]
 -----
  [[./pl-tutorial-1.html][PL教程 第一章 人和机器]] 
