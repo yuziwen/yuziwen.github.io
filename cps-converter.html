@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-02 Fri 10:11 -->
+<!-- 2019-12-08 Sun 09:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>自动 CPS 变换</title>
@@ -22,8 +22,8 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgfd5f21d">前言</a></li>
-<li><a href="#org04d248a">简单的CPS变换</a></li>
-<li><a href="#orgf5acf56">最简CPS输出</a></li>
+<li><a href="#orgbb28d62">简单的 CPS 变换</a></li>
+<li><a href="#org42c7670">最简 CPS 输出</a></li>
 <li><a href="#orge0c8219">简化 <code>cps1</code> 函数</a></li>
 <li><a href="#orga5f69e4">多参数和原生函数</a></li>
 <li><a href="#org4a3a1f2"><code>if</code> 语句</a></li>
@@ -53,7 +53,6 @@
 毕竟可能每个人有自己的思考方式，我在这里只是分享一下我自己的思路，
 我写出这个 CPS 程序的经历。当然为了显得我稍微强一点的样子，
 我把中间许多非常蠢的错误都省略了。
-其实我也不知道我怎么就把这段代码写出来了。
 </p>
 
 <p>
@@ -62,7 +61,7 @@
 这里有一个更友好一点的版本
 <a href="http://matt.might.net/articles/cps-conversion/">http://matt.might.net/articles/cps-conversion/</a>
 发现我的思路和他的完全不同，我反倒觉得我的思路很清楚，
-他的思路我要绕个弯才能看懂，虽然实质上是一样的。
+他的思路我要绕个弯才能看懂。
 </p>
 
 <p>
@@ -78,20 +77,20 @@
 </div>
 </div>
 
-<div id="outline-container-org04d248a" class="outline-2">
-<h2 id="org04d248a">简单的CPS变换</h2>
-<div class="outline-text-2" id="text-org04d248a">
+<div id="outline-container-orgbb28d62" class="outline-2">
+<h2 id="orgbb28d62">简单的 CPS 变换</h2>
+<div class="outline-text-2" id="text-orgbb28d62">
 <p>
-其实一个正确的CPS变换程序，只要学过一点点写解释器的人都会写，
+其实一个正确的 CPS 变换程序，只要学过一点点写解释器的人都会写，
 所以我就不细讲了，只是提供一个回忆，你如果要看下去的话最好是这个会自己写。
-我们先只考虑λ-calculus的语法，就只有3个分支，变量，λ，函数调用。
+我们先只考虑 λ-calculus 的语法，就只有3个分支，变量，λ，函数调用。
 先把最简单，没有经过优化的程序写出来。
 </p>
 
 <p>
 主要的函数是 <code>cps1</code> ，它有两个参数 <code>expr</code> 和 <code>ctx</code> ，
- <code>expr</code> 就是一个s-expression，
- <code>ctx</code> 是当前的context，是一个symbol或 <code>'(λ...)</code> ，
+ <code>expr</code> 就是一个 s-expression，
+ <code>ctx</code> 是当前的 context，是一个 symbol 或 <code>'(λ...)</code> ，
 比如 <code>(cps1 '(f x) '(λ(x) x))</code> 的值为
  <code>'(f x (λ(x) x))</code> 。所以 <code>(cps expr)</code> 函数
 就是 <code>(cps1 expr 'id)</code> 或 <code>(cps1 expr '(λ(x) x))</code> ，
@@ -114,6 +113,7 @@
   <span style="color: #93a8c6;">(</span>cps1 expr <span style="color: #228b22;">'id</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
+
 <p>
 下面就开始写 <code>cps1</code> 
 </p>
@@ -129,7 +129,7 @@
 
 <p>
 第一项，当 <code>expr</code> 为一个变量(比如 <code>'x</code> )
-或一个原始类型(比如 <code>123</code> )时，
+或一个原始类型(比如 <code>123</code>)时，
 我们就直接把它返回，比方说，
 </p>
 <div class="org-src-container">
@@ -146,9 +146,9 @@
 </pre>
 </div>
 <p>
-对于一个λ表达式，我们同样直接把它返回，
-只是先递归进函数体内，把函数体进行CPS变换。
-每个λ的continuation都为 <code>'k</code> ，比如，
+对于一个 λ 表达式，我们同样直接把它返回，
+只是先递归进函数体内，把函数体进行 CPS 变换。
+每个 λ 的 continuation 都为 <code>'k</code> ，比如，
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps1 '<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> x<span style="color: #93a8c6;">)</span> <span style="color: #228b22;">'id</span><span style="color: #8c8c8c;">)</span>
@@ -164,7 +164,7 @@
 </pre>
 </div>
 <p>
-处理函数的部分稍微复杂一些，CPS输出应该先分别计算函数和参数，
+处理函数的部分稍微复杂一些，CPS 输出应该先分别计算函数和参数，
 然后调用，举个例子，在我们最终要完成的代码里，应该大致是这样的，
 </p>
 <div class="org-src-container">
@@ -195,7 +195,7 @@
 </pre>
 </div>
 <p>
-可以看出来，我们先分别CPS了 <code>f</code> 和 <code>x</code> ，
+可以看出来，我们先分别 CPS 了 <code>f</code> 和 <code>x</code> ，
 然后调用 <code>(vf vx ctx)</code> ，其中 <code>vf</code> 和 <code>vx</code> 
 是我们前面定义的 <code>(fv)</code> 产生的，这样保证了每次都不一样。
 (说实话 <code>(gensym)</code> 也是可以的)
@@ -238,7 +238,7 @@
 </pre>
 </div>
 <p>
-&#x2026;&#x2026;&#x2026;&#x2026;
+……
 </p>
 
 <p>
@@ -247,9 +247,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgf5acf56" class="outline-2">
-<h2 id="orgf5acf56">最简CPS输出</h2>
-<div class="outline-text-2" id="text-orgf5acf56">
+<div id="outline-container-org42c7670" class="outline-2">
+<h2 id="org42c7670">最简 CPS 输出</h2>
+<div class="outline-text-2" id="text-org42c7670">
 <p>
 其实下面才开始真正的任务，上面一节只是因为，
 市面上的程序都是分好几个函数，我要把它们合在一起。
@@ -259,33 +259,33 @@
 上面的程序的问题就在于，当 <code>ctx</code> 是 <code>'(λ(v) ...v...)</code> ，
 而且 <code>expr</code> 是一个 <code>'x</code> 之类时，输出应该为
  <code>'...x...</code> 而不是 <code>'((λ(v) ...v...) x)</code> ，
-照λ-calculus的术语说就是产生了一个beta-redex。
+照 λ-calculus 的术语说就是产生了一个 beta-redex。
 </p>
 
 <p>
-我们来观察一下现在我们的CPS程序的3个分支产生的ctx
+我们来观察一下现在我们的 CPS程序的3个分支产生的 ctx
 </p>
 
 <p>
-case 1:如果是一个atom，就产生 <code>`(,ctx ,expr)</code> ，这时ctx在函数的位置。
+case 1:如果是一个 atom，就产生 <code>`(,ctx ,expr)</code> ，这时 ctx 在函数的位置。
 </p>
 
 <p>
-case 2:如果是λ表达式，ctx也在函数的位置。
+case 2:如果是 λ 表达式，ctx 也在函数的位置。
 </p>
 
 <p>
-case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)</code> )
+case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx)</code>)
 </p>
 
 <p>
-很显然，在参数位置时ctx是不可能被化简的，因为结果必须是
+很显然，在参数位置时 ctx 是不可能被化简的，因为结果必须是
  <code>(vf vx k/id)</code> 或 <code>(vf vx (λ(v?) ???))</code> 
-的形式。而在函数位置时是有可能化简的，当它是λ函数的时候。
+的形式。而在函数位置时是有可能化简的，当它是 λ 函数的时候。
 </p>
 
 <p>
-所以 <code>ctx</code> 在函数位置(case 1,2)时应该和case 3统一一下。就是说，
+所以 <code>ctx</code> 在函数位置(case 1,2)时应该和 case 3 统一一下。就是说，
 为了化简，我们把 <code>`(λ(v?) ???)</code> 
 的 <code>quasiquote</code> 直接去掉，改成一个函数
  <code>(λ(v?) `???)</code> ，调用它就相当于直接把函数体里面的
@@ -325,8 +325,8 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </div>
 
 <p>
- <code>(λ(out) out)</code> 就是 <code>id</code> 这个函数。因为原来的
- <code>'id</code> 可以看成是 <code>`(λ(v?) v?)</code> ，所以化简后
+<code>(λ(out) out)</code> 就是 <code>id</code> 这个函数。因为原来的
+<code>'id</code> 可以看成是 <code>`(λ(v?) v?)</code> ，所以化简后
 就变成了 <code>(λ(out) out)</code> 
 </p>
 
@@ -346,7 +346,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </p>
 
 <p>
-但是在CPS函数调用时遇到了一些麻烦,因为我们发现总共有4种情况需要讨论，
+但是在 CPS 函数调用时遇到了一些麻烦,因为我们发现总共有4种情况需要讨论，
 其中有大量重复的代码，但是不管怎么说，先把代码写出来才是正道
 (以下代码会需要一点耐心)
 </p>
@@ -372,7 +372,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 <p>
 令人惊讶的是，这个 <code>cps</code> 函数就这么完成了!
 跟前面的结果对照一下就会看出明显区别了。
-它不但可以处理beta-redex，还能正确处理尾递归。
+它不但可以处理 beta-redex，还能正确处理尾递归。
 </p>
 
 <p>
@@ -414,6 +414,9 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 <p>
 甚至还有一个写法，就是利用多返回值，再返回一个布尔值表示当前的选择，
 这个方法看起来会有些麻烦。就不提了。
+在本质上，这种多返回值的方法跟使用 continuation 的方法是完全等价的，
+你可以类比一下 JavaScript 里面的 Promise 和传统的回调函数是等价的。
+(我不喜欢 JavaScript，但是这个例子能明白的人应该比较多吧)
 </p>
 
 <p>
@@ -429,7 +432,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </pre>
 </div>
 <p>
-但如果没有beta-redex可以化简，比如，
+但如果没有 beta-redex 可以化简，比如，
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>f a<span style="color: #b0b1a3;">)</span> b<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
@@ -444,7 +447,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </p>
 
 <p>
-所谓的continuation-passing style多用一个参数k来告诉
+所谓的 continuation-passing style 多用一个参数 <code>k</code> 来告诉
 我们要调用的函数当前的状态是什么，就是这个函数运行完了以后
 应该干什么。但这里的 <code>cps</code> 函数也有一个参数 <code>ctx</code> ，
 它也表示一个状态，它表示的是现在的状态，让更深层递归的函数能得知一些外部信息。
@@ -477,11 +480,11 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 <p>
 这种模式更广泛的应用之处在于 <code>ctx</code> 的参数不是一个用来选择的符号，
 而是一个连续数值或对象的时候。我一下子想不出实际的例子，
-有了我会补充。
+但我感觉这种模式有不错的应用前景，有了例子我会补充。
 </p>
 
 <p>
-习题:请扩展这个程序以支持多参数的λ和函数调用。
+习题:请扩展这个程序以支持多参数的 λ 和函数调用。
 </p>
 
 <p>
@@ -522,12 +525,12 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </p>
 
 <p>
-问题就在于，13是一个形式的，24是一个形式的，
-我们要选择的就是只传13还是只传24.
+问题就在于，1、3是一个形式的，2、4是一个形式的，
+我们要选择的就是只传1、3还是只传2、4.
 </p>
 
 <p>
-我们发现，13是两个固定的值，而24里面是有一堆省略号的，
+我们发现，1、3是两个固定的值，而2、4里面是有一堆省略号的，
 也就是说，如果采用一点类似作弊的策略，从1也可以推出2，
 只要判断 <code>ctx</code> 是否等于 <code>(λ(out) `(k ,out))</code> 。
 但是无论如何也不可能从任意的4推出3(当然你如果使用 <code>eval</code> 
@@ -536,11 +539,11 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </p>
 
 <p>
-于是，我们决定采用13型的 <code>ctx</code> 。
+于是，我们决定采用1、3型的 <code>ctx</code> 。
 </p>
 
 <p>
-先写一个转换的函数，把一个13型的 <code>ctx</code> 转成24型的。
+先写一个转换的函数，把一个1、3型的 <code>ctx</code> 转成2、4型的。
 就是把 <code>ctx-f</code> 转成 <code>ctx-a</code> 
 </p>
 <div class="org-src-container">
@@ -560,7 +563,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </pre>
 </div>
 <p>
-(看到了吗，这就是王垠CPS代码里的 <code>ctx0</code> )
+(看到了吗，这就是王垠 CPS 代码里的 <code>ctx0</code> )
 </p>
 
 <p>
@@ -594,8 +597,8 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </pre>
 </div>
 <p>
-是的，这就是完整的λ-calculus的最简的CPS变换，
-如果对照一下王垠的CPS变换的最后几行，你会发现我的这个版本甚至更清晰一些，
+是的，这就是完整的 λ-calculus 的最简的 CPS 变换，
+如果对照一下王垠的 CPS 变换的最后几行，你会发现我的这个版本甚至更清晰一些，
 因为我用 <code>ctx-f-&gt;a</code> 这个函数避免了 <code>`(,out-rator ,out-rand ....)</code> 
 这样重复的代码，并把判断也放进了这个辅助函数中。
 </p>
@@ -627,7 +630,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </pre>
 </div>
 <p>
-第二种情况只要把λ的参数改成一个列表就可以了。
+第二种情况只要把 λ 的参数改成一个列表就可以了。
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span>`<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> ,args ,body<span style="color: #93a8c6;">)</span>
@@ -648,6 +651,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </div>
 <p>
 说实话，最后这个递归&#x2026;我也不知道我自己是怎么写出来的，
+希望有人能帮我改成普通的循环之类的，简化一下代码。
 思路就是这样，首先最后返回值肯定是<br />
  <code>(cps1 (car exprs) (λ(v) ....))</code> <br />
 然后省略号要填的是，递归遍历 <code>(cdr exprs)</code> ，所以结构必须是这样的，
@@ -671,7 +675,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 
 <p>
 接下来我们要支持一些原生的函数，比如 <code>+ - * / zero?</code> ，
-这些函数不需要经过CPS变换，比如，
+这些函数不需要经过 CPS 变换，比如，
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> x y<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
@@ -731,12 +735,11 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </div>
 </div>
 
-
 <div id="outline-container-org4a3a1f2" class="outline-2">
 <h2 id="org4a3a1f2"><code>if</code> 语句</h2>
 <div class="outline-text-2" id="text-org4a3a1f2">
 <p>
-首先， <code>if</code> 语句的不同之处在于，我们需要对它的两个分支做两次CPS变换，
+首先， <code>if</code> 语句的不同之处在于，我们需要对它的两个分支做两次 CPS 变换，
 比如，
 </p>
 <div class="org-src-container">
@@ -756,7 +759,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </pre>
 </div>
 <p>
-把这段代码插到CPS函数调用的前面。我一开始以为就这么完成了，
+把这段代码插到 CPS 函数调用的前面。我一开始以为就这么完成了，
 结果发现，这里的 <code>ctx</code> 是会被翻倍的。
 </p>
 
@@ -815,7 +818,7 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </pre>
 </div>
 <p>
- <sub>(这看起来怎么像是ANF和CPS的混合版)</sub>
+ <sub>(这看起来怎么像是 ANF 和 CPS 的混合版)</sub>
 </p>
 
 <p>
@@ -913,10 +916,10 @@ case 3:但如果是函数调用，这时ctx在参数的位置( <code>(vf vx ctx)
 </p>
 
 <p>
-这个程序还有升级空间，就是  <code>begin</code>  和  <code>set!</code>  语句，提示一下，
-东西越来越复杂的时候，可能不得不回归到第3节中的方式，把各种  <code>ctx</code>  拆开，
-否则处理  <code>set!</code>  的时候会产生一堆嵌套的  <code>begin</code>  语句。
-另外，如果是Common Lisp里的那种有返回值的赋值语句，处理起来会简单一些，
+这个程序还有升级空间，就是 <code>begin</code> 和 <code>set!</code> 语句，提示一下，
+东西越来越复杂的时候，可能不得不回归到第3节中的方式，把各种 <code>ctx</code> 拆开，
+否则处理 <code>set!</code> 的时候会产生一堆嵌套的 <code>begin</code> 语句。
+另外，如果是 Common Lisp 里的那种有返回值的赋值语句，处理起来会简单一些，
 因为可以简单地看作一个表达式。
 </p>
 

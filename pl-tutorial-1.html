@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-14 Thu 20:14 -->
+<!-- 2019-12-08 Sun 10:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第一章 人和机器</title>
@@ -66,7 +66,7 @@
 </p>
 
 <p>
-又要提 Dijkstra 的名言了
+又要提 Dijkstra 的名言了(我怕不是要变成 Dijkstra 的粉丝了&#x2026;)
 </p>
 <blockquote>
 <p>
@@ -102,9 +102,9 @@
 <p>
 程序语言理论(PLT，Programming Language Theory)就是对语言本身的研究，
 它首先就教你写出简单的程序，建立信心。当然了，再深下去，
-(虽然我挺喜欢的)，但对实际生活来说，没什么必要，
+(虽然我挺喜欢的)，但对实际生活来说，也许没什么必要，
 大多数人也不感兴趣。我只是想把最简单的东西讲一讲，
-(因为稍微难一点的东西我不会)，普及一些正经的课程或书不会提到的东西，
+(因为稍微难一点的东西我不会:p)，普及一些正经的课程或书不会提到的东西，
 讲一些刚学的时候很难理解，但理解以后会感觉“编程怎么这么简单”的知识。
 顺便一提，我希望最后能让读者学会所有程序语言(共同特征和各自的优缺点)，
 能学会发明自己的语言:p
@@ -129,12 +129,15 @@
 <p>
 接触过的人肯定会有意见，但我不是想显示一下有多简单嘛，
 第一行定义这个函数名叫 <code>sort</code>, 第二行处理空列表，第三行找最小值，
-第四行递归进去。你跟别的语言比一比就知道了。
+第四行递归进去。你跟别的语言比一比就知道了。<br />
+(啊对了，感兴趣的可以去跟一个叫 APL 的语言比一比，
+现在不知道还有多少人听说过这门古老至极的语言，总之在有兴趣的时候，
+长长见识是很不错的:)
 </p>
 
 <p>
 那是我第一次发现，写程序这么简单。就在那时我才对编程有了兴趣。
-以前学算法都只是死学而已.
+以前学算法都只是死学而已。
 </p>
 
 <p>
@@ -143,7 +146,8 @@
 我都只能看书上的图画，不看代码，
 因为书上的代码复杂到没法看。真的。我是那种见到麻烦的东西就泄气的人，
 比方说吧，我还记得书上红黑树的代码直到最后也没看下去，但是没关系，
-因为我看到了一本 ML 语言的教材，它也讲到了红黑树，我一下子就明白了。
+因为我后来就看到了一本 ML 语言的教材，它也讲到了红黑树，我一下子就明白了，
+ML 这类语言的模式匹配和递归，跟伪 Pascal 代码的清晰度简直不是一个等级的。
 </p>
 
 <p>
@@ -151,8 +155,7 @@
 </p>
 
 <p>
-追求简单就是我这些文章的目标，当然，只是尽量简单，
-我不保证不动脑也能看懂。(动脑指的不是记忆，而是理解。)
+追求简单就是我这些文章的目标，当然，只是尽量简单，我不保证不动脑也能看懂。
 </p>
 <blockquote>
 <p>
@@ -268,8 +271,14 @@
 <div id="outline-container-orge2aa5a4" class="outline-2">
 <h2 id="orge2aa5a4">圈养</h2>
 <div class="outline-text-2" id="text-orge2aa5a4">
+<blockquote>
 <p>
-数字就像宠物，多了就难管(瞎扯)
+管理一群程序员就像放养一群猫<br />
+—— 无名氏
+</p>
+</blockquote>
+<p>
+所以管理一群数字是不是就像管理一群程序员&#x2026;(瞎扯)
 </p>
 
 <p>
@@ -286,7 +295,7 @@
 画两遍 <code>1+2</code> 就有些麻烦(虽然我是复制粘贴..)，
 还费时间费电，变量就出现了。<br />
 先定义个变量 <code>three</code>, 然后让它平方。
-(变量可以是字母，或减号、问号等规定的几个符号连在一起，
+(变量的名字可以是字母，或减号、问号等规定的几个符号连在一起，
 末尾可以跟数字，比如 <code>ab-cd-ef123</code>. 先不用太管这些)
 </p>
 
@@ -343,8 +352,9 @@
 </div>
 
 <p>
-那 <code>y</code> 只是个变量而已，如果这个程序的前面定义过 <code>x</code> 是多少，
-那么 <code>y</code> 就是它加1，一个固定的数字，如果 <code>x</code> 没有定义过，那程序就出错。
+那 <code>y</code> 只是个变量而已，如果这个程序的前面定义过 <code>x</code> 是 100，
+那么 <code>y</code> 就是它加 1，即 101，一个固定的数字，如果 <code>x</code> 没有定义过，
+那程序就出错。
 </p>
 
 <p>
@@ -420,7 +430,7 @@
 <p>
 我啰嗦这么多，看起来很简单，可是确实这点容易被忽视。
 刚开始学的时候，我们都没有把一块程序提取出来成为一个函数的意识，
-我看过的很多代码，比如要算x<sup>2</sup> 还采用了第二种很复杂的做法
+我看过的很多代码，比如要算 x<sup>2</sup> 并采用了第二种很复杂的做法
 (比方说是为了提高一点点效率)，
 却不把它写成函数，看过去就是一大堆 &#x2026;&#x2026; x &#x2026;&#x2026; 
 我要费很大功夫才能看懂他要干嘛。就因为这个，
@@ -469,7 +479,7 @@
 </div>
 <p>
 一般来讲，在电脑上看到这个大于号“&gt;”，后面就是我们要输入的东西，
-输入之后按回车电脑就会在下一行把结果显示出来。
+输入之后按回车，电脑就会在下一行把结果显示出来。
 我为了程序看的清楚，如果一行写不下可以换行。
 </p>
 
@@ -513,14 +523,13 @@
 <p>
 放心，以后不会有这么复杂的代码了。<br />
 (话说回来，也许代码比画图有个好处，因为代码稍微复杂点就看不清楚，
-所以它逼着人们写简单的代码。)<br />
-(但照这个逻辑下去，我们是不是应该都去写机器代码?)
+所以它逼着人们写简单的代码。)
 </p>
 
 <p>
 数学中的函数是有优先级的，但 Racket 里没有，而且也不能省略括号或乘号，
-也不能多加括号，因为 <code>(1)</code> 中的1的位置应该是一个函数，
-但1不是函数，所以会出错。总之，就是完全的死板就对了。
+也不能多加括号。比如我多加了个括号 <code>(1)</code>, 但其中的 1 的位置应该是一个函数
+(比如加减乘除)，但 1 不是函数，所以会出错。总之，就是完全的死板就对了。
 </p>
 
 <p>
@@ -570,8 +579,8 @@
 
 <p>
 一个函数，在调用之前应该先计算它的参数，比如 <code>(+ (* 1 2) abc)</code>
-(假设 <code>abc</code> 还是 123)，程序先计算 <code>(* 1 2)</code> 结果是2, <code>abc</code>
-结果是123，然后再运行 <code>(+ 2 123)</code>
+(假设 <code>abc</code> 还是上面定义过的 123)，程序先计算 <code>(* 1 2)</code> 结果是2, <code>abc</code>
+结果是 123，然后再运行 <code>(+ 2 123)</code>
 </p>
 
 <p>
@@ -602,7 +611,7 @@
 </pre>
 </div>
 <p>
-<code>λ</code> 开头是一个函数，接下来是一个括号，括号里是参数的名字，
+<code>λ</code> 开头的式子是一个函数，接下来是一个括号，括号里是参数的名字，
 再接下来是函数输出的值。很明显，λ也是个特殊语法。
 </p>
 
@@ -667,7 +676,7 @@
 <span style="color: #228b22;">9</span>
 <span style="color: #262680;">&gt;</span> <span style="color: #262680;">sqr</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#25968;&#23398;&#19978;&#24635;&#26159;&#29992; (sqr x) &#34920;&#31034;&#36825;&#20010;&#20989;&#25968;&#65292;</span>
       <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#20320;&#20250;&#21457;&#29616;&#26159;&#22810;&#20040;&#38169;&#35823;&#30340;&#19968;&#20010;&#20889;&#27861;&#65292;</span>
-      <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#33258;&#24049;&#22909;&#22909;&#24605;&#32771;&#19968;&#19979;&#36825;&#20010;&#38382;&#39064;</span>
+      <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#35831;&#33258;&#24049;&#22909;&#22909;&#24605;&#32771;&#19968;&#19979;&#36825;&#20010;&#38382;&#39064;</span>
 #&lt;procedure:sqr&gt;
 <span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>circle-area <span style="color: #228b22;">3.14</span> <span style="color: #228b22;">10</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">314</span>
@@ -679,7 +688,7 @@
 </pre>
 </div>
 <p>
-就跟数字可以直接写出来一样，函数也可以直接用，只是看起来复杂。
+就跟数字可以直接写出来一样，函数也可以直接用，只是看起来比较复杂。
 </p>
 
 <p>
@@ -705,6 +714,8 @@
 电脑里也是这样。函数也是一段程序，它在电脑里有一个地址，
 这个地址就像经纬度一样，是个数字。我们要调用这个函数，只要知道它的地址，
 就可以找到这段程序，然后运行，就是这么简单。
+现在不用在意这些细节问题，等到接触操作系统及以下的底层知识的时候，
+会很详细地讲这些东西(说实在底层的知识挺无聊的，还是高级一点的语言有意思)
 </p>
 
 <hr />
@@ -719,10 +730,10 @@
 
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">pi</span> <span style="color: #228b22;">3.1415926</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">circle-area</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">circle-area</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#22278;&#30340;&#38754;&#31215;</span>
     <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">pi</span> radius<span style="color: #b0b1a3;">)</span>
       <span style="color: #b0b1a3;">(</span><span style="color: #262680;">*</span> <span style="color: #262680;">pi</span> radius radius<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">circle-circumference</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">circle-circumference</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#22278;&#30340;&#21608;&#38271;</span>
     <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">pi</span> radius<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">*</span> <span style="color: #228b22;">2</span> <span style="color: #262680;">pi</span> radius<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
@@ -772,9 +783,8 @@
 
 <p>
 可以想一下这样做的好处。很多时候，程序里有很多很多变量，
-比如用户名、密码等各种常数和各种函数(暂时这么理解吧，实际情况不太一样)，
-大一点的程序是很多人一起写的，每个人都不知道别人到底定义了什么，
-要阻止重名是不可能的事了。
+比如各种常数和各种函数，大一点的程序是很多人一起写的，
+每个人都不知道别人到底定义了什么，要阻止重名是不可能的事了。
 </p>
 
 <p>
@@ -810,6 +820,10 @@
 </p>
 
 <p>
+先讲现在已经抛弃了的逻辑。
+</p>
+
+<p>
 照我们前面的解释，调用 <code>(cylinder-volume 3.14 1 1)</code> 之后，
 离 <code>circle-area-v2</code> 更近的 <code>pi</code> 变成了 <code>3.14</code>, 
 而不是外界的 <code>3.1415926</code>, 所以结果是 <code>3.14</code>.
@@ -841,9 +855,9 @@
 你上来就写了个 <code>cylinder-volume</code>, 你看了看，
 <code>circle-area-v2</code> 只有参数 <code>radius</code>,
 也就是说圆的面积只跟输入的半径有关。所以我如果一直输入半径为 <code>1</code>,
-结果也应该永远是个定值 <code>(circle-area-v2 1)</code>, 即3.1415926。
-结果发现 <code>(cylinder-volume 3.1415926 1 1)</code> 是3.1415926,
-<code>(cylinder-volume 3.14 1 1)</code> 是3.14，很不对是吧。
+结果也应该永远是个定值 <code>(circle-area-v2 1)</code>, 即 3.1415926。
+结果发现 <code>(cylinder-volume 3.1415926 1 1)</code> 是 3.1415926,
+<code>(cylinder-volume 3.14 1 1)</code> 是 3.14，很不对是吧。
 都是 <code>(circle-area-v2 1)</code>, 结果居然不一样。这还怎么写代码。
 </p>
 
@@ -865,8 +879,8 @@
 <p>
 于是有人提出来，我们说“最近的变量”，不应该是在使用的时候最近，
 而是在定义的时候最近。 <code>circle-area-v2</code> 在定义时,
-<code>pi</code> 就是3.1415926，这才应该是离它最近的那个 <code>pi</code>,
-那它就应该保存那个 <code>pi</code>, 它的 <code>pi</code> 就应该一直是3.1415926，
+<code>pi</code> 就是 3.1415926，这才应该是离它最近的那个 <code>pi</code>,
+那它就应该保存那个 <code>pi</code>, 它的 <code>pi</code> 就应该一直是 3.1415926，
 而不会随着使用时外界的 <code>pi</code> 而变化。
 </p>
 
@@ -1024,13 +1038,15 @@ ______ <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#3
 </p>
 
 <p>
-这有一个名词，叫做“抽象”。
+这有一个名词，叫做“抽象(abstraction)”。
 </p>
 
 <p>
 这里的抽象不是指让人难理解，相反，它指的是把底层复杂的东西隐藏起来，
-比如，完全不会数学的人也能调用 <code>add-what</code>, 完全不懂电路的人也会玩电脑，
-这是抽象，因为我们不知道它们内部是什么，但不知道这些对我们使用没有影响，
+比如，完全不会数学的人也能调用 <code>add-what</code>,
+他会发现他的数后面神奇地添加上了另一个数字；完全不懂电路的人也会玩电脑，
+也有许多不懂物理的 3D 游戏程序员……
+这就是抽象，因为我们不知道它们内部是什么，但不知道这些对我们使用没有影响，
 甚至更方便了。明白了抽象是怎么回事，就明白了之后我们学编程都在学些什么。
 以后慢慢体会就可以了。
 </p>
@@ -1076,7 +1092,7 @@ ______ <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#3
 你也可以直接去下载页面 <a href="https://download.racket-lang.org">https://download.racket-lang.org</a>，
 默认下载就可以。如果你不熟悉，一路默认安装就可以，
 安装完以后你的桌面上就会出现 DrRacket 的快捷方式了。
-(使用 Ubuntu 的可以直接通过 apt 安装 <code>sudo apt install racket</code> ，
+(像我一样使用 Ubuntu 的可以直接通过 apt 安装 <code>sudo apt install racket</code>, 
 DrRacket 会添加在你的应用里面。
 当然也可以用 Emacs 来编辑 Racket，我一直用的是 racket-mode，
 自己稍稍配置一下 paredit-mode 什么的，用起来还是过得去的。)

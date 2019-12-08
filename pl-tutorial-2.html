@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-14 Thu 20:14 -->
+<!-- 2019-12-08 Sun 10:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第二章 停下来!</title>
@@ -294,12 +294,12 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
     <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">+</span> x <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">g</span>
     <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">+</span> x <span style="color: #228b22;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
-<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">eqv?</span> f g<span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">equal?</span> f g<span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">#f</span>
 </pre>
 </div>
 <p>
-但有一个通用的函数 <code>eqv?</code>, 所有的类型它都可以比较是否相等。
+但有一个通用的函数 <code>equal?</code>, 所有的类型它都可以比较是否相等。
 </p>
 
 <p>
@@ -309,9 +309,9 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <p>
 练习题: 还记得上一章中的 <code>add-what</code> 函数吗，不记得的话回去翻一下
 (<a href="./pl-tutorial-1.html#intro-add-what">传送门</a>)。仿照上面的 <code>abs</code> 函数，检查 <code>add-what</code> 的 <code>what</code> 参数，
-确保它为0~9之间的整数。<br />
+确保它为 0~9 之间的整数。<br />
 注: 检查整数可用 <code>integer?</code>, 小于或大于号也能有多个参数，
-比如 <code>what</code> 在0~9之间，可以写做 <code>(&lt;= 0 what 9)</code><br />
+比如 <code>what</code> 在 0~9 之间，可以写做 <code>(&lt;= 0 what 9)</code><br />
 请尽量写出让人能看明白的错误信息，并测试。
 </p>
 </div>
@@ -341,8 +341,8 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </p>
 
 <p>
-(如果你数学真的很好的话，你会发现, <code>num</code> 个1就相当于 <code>num</code> 个9再除以9，
-然后 <code>num</code> 个9等于10<sup>num</sup> 再减1，如果你以为成功了的话，
+(如果你数学真的很好的话，你会发现, <code>num</code> 个 1 就相当于 <code>num</code> 个 9 再除以 9，
+然后 <code>num</code> 个 9 等于 10<sup>num</sup> 再减 1，如果你以为成功了的话，
 那请你自己写一下乘方函数，然后你就遇到同样的问题了)
 </p>
 
@@ -369,7 +369,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <p>
 经过研究，我们发现我们没法把 <code>num</code> 个 <code>add-chip</code> 写出来，
 但是我们看看上面的那一堆 <code>if</code>, 我们发现了规律:<br />
-如果 <code>num</code> 多了1，那么 <code>add-chip</code> 也多调用1次。
+如果 <code>num</code> 多了 1 ，那么 <code>add-chip</code> 也多调用 1 次。
 </p>
 
 <p>
@@ -383,10 +383,10 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 
 <p>
 数字就是这么数出来的。<br />
-如果 <code>num</code> 是0呢? <code>add-chip</code> 调用0次。<br />
-如果 <code>num</code> 比0多1呢? <code>add-chip</code> 多调用1次，就是1次。<br />
-如果 <code>num</code> 再比1多1呢? <code>add-chip</code> 再多调用1次，就是2次。<br />
-如果 <code>num</code> 再比2多1呢? <code>add-chip</code> 再多调用1次，就是3次。<br />
+如果 <code>num</code> 是 0 呢? <code>add-chip</code> 调用0次。<br />
+如果 <code>num</code> 比 0 多 1 呢? <code>add-chip</code> 多调用 1 次，就是 1 次。<br />
+如果 <code>num</code> 再比 1 多 1 呢? <code>add-chip</code> 再多调用 1 次，就是 2 次。<br />
+如果 <code>num</code> 再比 2 多 1 呢? <code>add-chip</code> 再多调用 1 次，就是 3 次。<br />
 &#x2026;&#x2026;
 </p>
 
@@ -412,15 +412,15 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </p>
 
 <p>
-首先，来理解一下这段程序。如果 <code>num</code> 为0，就直接返回 <code>x</code>, 
-什么都不加; 如果 <code>num</code> 大于0，就先调用 <code>add-many-chips</code>
-给它加上 <code>num-1</code> 个1，然后再加一个1.
+首先，来理解一下这段程序。如果 <code>num</code> 为 0，就直接返回 <code>x</code>, 
+什么都不加; 如果 <code>num</code> 大于 0，就先调用 <code>add-many-chips</code>
+给它加上 <code>num-1</code> 个 1，然后再加一个 1.
 </p>
 
 <p>
 你问我为什么 <code>(add-many-chips (- num 1) x)</code> 神奇般地就完成了?
-因为如果 <code>num-1</code> 是0，那它就完成了，否则就继续减1，
-一直重复，直到减到0了为止。
+因为如果 <code>num-1</code> 是 0，那它就完成了，否则就继续减 1，
+一直重复，直到减到 0了为止。
 </p>
 
 <p>
@@ -474,7 +474,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </p>
 
 <p>
-比如说我们调用了 <code>(add-many-chips 3 666)</code>, 首先，判断 <code>num</code> 是不是0.
+比如说我们调用了 <code>(add-many-chips 3 666)</code>, 首先，判断 <code>num</code> 是不是 0.
 (为了方便我竖着画)
 </p>
 
@@ -485,7 +485,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 
 <p>
-不是0，所以先调用 <code>add-many-chips</code>, 不过要记得完了还要加个 <code>add-chip</code>
+不是 0，所以先调用 <code>add-many-chips</code>, 不过要记得完了还要加个 <code>add-chip</code>
 (有些箭头画不下了，省略了)
 </p>
 
@@ -496,7 +496,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 
 <p>
-然后我们就要开始计算 <code>(add-many-chips 2 666)</code>, 因为2不为0，所以接着调用一层
+然后我们就要开始计算 <code>(add-many-chips 2 666)</code>, 因为 2 不为 0，所以接着调用一层
 </p>
 
 
@@ -506,7 +506,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 
 <p>
-然后需要计算 <code>(add-many-chips 1 666)</code>, 同理，1不为0，再调用一层
+然后需要计算 <code>(add-many-chips 1 666)</code>, 同理，1 不为 0，再调用一层
 </p>
 
 
@@ -516,7 +516,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 
 <p>
-好了，现在最底下的这个函数终于发现它的参数是0了，于是它很高兴地返回了666.
+好了，现在最底下的这个函数终于发现它的参数是 0 了，于是它很高兴地返回了 666.
 </p>
 
 
@@ -526,7 +526,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </div>
 
 <p>
-接下来就明白了，这个666经过了3个 <code>add-chip</code> 最后得到了结果。
+接下来就明白了，这个 666 经过了 3 个 <code>add-chip</code> 最后得到了结果。
 </p>
 
 <p>
@@ -576,8 +576,8 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 思考题: (请先保存好你的代码，否则后果自负，
 不过除非你的操作系统有 bug，不然并不会影响系统和其它软件)。
 给 <code>add-many-chips</code> 输入一个很大的数，内存可能就爆了，比如，
-我给了它一个亿&#x2026;然后它3秒钟后占到了3.2G的内存然后卡住了&#x2026;<br />
-好。这说明我们要量力而行，那给它一个小一点的数，比如2.5吧
+我给了它一个亿&#x2026;然后它 3 秒钟后占到了 3.2G 的内存然后卡住了&#x2026;<br />
+好。这说明我们要量力而行，那给它一个小一点的数，比如 2.5 吧
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>add-many-chips <span style="color: #228b22;">2.5</span> <span style="color: #228b22;">666</span><span style="color: #8c8c8c;">)</span>
@@ -589,7 +589,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 </p>
 
 <p>
-手动模拟。它要计算1.5，然后0.5，然后&#x2026;-0.5，然后-1.5，-2.5，&#x2026;
+手动模拟。它要计算 1.5，然后 0.5，然后&#x2026; -0.5，然后 -1.5，-2.5，&#x2026;
 </p>
 
 <p>
@@ -657,7 +657,7 @@ Racket 居然没有不等于函数，但有 <code>not</code> 函数，作为练�
 <h2 id="org1007389">练习: 再来一瓶，再来一瓶</h2>
 <div class="outline-text-2" id="text-org1007389">
 <p>
-(WARNING: 这章会用到一点数学知识，因为我实在想不出不用数学的例子了，
+(警告: 这章会用到一点数学知识，因为我实在想不出不用数学的例子了，
 如果有谁想出来了请一定要告诉我一声)
 </p>
 
@@ -731,7 +731,7 @@ b<sup>n</sup> = b*b*&#x2026;*b，共 n 个 b
 </p>
 
 <p>
-对自然数来说，大多时候都是每次减1，一直减到0，
+对自然数来说，大多时候都是每次减 1，一直减到 0，
 根据情况有例外，下面就会举一个例子。
 </p>
 
@@ -741,7 +741,7 @@ b<sup>n</sup> = b*b*&#x2026;*b，共 n 个 b
 
 <p>
 b<sup>0</sup> = 1，这种情况很简单。<br />
-若 n&gt;0, b<sup>n</sup> 要先调用 b<sup>(n-1)</sup>，然后只要再乘个 b 就行了。<br />
+若 n&gt;0，那么 b<sup>n</sup> 要先调用 b<sup>(n-1)</sup>，然后只要再乘个 b 就行了。<br />
 b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </p>
 
@@ -790,12 +790,12 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 <p>
 练习题:<br />
 写出函数 <code>biggest-odd-divisor</code>, 找出一个数字最大的奇数因数
-(比如6有因数1,2,3,6，最大的奇数是3)<br />
+(比如 6 有因数 1,2,3,6，最大的奇数是 3)<br />
 (Racket 提供了函数 <code>odd?</code> 判断一个整数是否是奇数)
 </p>
 
 <p>
-当然，最简单的是一直除以2，直到把2全除掉，剩个奇数为止
+当然，最简单的是一直除以 2，直到把 2 全除掉，剩个奇数为止
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">biggest-odd-divisor</span>
@@ -825,7 +825,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </div>
 <p>
 先看懂这段代码吧。这也揭示了一个道理: 往往简单的代码反倒更快。
-这也很好理解，每次除以2除到一个数，跟每次减2减到同一个数，
+这也很好理解，每次除以 2 除到一个数，跟每次减 2 减到同一个数，
 很明显前一个快得多吧。
 </p>
 
@@ -834,18 +834,18 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </p>
 
 <p>
-问题1: 既然x是奇数而且每次减2，为什么不检查 <code>(= 1 x)</code> 而是只判断
+问题 1: 既然 x 是奇数而且每次减 2，为什么不检查 <code>(= 1 x)</code> 而是只判断
 <code>(integer? (/ n x))</code> 呢?
 </p>
 
 <p>
 这是数学知识告诉我们的。总会有一个奇数满足这个条件，如果一直没有，
-最后 <code>x</code> 就减到1了，那 <code>(/ n x)</code> 就是 <code>n</code>, 一定是整数，
+最后 <code>x</code> 就减到 1 了，那 <code>(/ n x)</code> 就是 <code>n</code>, 一定是整数，
 所以程序一定会停止。
 </p>
 
 <p>
-问题2: 为什么这个函数的终止的情况是跟 <code>x</code> 这个递归的变量有关的，
+问题 2: 为什么这个函数的终止的情况是跟 <code>x</code> 这个递归的变量有关的，
 但之前的 <code>expt</code>, <code>factorial</code> 等函数的终止的情况就是个常数?
 </p>
 
@@ -867,7 +867,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 </pre>
 </div>
 <p>
-这个函数就是，把 <code>x</code> 除以多少个2就会变成奇数。
+这个函数就是，把 <code>x</code> 除以多少个 2 就会变成奇数。
 </p>
 
 <p>
@@ -967,7 +967,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 这有什么区别呢? 在现在很多流行语言里，没有区别，但是在 Racket 里，
 前面说过了，如果给一个很大的输入，旧的版本会占非常大的内存，
 但你试一下新的版本? 它居然几乎不占内存! 不管多大的输入都一样
-(除了我电脑的风扇转得飞快，CPU飙升到60多度&#x2026;)
+(除了我电脑的风扇转得飞快，CPU 飙升到 60 多度&#x2026;)
 </p>
 
 <p>
@@ -982,7 +982,7 @@ b<sup>n</sup> = b*b<sup>(n-1)</sup>
 一会儿又下降了，然后又慢慢上升&#x2026;因为为了效率和简单性，
 Racket 不是一边计算一边扔没用的内存，而是过一段时间统一扔一次。
 这是一种计算机自动管理内存的方式，叫“垃圾回收(garbage collection)”，
-下面还会讲到。)
+以后还会讲到。)
 </p>
 
 <p>
@@ -1123,7 +1123,7 @@ Racket 不是一边计算一边扔没用的内存，而是过一段时间统一�
 </p>
 
 <p>
-首先，我们有一个0，然后，我们有一个函数 <code>add1</code>, 它能把一个数加1.
+首先，我们有一个 0，然后，我们有一个函数 <code>add1</code>, 它能把一个数加 1.
 </p>
 
 <p>
@@ -1141,11 +1141,11 @@ Racket 不是一边计算一边扔没用的内存，而是过一段时间统一�
 </p>
 
 <p>
-首先的难点就是，如何定义一个减1的函数 <code>sub1</code>
+首先的难点就是，如何定义一个减 1 的函数 <code>sub1</code>
 </p>
 
 <p>
-方法就是从0加上去，如果发现某个数加1以后等于参数，那么返回这个数
+方法就是从 0 加上去，如果发现某个数加 1 以后等于参数，那么返回这个数
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">sub1</span>
@@ -1184,13 +1184,13 @@ Racket 不是一边计算一边扔没用的内存，而是过一段时间统一�
 
 <p>
 练习题: 写出函数 <code>gcd?</code>, 找出两个数的最大公约数
-(求两个数相除的余数是 <code>remainder</code>, 比如 <code>(remainder 5 3)</code>
-为2。求最大公约数的方法自己去网上查)
+(求两个数相除的余数是 <code>remainder</code>, 比如 <code>(remainder 8 3)</code>
+为 2。求最大公约数的方法自己去网上查)
 </p>
 
 <p>
 练习题: 写出函数 <code>prime?</code>, 判断一个数是否为质数
-(方法: 从小到大找，如果找到一个因数(remainder 为0)就说明不是质数，
+(方法: 从小到大找，如果找到一个因数(remainder 为 0)就说明不是质数，
 如果一直找到足够大(自己思考是多大)都没找到，说明是质数)
 </p>
 
