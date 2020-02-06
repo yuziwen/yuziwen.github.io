@@ -1,6 +1,8 @@
 #+TITLE: Ziwen's Blog Homepage
 
 -----
+ [[./on-reasoning.html][关于生活中的理性]]
+-----
  [[./mental-journey.html][再忆往事]]
 -----
  [[./skip-school-experience.html][记我的逃学经历]]
