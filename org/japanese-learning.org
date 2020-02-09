@@ -620,6 +620,8 @@
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=2&id=562343&auto=0&height=66"></iframe>
 #+END_EXPORT
 
+(这首歌够冷门吧。现在已经能算是老番了吧。我怎么就这么怀旧呢。)
+
 要说这篇文章的话，肯定还有好多东西没讲到，我既没那水平，
 也没时间来写一本日语教材。而且一本教材也没那么重要，
 只要不要去报课外班并且遇到了个普通的老师，就没什么大问题。
