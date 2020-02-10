@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-08 Sun 09:46 -->
+<!-- 2020-02-10 Mon 12:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>自动 CPS 变换</title>
@@ -37,11 +37,7 @@
 <div class="outline-text-2" id="text-orgfd5f21d">
 <p>
 我最一开始听到 CPS 变换这个词是在王垠的博客里
-(请求不要喷我)，就是那篇他第一次宣传他的40行代码的文章。
-我当时什么都看不懂，所以没太注意，不过我也正在学程序语言方面的东西，
-不久我就在 EOPL 和 The Little Schemer 里面又见到了 CPS。
-我有点不服气，知道了 CPS 不过就是这么个东西，
-于是我也开始想自己重造王垠40行代码，然后我很惊讶地也花了
+(请求不要喷我)，就是那篇他第一次宣传他的40行代码的文章。我当时什么都看不懂，所以没太注意，不过我也正在学程序语言方面的东西，不久我就在 EOPL 和 The Little Schemer 里面又见到了 CPS。我有点不服气，知道了 CPS 不过就是这么个东西，于是我也开始想自己重造王垠40行代码，然后我很惊讶地也花了
 刚好一个星期写了出来，而且还基本上跟他的一模一样&#x2026;&#x2026;
 </p>
 
@@ -50,30 +46,20 @@
 </p>
 
 <p>
-毕竟可能每个人有自己的思考方式，我在这里只是分享一下我自己的思路，
-我写出这个 CPS 程序的经历。当然为了显得我稍微强一点的样子，
-我把中间许多非常蠢的错误都省略了。
-</p>
+毕竟可能每个人有自己的思考方式，我在这里只是分享一下我自己的思路，我写出这个 CPS 程序的经历。当然为了显得我稍微强一点的样子，我把中间许多非常蠢的错误都省略了。</p>
 
 <p>
 我写出这个程序以后，又去看了那篇经典论文
 <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.42.4772">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.42.4772</a>
 这里有一个更友好一点的版本
 <a href="http://matt.might.net/articles/cps-conversion/">http://matt.might.net/articles/cps-conversion/</a>
-发现我的思路和他的完全不同，我反倒觉得我的思路很清楚，
-他的思路我要绕个弯才能看懂。
-</p>
+发现我的思路和他的完全不同，我反倒觉得我的思路很清楚，他的思路我要绕个弯才能看懂。</p>
 
 <p>
-这篇文章不涉及什么是 CPS 变换，CPS 变换入门请参考 The Little Schemer，
-我直接就开始写 <code>cps</code> 函数了，我们的目标就是王垠的那40行代码，
-我也把我自己的程序的变量名什么的都改成了跟那段代码一样的格式，方便对照，
-当然也有一些地方不一样，懒得改了。
-</p>
+这篇文章不涉及什么是 CPS 变换，CPS 变换入门请参考 The Little Schemer，我直接就开始写 <code>cps</code> 函数了，我们的目标就是王垠的那40行代码，我也把我自己的程序的变量名什么的都改成了跟那段代码一样的格式，方便对照，当然也有一些地方不一样，懒得改了。</p>
 
 <p>
-我采用 Racket 语言，就是因为用起来方便一些。就这样了。
-</p>
+我采用 Racket 语言，就是因为用起来方便一些。就这样了。</p>
 </div>
 </div>
 
@@ -81,21 +67,12 @@
 <h2 id="orgbb28d62">简单的 CPS 变换</h2>
 <div class="outline-text-2" id="text-orgbb28d62">
 <p>
-其实一个正确的 CPS 变换程序，只要学过一点点写解释器的人都会写，
-所以我就不细讲了，只是提供一个回忆，你如果要看下去的话最好是这个会自己写。
-我们先只考虑 λ-calculus 的语法，就只有3个分支，变量，λ，函数调用。
-先把最简单，没有经过优化的程序写出来。
-</p>
+其实一个正确的 CPS 变换程序，只要学过一点点写解释器的人都会写，所以我就不细讲了，只是提供一个回忆，你如果要看下去的话最好是这个会自己写。我们先只考虑 λ-calculus 的语法，就只有3个分支，变量，λ，函数调用。先把最简单，没有经过优化的程序写出来。</p>
 
 <p>
-主要的函数是 <code>cps1</code> ，它有两个参数 <code>expr</code> 和 <code>ctx</code> ，
- <code>expr</code> 就是一个 s-expression，
- <code>ctx</code> 是当前的 context，是一个 symbol 或 <code>'(λ...)</code> ，
-比如 <code>(cps1 '(f x) '(λ(x) x))</code> 的值为
+主要的函数是 <code>cps1</code> ，它有两个参数 <code>expr</code> 和 <code>ctx</code> ， <code>expr</code> 就是一个 s-expression， <code>ctx</code> 是当前的 context，是一个 symbol 或 <code>'(λ...)</code> ，比如 <code>(cps1 '(f x) '(λ(x) x))</code> 的值为
  <code>'(f x (λ(x) x))</code> 。所以 <code>(cps expr)</code> 函数
-就是 <code>(cps1 expr 'id)</code> 或 <code>(cps1 expr '(λ(x) x))</code> ，
-我暂且用前者。
-</p>
+就是 <code>(cps1 expr 'id)</code> 或 <code>(cps1 expr '(λ(x) x))</code> ，我暂且用前者。</p>
 
 <p>
 先把用到的辅助函数都列出来
@@ -129,9 +106,7 @@
 
 <p>
 第一项，当 <code>expr</code> 为一个变量(比如 <code>'x</code> )
-或一个原始类型(比如 <code>123</code>)时，
-我们就直接把它返回，比方说，
-</p>
+或一个原始类型(比如 <code>123</code>)时，我们就直接把它返回，比方说，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps1 <span style="color: #228b22;">'x</span> <span style="color: #228b22;">'k</span><span style="color: #8c8c8c;">)</span> ==&gt; '<span style="color: #8c8c8c;">(</span>k x<span style="color: #8c8c8c;">)</span>
 <span style="color: #8c8c8c;">(</span>cps1 <span style="color: #228b22;">'x</span> '<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> ....<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
@@ -139,34 +114,27 @@
 </pre>
 </div>
 <p>
-因此，
-</p>
+因此，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span><span style="color: #93a8c6;">(</span>? atom? expr<span style="color: #93a8c6;">)</span> `<span style="color: #93a8c6;">(</span>,ctx ,expr<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">]</span>
 </pre>
 </div>
 <p>
-对于一个 λ 表达式，我们同样直接把它返回，
-只是先递归进函数体内，把函数体进行 CPS 变换。
-每个 λ 的 continuation 都为 <code>'k</code> ，比如，
-</p>
+对于一个 λ 表达式，我们同样直接把它返回，只是先递归进函数体内，把函数体进行 CPS 变换。每个 λ 的 continuation 都为 <code>'k</code> ，比如，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps1 '<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> x<span style="color: #93a8c6;">)</span> <span style="color: #228b22;">'id</span><span style="color: #8c8c8c;">)</span>
 ==&gt; '<span style="color: #8c8c8c;">(</span>id <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x k<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>k x<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 <p>
-因此，
-</p>
+因此，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span>`<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>,x<span style="color: #b0b1a3;">)</span> ,body<span style="color: #93a8c6;">)</span>
  `<span style="color: #93a8c6;">(</span>,ctx <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&#955;</span><span style="color: #97b098;">(</span>,x k<span style="color: #97b098;">)</span> ,<span style="color: #97b098;">(</span>cps1 body <span style="color: #228b22;">'k</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">]</span>
 </pre>
 </div>
 <p>
-处理函数的部分稍微复杂一些，CPS 输出应该先分别计算函数和参数，
-然后调用，举个例子，在我们最终要完成的代码里，应该大致是这样的，
-</p>
+处理函数的部分稍微复杂一些，CPS 输出应该先分别计算函数和参数，然后调用，举个例子，在我们最终要完成的代码里，应该大致是这样的，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps1 '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>f a<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>g b<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span> <span style="color: #228b22;">'id</span><span style="color: #8c8c8c;">)</span>
 ==&gt;
@@ -176,13 +144,10 @@
 </pre>
 </div>
 <p>
-<code>v0</code> 是 <code>(f a)</code> 的结果，
-<code>v1</code> 是 <code>(g b)</code> 的结果，然后调用。
-</p>
+<code>v0</code> 是 <code>(f a)</code> 的结果，<code>v1</code> 是 <code>(g b)</code> 的结果，然后调用。</p>
 
 <p>
-我们先要实现的会产生一些多余代码，比如，
-</p>
+我们先要实现的会产生一些多余代码，比如，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps1 '<span style="color: #93a8c6;">(</span>f x<span style="color: #93a8c6;">)</span> <span style="color: #228b22;">'id</span><span style="color: #8c8c8c;">)</span>
 ==&gt; '<span style="color: #8c8c8c;">(</span><span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>v0<span style="color: #b0b1a3;">)</span>
@@ -195,10 +160,8 @@
 </pre>
 </div>
 <p>
-可以看出来，我们先分别 CPS 了 <code>f</code> 和 <code>x</code> ，
-然后调用 <code>(vf vx ctx)</code> ，其中 <code>vf</code> 和 <code>vx</code> 
-是我们前面定义的 <code>(fv)</code> 产生的，这样保证了每次都不一样。
-(说实话 <code>(gensym)</code> 也是可以的)
+可以看出来，我们先分别 CPS 了 <code>f</code> 和 <code>x</code> ，然后调用 <code>(vf vx ctx)</code> ，其中 <code>vf</code> 和 <code>vx</code> 
+是我们前面定义的 <code>(fv)</code> 产生的，这样保证了每次都不一样。(说实话 <code>(gensym)</code> 也是可以的)
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span>`<span style="color: #93a8c6;">(</span>,rator ,rand<span style="color: #93a8c6;">)</span>
@@ -212,12 +175,10 @@
 </pre>
 </div>
 <p>
-于是就全部搞定了。
-</p>
+于是就全部搞定了。</p>
 
 <p>
-于是我就兴高采烈地试了一下这个程序，
-</p>
+于是我就兴高采烈地试了一下这个程序，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>f a<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>g b<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt;
@@ -242,8 +203,7 @@
 </p>
 
 <p>
-不过算作是个很好的开头吧。
-</p>
+不过算作是个很好的开头吧。</p>
 </div>
 </div>
 
@@ -251,28 +211,21 @@
 <h2 id="org42c7670">最简 CPS 输出</h2>
 <div class="outline-text-2" id="text-org42c7670">
 <p>
-其实下面才开始真正的任务，上面一节只是因为，
-市面上的程序都是分好几个函数，我要把它们合在一起。
-</p>
+其实下面才开始真正的任务，上面一节只是因为，市面上的程序都是分好几个函数，我要把它们合在一起。</p>
 
 <p>
-上面的程序的问题就在于，当 <code>ctx</code> 是 <code>'(λ(v) ...v...)</code> ，
-而且 <code>expr</code> 是一个 <code>'x</code> 之类时，输出应该为
- <code>'...x...</code> 而不是 <code>'((λ(v) ...v...) x)</code> ，
-照 λ-calculus 的术语说就是产生了一个 beta-redex。
-</p>
+上面的程序的问题就在于，当 <code>ctx</code> 是 <code>'(λ(v) ...v...)</code> ，而且 <code>expr</code> 是一个 <code>'x</code> 之类时，输出应该为
+ <code>'...x...</code> 而不是 <code>'((λ(v) ...v...) x)</code> ，照 λ-calculus 的术语说就是产生了一个 beta-redex。</p>
 
 <p>
 我们来观察一下现在我们的 CPS程序的3个分支产生的 ctx
 </p>
 
 <p>
-case 1:如果是一个 atom，就产生 <code>`(,ctx ,expr)</code> ，这时 ctx 在函数的位置。
-</p>
+case 1:如果是一个 atom，就产生 <code>`(,ctx ,expr)</code> ，这时 ctx 在函数的位置。</p>
 
 <p>
-case 2:如果是 λ 表达式，ctx 也在函数的位置。
-</p>
+case 2:如果是 λ 表达式，ctx 也在函数的位置。</p>
 
 <p>
 case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx)</code>)
@@ -281,12 +234,10 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 <p>
 很显然，在参数位置时 ctx 是不可能被化简的，因为结果必须是
  <code>(vf vx k/id)</code> 或 <code>(vf vx (λ(v?) ???))</code> 
-的形式。而在函数位置时是有可能化简的，当它是 λ 函数的时候。
-</p>
+的形式。而在函数位置时是有可能化简的，当它是 λ 函数的时候。</p>
 
 <p>
-所以 <code>ctx</code> 在函数位置(case 1,2)时应该和 case 3 统一一下。就是说，
-为了化简，我们把 <code>`(λ(v?) ???)</code> 
+所以 <code>ctx</code> 在函数位置(case 1,2)时应该和 case 3 统一一下。就是说，为了化简，我们把 <code>`(λ(v?) ???)</code> 
 的 <code>quasiquote</code> 直接去掉，改成一个函数
  <code>(λ(v?) `???)</code> ，调用它就相当于直接把函数体里面的
  <code>v?</code> 替换掉了，比如
@@ -303,15 +254,11 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </div>
 
 <p>
-第二，如果 <code>ctx</code> 是 <code>'k/id</code> ，
-就改成 <code>(λ(out) `(k/id ,out))</code> 
+第二，如果 <code>ctx</code> 是 <code>'k/id</code> ，就改成 <code>(λ(out) `(k/id ,out))</code> 
 </p>
 
 <p>
-因为总共就两种情况: <code>ctx</code> 在函数位置和参数位置。
-我们不妨把 <code>cps1</code> 函数的 <code>ctx</code> 参数改成两个，
-一个叫 <code>ctx-f</code> 在函数位置，一个叫 <code>ctx-a</code> 在参数位置。
-</p>
+因为总共就两种情况: <code>ctx</code> 在函数位置和参数位置。我们不妨把 <code>cps1</code> 函数的 <code>ctx</code> 参数改成两个，一个叫 <code>ctx-f</code> 在函数位置，一个叫 <code>ctx-a</code> 在参数位置。</p>
 
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">ctx-f : symbol -&gt; s-exp</span>
@@ -331,8 +278,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </p>
 
 <p>
-接下来就是 <code>match</code> 的分支。
-</p>
+接下来就是 <code>match</code> 的分支。</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span><span style="color: #93a8c6;">(</span>? atom?<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">(</span>ctx-f expr<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">]</span>
 <span style="color: #8c8c8c;">[</span>`<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>,x<span style="color: #b0b1a3;">)</span> ,body<span style="color: #93a8c6;">)</span>
@@ -342,12 +288,10 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-这两个应该都是好理解的，都调用了 <code>ctx-f</code> 来化简当前的式子。
-</p>
+这两个应该都是好理解的，都调用了 <code>ctx-f</code> 来化简当前的式子。</p>
 
 <p>
-但是在 CPS 函数调用时遇到了一些麻烦,因为我们发现总共有4种情况需要讨论，
-其中有大量重复的代码，但是不管怎么说，先把代码写出来才是正道
+但是在 CPS 函数调用时遇到了一些麻烦,因为我们发现总共有4种情况需要讨论，其中有大量重复的代码，但是不管怎么说，先把代码写出来才是正道
 (以下代码会需要一点耐心)
 </p>
 <div class="org-src-container">
@@ -371,25 +315,17 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </div>
 <p>
 令人惊讶的是，这个 <code>cps</code> 函数就这么完成了!
-跟前面的结果对照一下就会看出明显区别了。
-它不但可以处理 beta-redex，还能正确处理尾递归。
-</p>
+跟前面的结果对照一下就会看出明显区别了。它不但可以处理 beta-redex，还能正确处理尾递归。</p>
 
 <p>
-这段代码应该也不难理解，只是分别讨论了函数和参数分别处于函数位置和参数位置的情况。
-大致思路就是，首先， <code>cps1</code> 要根据 <code>rator</code> 和 <code>rand</code> 
-是否为一个 <code>atom</code> 来决定如何输出，其次，我们不愿意在递归进去之前就判断一次，
-递归进去之后又要 <code>match expr</code> (开头提到的那篇论文的方法就有这个问题)。
-所以我们把现在的状态分成了两个参数，也一起递归进去。
-</p>
+这段代码应该也不难理解，只是分别讨论了函数和参数分别处于函数位置和参数位置的情况。大致思路就是，首先， <code>cps1</code> 要根据 <code>rator</code> 和 <code>rand</code> 
+是否为一个 <code>atom</code> 来决定如何输出，其次，我们不愿意在递归进去之前就判断一次，递归进去之后又要 <code>match expr</code> (开头提到的那篇论文的方法就有这个问题)。所以我们把现在的状态分成了两个参数，也一起递归进去。</p>
 
 <p>
 它有唯一一个但很好修复的缺陷，就是 <code>v-rator</code> 和 <code>v-rand</code> 
-定义地太早了，所以有时候会出现 <code>vn</code> 不连续的情况，
-如果不嫌麻烦的话可以在每次第一次出现 <code>v-?</code> 的地方再
+定义地太早了，所以有时候会出现 <code>vn</code> 不连续的情况，如果不嫌麻烦的话可以在每次第一次出现 <code>v-?</code> 的地方再
 <code>(let ([v-? (fv)]) ....)</code> ，当然这个代码看起来就&#x2026;&#x2026;
-另外，做出了下面一道习题后也会很好修复这个缺陷。
-</p>
+另外，做出了下面一道习题后也会很好修复这个缺陷。</p>
 
 <p>
 论文里的方法大概就是这样，只是写成了好几个函数
@@ -406,22 +342,14 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-其实这样写也是完全可以的，这时 <code>cps1</code> 只需要传一个参数 <code>ctx-f</code> 就可以了，
-在判断出不是 <code>atom</code> 以后用 <code>'vn</code> 调用 <code>ctx-f</code> ，
-把它转换成 <code>ctx-a</code> ，这其实更接近王垠的版本。
+其实这样写也是完全可以的，这时 <code>cps1</code> 只需要传一个参数 <code>ctx-f</code> 就可以了，在判断出不是 <code>atom</code> 以后用 <code>'vn</code> 调用 <code>ctx-f</code> ，把它转换成 <code>ctx-a</code> ，这其实更接近王垠的版本。</p>
+
+<p>
+甚至还有一个写法，就是利用多返回值，再返回一个布尔值表示当前的选择，这个方法看起来会有些麻烦。就不提了。在本质上，这种多返回值的方法跟使用 continuation 的方法是完全等价的，你可以类比一下 JavaScript 里面的 Promise 和传统的回调函数是等价的。(我不喜欢 JavaScript，但是这个例子能明白的人应该比较多吧)
 </p>
 
 <p>
-甚至还有一个写法，就是利用多返回值，再返回一个布尔值表示当前的选择，
-这个方法看起来会有些麻烦。就不提了。
-在本质上，这种多返回值的方法跟使用 continuation 的方法是完全等价的，
-你可以类比一下 JavaScript 里面的 Promise 和传统的回调函数是等价的。
-(我不喜欢 JavaScript，但是这个例子能明白的人应该比较多吧)
-</p>
-
-<p>
-现在举两个例子，看一下这个程序是怎么做的，
-</p>
+现在举两个例子，看一下这个程序是怎么做的，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span>f x<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt; <span style="color: #8c8c8c;">(</span>cps1 <span style="color: #228b22;">'f</span> ctx-f ctx-a<span style="color: #8c8c8c;">)</span>
@@ -432,8 +360,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-但如果没有 beta-redex 可以化简，比如，
-</p>
+但如果没有 beta-redex 可以化简，比如，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>f a<span style="color: #b0b1a3;">)</span> b<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt; <span style="color: #8c8c8c;">(</span>cps1 '<span style="color: #93a8c6;">(</span>f a<span style="color: #93a8c6;">)</span> ctx-f ctx-a<span style="color: #8c8c8c;">)</span>
@@ -443,28 +370,20 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </div>
 
 <p>
-现在可以来看一下这段代码对我们有什么启发。
-</p>
+现在可以来看一下这段代码对我们有什么启发。</p>
 
 <p>
 所谓的 continuation-passing style 多用一个参数 <code>k</code> 来告诉
 我们要调用的函数当前的状态是什么，就是这个函数运行完了以后
-应该干什么。但这里的 <code>cps</code> 函数也有一个参数 <code>ctx</code> ，
-它也表示一个状态，它表示的是现在的状态，让更深层递归的函数能得知一些外部信息。
-</p>
+应该干什么。但这里的 <code>cps</code> 函数也有一个参数 <code>ctx</code> ，它也表示一个状态，它表示的是现在的状态，让更深层递归的函数能得知一些外部信息。</p>
 
 <p>
 很多时候我们发现就传一个死的数据(比如第一个版本里的 <code>ctx</code> )
-是不够的，不但递归进去的函数需要这个数据，而这个数据也要随着当前的情况而变化。
-在简单的情况下我们可以传好几个参数，或者一个对象进去，里面的函数
-选择性地使用这些数据。但是在支持高阶函数的语言里很多时候方便很多，
-因为我们可以传一个函数进去。
-</p>
+是不够的，不但递归进去的函数需要这个数据，而这个数据也要随着当前的情况而变化。在简单的情况下我们可以传好几个参数，或者一个对象进去，里面的函数
+选择性地使用这些数据。但是在支持高阶函数的语言里很多时候方便很多，因为我们可以传一个函数进去。</p>
 
 <p>
-更通常的情况下，上面的 <code>cps1</code> 可以只有一个参数 <code>ctx</code> ，
-其中 <code>ctx</code> 是这样的，
-</p>
+更通常的情况下，上面的 <code>cps1</code> 可以只有一个参数 <code>ctx</code> ，其中 <code>ctx</code> 是这样的，</p>
 <div class="org-src-container">
 <pre class="src src-racket">ctx=
 <span style="color: #8c8c8c;">(</span><span style="color: #262680;">&#955;</span><span style="color: #93a8c6;">(</span>position<span style="color: #93a8c6;">)</span>
@@ -474,25 +393,17 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-这两个分支分别为原来的 <code>ctx-f</code> 和 <code>ctx-a</code> 。
-</p>
+这两个分支分别为原来的 <code>ctx-f</code> 和 <code>ctx-a</code> 。</p>
 
 <p>
-这种模式更广泛的应用之处在于 <code>ctx</code> 的参数不是一个用来选择的符号，
-而是一个连续数值或对象的时候。我一下子想不出实际的例子，
-但我感觉这种模式有不错的应用前景，有了例子我会补充。
-</p>
+这种模式更广泛的应用之处在于 <code>ctx</code> 的参数不是一个用来选择的符号，而是一个连续数值或对象的时候。我一下子想不出实际的例子，但我感觉这种模式有不错的应用前景，有了例子我会补充。</p>
 
 <p>
-习题:请扩展这个程序以支持多参数的 λ 和函数调用。
-</p>
+习题:请扩展这个程序以支持多参数的 λ 和函数调用。</p>
 
 <p>
 令我惊讶的是，支持多参数就不用分4类讨论了!
-因为只要分两类讨论，依次遍历整个列表就可以，
-不用区分函数和参数，所以代码反倒简单多了。
-推荐做一下这个习题。
-</p>
+因为只要分两类讨论，依次遍历整个列表就可以，不用区分函数和参数，所以代码反倒简单多了。推荐做一下这个习题。</p>
 </div>
 </div>
 
@@ -519,32 +430,23 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 
 <p>
 如果要只传一个参数的话，我们会发现，由2可以推出1,
-因为我们只要给它包一个 <code>λ</code> 就可以了。
-由3可以推出4，如果3是 <code>ctx</code> ，4就是
+因为我们只要给它包一个 <code>λ</code> 就可以了。由3可以推出4，如果3是 <code>ctx</code> ，4就是
  <code>`(λ(,vn) ,(ctx vn))</code> 
 </p>
 
 <p>
-问题就在于，1、3是一个形式的，2、4是一个形式的，
-我们要选择的就是只传1、3还是只传2、4.
+问题就在于，1、3是一个形式的，2、4是一个形式的，我们要选择的就是只传1、3还是只传2、4.
 </p>
 
 <p>
-我们发现，1、3是两个固定的值，而2、4里面是有一堆省略号的，
-也就是说，如果采用一点类似作弊的策略，从1也可以推出2，
-只要判断 <code>ctx</code> 是否等于 <code>(λ(out) `(k ,out))</code> 。
-但是无论如何也不可能从任意的4推出3(当然你如果使用 <code>eval</code> 
-的话，我就没话说了，按理来说是可以的，你可以自己尝试一下，
-成功了记得偷偷告诉我一声)。
-</p>
+我们发现，1、3是两个固定的值，而2、4里面是有一堆省略号的，也就是说，如果采用一点类似作弊的策略，从1也可以推出2，只要判断 <code>ctx</code> 是否等于 <code>(λ(out) `(k ,out))</code> 。但是无论如何也不可能从任意的4推出3(当然你如果使用 <code>eval</code> 
+的话，我就没话说了，按理来说是可以的，你可以自己尝试一下，成功了记得偷偷告诉我一声)。</p>
 
 <p>
-于是，我们决定采用1、3型的 <code>ctx</code> 。
-</p>
+于是，我们决定采用1、3型的 <code>ctx</code> 。</p>
 
 <p>
-先写一个转换的函数，把一个1、3型的 <code>ctx</code> 转成2、4型的。
-就是把 <code>ctx-f</code> 转成 <code>ctx-a</code> 
+先写一个转换的函数，把一个1、3型的 <code>ctx</code> 转成2、4型的。就是把 <code>ctx-f</code> 转成 <code>ctx-a</code> 
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #93a8c6;">(</span><span style="color: black;">ctx-f-&gt;a</span> ctx<span style="color: #93a8c6;">)</span>
@@ -555,8 +457,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-但是我们怎样知道一个 <code>ctx</code> 是不是 <code>ctx1?</code> 呢，
-就是不直接写出 <code>(λ(out) `(k ,out))</code> ，而是定义
+但是我们怎样知道一个 <code>ctx</code> 是不是 <code>ctx1?</code> 呢，就是不直接写出 <code>(λ(out) `(k ,out))</code> ，而是定义
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">ctx1</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>out<span style="color: #b0b1a3;">)</span> `<span style="color: #b0b1a3;">(</span>k ,out<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
@@ -567,19 +468,14 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </p>
 
 <p>
-于是，
-</p>
+于是，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #93a8c6;">(</span><span style="color: black;">ctx1?</span> ctx<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">eq?</span> ctx ctx1<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 
 <p>
-这样完成了之后，原来那段代码所有的 <code>ctx-a</code> 都不用手写了，
-只要改为 <code>(ctx-f-&gt;a ctx-f)</code> 就可以了。
-因为能这样直接转化，所以也没有必要传两个 <code>ctx</code> 参数了，
-我们在需要用到 <code>ctx-a</code> 时现转化就可以，于是，我们最终得到了这样的代码。
-</p>
+这样完成了之后，原来那段代码所有的 <code>ctx-a</code> 都不用手写了，只要改为 <code>(ctx-f-&gt;a ctx-f)</code> 就可以了。因为能这样直接转化，所以也没有必要传两个 <code>ctx</code> 参数了，我们在需要用到 <code>ctx-a</code> 时现转化就可以，于是，我们最终得到了这样的代码。</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #93a8c6;">(</span><span style="color: black;">cps1</span> expr ctx<span style="color: #93a8c6;">)</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">match</span> expr
@@ -597,21 +493,14 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-是的，这就是完整的 λ-calculus 的最简的 CPS 变换，
-如果对照一下王垠的 CPS 变换的最后几行，你会发现我的这个版本甚至更清晰一些，
-因为我用 <code>ctx-f-&gt;a</code> 这个函数避免了 <code>`(,out-rator ,out-rand ....)</code> 
-这样重复的代码，并把判断也放进了这个辅助函数中。
-</p>
+是的，这就是完整的 λ-calculus 的最简的 CPS 变换，如果对照一下王垠的 CPS 变换的最后几行，你会发现我的这个版本甚至更清晰一些，因为我用 <code>ctx-f-&gt;a</code> 这个函数避免了 <code>`(,out-rator ,out-rand ....)</code> 
+这样重复的代码，并把判断也放进了这个辅助函数中。</p>
 
 <p>
-你现在可以自己随意试验这个程序了。
-</p>
+你现在可以自己随意试验这个程序了。</p>
 
 <p>
-下面我们对它进行一些扩展，先增加多参数的λ和函数调用，
-然后是原生的几个函数(比如 <code>+</code> , <code>-</code> , <code>zero?</code> 等)，
-最后添加if语句。
-</p>
+下面我们对它进行一些扩展，先增加多参数的λ和函数调用，然后是原生的几个函数(比如 <code>+</code> , <code>-</code> , <code>zero?</code> 等)，最后添加if语句。</p>
 </div>
 </div>
 
@@ -619,19 +508,16 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 <h2 id="orga5f69e4">多参数和原生函数</h2>
 <div class="outline-text-2" id="text-orga5f69e4">
 <p>
-都已经到这一步了，支持多参数其实很简单。
-</p>
+都已经到这一步了，支持多参数其实很简单。</p>
 
 <p>
-第一种情况不用变。
-</p>
+第一种情况不用变。</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span><span style="color: #93a8c6;">(</span>? atom? expr<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">(</span>ctx expr<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">]</span>
 </pre>
 </div>
 <p>
-第二种情况只要把 λ 的参数改成一个列表就可以了。
-</p>
+第二种情况只要把 λ 的参数改成一个列表就可以了。</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span>`<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> ,args ,body<span style="color: #93a8c6;">)</span>
  <span style="color: #93a8c6;">(</span>ctx `<span style="color: #b0b1a3;">(</span><span style="color: #262680;">&#955;</span><span style="color: #97b098;">(</span>,@args k<span style="color: #97b098;">)</span> ,<span style="color: #97b098;">(</span>cps1 body ctx1<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">]</span>
@@ -650,12 +536,9 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-说实话，最后这个递归&#x2026;我也不知道我自己是怎么写出来的，
-希望有人能帮我改成普通的循环之类的，简化一下代码。
-思路就是这样，首先最后返回值肯定是<br />
+说实话，最后这个递归&#x2026;我也不知道我自己是怎么写出来的，希望有人能帮我改成普通的循环之类的，简化一下代码。思路就是这样，首先最后返回值肯定是<br />
  <code>(cps1 (car exprs) (λ(v) ....))</code> <br />
-然后省略号要填的是，递归遍历 <code>(cdr exprs)</code> ，所以结构必须是这样的，
-</p>
+然后省略号要填的是，递归遍历 <code>(cdr exprs)</code> ，所以结构必须是这样的，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">let</span> <span style="color: black;">recur</span> <span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">[</span><span style="color: black;">exprs</span> expr<span style="color: #b0b1a3;">]</span><span style="color: #93a8c6;">)</span>
   <span style="color: #93a8c6;">(</span>cps1 <span style="color: #b0b1a3;">(</span><span style="color: #262680;">car</span> exprs<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">; </span><span style="color: #ff7f24;">when exprs is not null</span>
@@ -665,18 +548,11 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-然后当 <code>exprs</code> 最后变成 <code>null</code> 的时候，
-我们需要把之前所有的 <code>v</code>  :  <code>v1 v2 v3 ....</code> 收集起来，
-返回 <code>`(,v1 ,v2 ,v3 .... ,vn ,(ctx-f-&gt;a ctx))</code> ，
-因此再多一个变量 <code>acc</code> ，用来收集这些 <code>v</code> 。
-这个程序就完成了。你可以自己试验一下确保它正确。
-</p>
+然后当 <code>exprs</code> 最后变成 <code>null</code> 的时候，我们需要把之前所有的 <code>v</code>  :  <code>v1 v2 v3 ....</code> 收集起来，返回 <code>`(,v1 ,v2 ,v3 .... ,vn ,(ctx-f-&gt;a ctx))</code> ，因此再多一个变量 <code>acc</code> ，用来收集这些 <code>v</code> 。这个程序就完成了。你可以自己试验一下确保它正确。</p>
 
 
 <p>
-接下来我们要支持一些原生的函数，比如 <code>+ - * / zero?</code> ，
-这些函数不需要经过 CPS 变换，比如，
-</p>
+接下来我们要支持一些原生的函数，比如 <code>+ - * / zero?</code> ，这些函数不需要经过 CPS 变换，比如，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> x y<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">instead of (+ x y id)</span>
@@ -698,8 +574,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-首先，
-</p>
+首先，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #93a8c6;">(</span><span style="color: black;">trivial?</span> x<span style="color: #93a8c6;">)</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">memq</span> x '<span style="color: #b0b1a3;">(</span><span style="color: #262680;">zero?</span> <span style="color: #262680;">add1</span> <span style="color: #262680;">sub1</span> <span style="color: #262680;">+</span> <span style="color: #262680;">-</span> <span style="color: #262680;">*</span> <span style="color: #262680;">/</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
@@ -707,8 +582,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </div>
 
 <p>
-然后，处理函数的不分大多数不变，先在最后进行一个判断。
-</p>
+然后，处理函数的不分大多数不变，先在最后进行一个判断。</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span><span style="color: #262680;">_</span>
  <span style="color: #93a8c6;">(</span><span style="color: #262680;">let</span> <span style="color: black;">recur</span> <span style="color: #b0b1a3;">(</span><span style="color: #97b098;">[</span><span style="color: black;">exprs</span> expr<span style="color: #97b098;">]</span> <span style="color: #97b098;">[</span><span style="color: black;">acc</span> '<span style="color: #aebed8;">()</span><span style="color: #97b098;">]</span><span style="color: #b0b1a3;">)</span>
@@ -721,8 +595,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-如果 <code>(car acc)</code> 是原生函数，就把整体当成一个值返回，所以非常简单，
-</p>
+如果 <code>(car acc)</code> 是原生函数，就把整体当成一个值返回，所以非常简单，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #93a8c6;">(</span>trivial? <span style="color: #b0b1a3;">(</span><span style="color: #262680;">car</span> acc<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
     <span style="color: #93a8c6;">(</span>ctx acc<span style="color: #93a8c6;">)</span>
@@ -730,8 +603,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-这样就完成了。现在只差最后的难点，就是 <code>if</code> 语句了。
-</p>
+这样就完成了。现在只差最后的难点，就是 <code>if</code> 语句了。</p>
 </div>
 </div>
 
@@ -739,17 +611,14 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 <h2 id="org4a3a1f2"><code>if</code> 语句</h2>
 <div class="outline-text-2" id="text-org4a3a1f2">
 <p>
-首先， <code>if</code> 语句的不同之处在于，我们需要对它的两个分支做两次 CPS 变换，
-比如，
-</p>
+首先， <code>if</code> 语句的不同之处在于，我们需要对它的两个分支做两次 CPS 变换，比如，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">if</span> a b <span style="color: #97b098;">(</span>f c<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt; '<span style="color: #8c8c8c;">(</span><span style="color: #262680;">&#955;</span><span style="color: #93a8c6;">(</span>x k<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">if</span> a <span style="color: #b0b1a3;">(</span>k b<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>f c k<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 <p>
-是的，这个没什么难的，既然都到这里了，应该随手就可以写出来了，
-</p>
+是的，这个没什么难的，既然都到这里了，应该随手就可以写出来了，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span>`<span style="color: #93a8c6;">(</span><span style="color: #262680;">if</span> ,test ,conseq ,alt<span style="color: #93a8c6;">)</span>
  <span style="color: #93a8c6;">(</span>cps1 test
@@ -759,23 +628,18 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-把这段代码插到 CPS 函数调用的前面。我一开始以为就这么完成了，
-结果发现，这里的 <code>ctx</code> 是会被翻倍的。
-</p>
+把这段代码插到 CPS 函数调用的前面。我一开始以为就这么完成了，结果发现，这里的 <code>ctx</code> 是会被翻倍的。</p>
 
 <p>
-如果 <code>ctx</code> 是 <code>k</code> 的话，没有关系，但是如果是一个比较复杂的式子，
-就是说， <code>if</code> 语句嵌套在了不是尾递归的地方，比如函数的参数，或 <code>if</code> 
-的判断语句，就出现了一些问题，
-</p>
+如果 <code>ctx</code> 是 <code>k</code> 的话，没有关系，但是如果是一个比较复杂的式子，就是说， <code>if</code> 语句嵌套在了不是尾递归的地方，比如函数的参数，或 <code>if</code> 
+的判断语句，就出现了一些问题，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>f <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> a b c<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt; '<span style="color: #8c8c8c;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #93a8c6;">(</span>x k<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">if</span> a <span style="color: #b0b1a3;">(</span>f b k<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>f c k<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 <p>
-看起来没什么毛病，但那是因为我们的 <code>ctx</code> 太简单了，制造一点更复杂的，
-</p>
+看起来没什么毛病，但那是因为我们的 <code>ctx</code> 太简单了，制造一点更复杂的，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>f <span style="color: #97b098;">(</span>g <span style="color: #aebed8;">(</span>h <span style="color: #b0b0b3;">(</span><span style="color: #262680;">if</span> a b c<span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt; '<span style="color: #8c8c8c;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #93a8c6;">(</span>x k<span style="color: #93a8c6;">)</span>
@@ -796,15 +660,11 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-一眼看过去，长得一模一样的代码很多，
-第一个例子里面， <code>(h b/c ....)</code> 就只有 <code>b</code> 和 <code>c</code> 不同，
-后面完全一样，第二个例子也是这样。
-</p>
+一眼看过去，长得一模一样的代码很多，第一个例子里面， <code>(h b/c ....)</code> 就只有 <code>b</code> 和 <code>c</code> 不同，后面完全一样，第二个例子也是这样。</p>
 
 <p>
 解决方法也很直接，在发现当前的 <code>ctx</code> 不是最简的时候，我们用一个 <code>let</code> 
-包住当前的 <code>ctx</code> ，最终结果变成这样，
-</p>
+包住当前的 <code>ctx</code> ，最终结果变成这样，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span><span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span>f <span style="color: #97b098;">(</span><span style="color: #262680;">if</span> a b c<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt; '<span style="color: #8c8c8c;">(</span><span style="color: #262680;">&#955;</span><span style="color: #93a8c6;">(</span>x k<span style="color: #93a8c6;">)</span>
@@ -822,8 +682,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </p>
 
 <p>
-所以，也是只要加一个判断即可，
-</p>
+所以，也是只要加一个判断即可，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">[</span>`<span style="color: #93a8c6;">(</span><span style="color: #262680;">if</span> ,test ,conseq ,alt<span style="color: #93a8c6;">)</span>
  <span style="color: #93a8c6;">(</span><span style="color: #262680;">define</span> <span style="color: #b0b1a3;">(</span><span style="color: black;">if-body</span> ctx<span style="color: #b0b1a3;">)</span>
@@ -838,13 +697,11 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-好了，现在一切都已经完成了。这个教程可以基本圆满地结束了。
-</p>
+好了，现在一切都已经完成了。这个教程可以基本圆满地结束了。</p>
 
 
 <p>
-那么最后，还有一点小问题可以修复，就是在这种 <code>ctx</code> 是 <code>id</code> 的时候，
-</p>
+那么最后，还有一点小问题可以修复，就是在这种 <code>ctx</code> 是 <code>id</code> 的时候，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span>cps '<span style="color: #93a8c6;">(</span><span style="color: #262680;">if</span> a b c<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 ==&gt; '<span style="color: #8c8c8c;">(</span><span style="color: #262680;">let</span> <span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">[</span><span style="color: black;">k</span> <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span><span style="color: #aebed8;">(</span>v0<span style="color: #aebed8;">)</span> v0<span style="color: #97b098;">)</span><span style="color: #b0b1a3;">]</span><span style="color: #93a8c6;">)</span>
@@ -862,8 +719,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-然后把处理 <code>if</code> 的代码加上一句，
-</p>
+然后把处理 <code>if</code> 的代码加上一句，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">or</span> <span style="color: #b0b1a3;">(</span>ctx1? ctx<span style="color: #b0b1a3;">)</span>
         <span style="color: #b0b1a3;">(</span>id? ctx<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
@@ -872,8 +728,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-最后，
-</p>
+最后，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #93a8c6;">(</span><span style="color: black;">cps</span> expr<span style="color: #93a8c6;">)</span>
   ....
@@ -881,13 +736,11 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-就可以了。
-</p>
+就可以了。</p>
 
 <p>
 再最后，如果有人看着  <code>(cps '(f x))</code>  变成  <code>'(f x (λ(v0) v0))</code> 
-感觉不爽的话，可以这么改一下，
-</p>
+感觉不爽的话，可以这么改一下，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #93a8c6;">(</span><span style="color: black;">ctx-f-&gt;a</span> ctx<span style="color: #93a8c6;">)</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">cond</span>
@@ -900,8 +753,7 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 </pre>
 </div>
 <p>
-这样， <code>(cps '(f x))</code>  就是  <code>'(f x id)</code>  啦。
-</p>
+这样， <code>(cps '(f x))</code>  就是  <code>'(f x id)</code>  啦。</p>
 </div>
 </div>
 
@@ -909,32 +761,19 @@ case 3:但如果是函数调用，这时 ctx 在参数的位置(<code>(vf vx ctx
 <h2 id="orge7c93b1">总结</h2>
 <div class="outline-text-2" id="text-orge7c93b1">
 <p>
-这么多代码看下来，其实你会发现，就只有几个关键点，
-只要想到了，其实也没有多难。我自己想这个程序的时候，手头上没有电脑，
-我是写在纸上的(好痛苦啊)，但是放到电脑上测试，一次性就全是对的，
-毕竟不是很大的工程，也没有各种复杂的角角落落需要考虑，思路还是很简单的。
-</p>
+这么多代码看下来，其实你会发现，就只有几个关键点，只要想到了，其实也没有多难。我自己想这个程序的时候，手头上没有电脑，我是写在纸上的(好痛苦啊)，但是放到电脑上测试，一次性就全是对的，毕竟不是很大的工程，也没有各种复杂的角角落落需要考虑，思路还是很简单的。</p>
 
 <p>
-这个程序还有升级空间，就是 <code>begin</code> 和 <code>set!</code> 语句，提示一下，
-东西越来越复杂的时候，可能不得不回归到第3节中的方式，把各种 <code>ctx</code> 拆开，
-否则处理 <code>set!</code> 的时候会产生一堆嵌套的 <code>begin</code> 语句。
-另外，如果是 Common Lisp 里的那种有返回值的赋值语句，处理起来会简单一些，
-因为可以简单地看作一个表达式。
-</p>
+这个程序还有升级空间，就是 <code>begin</code> 和 <code>set!</code> 语句，提示一下，东西越来越复杂的时候，可能不得不回归到第3节中的方式，把各种 <code>ctx</code> 拆开，否则处理 <code>set!</code> 的时候会产生一堆嵌套的 <code>begin</code> 语句。另外，如果是 Common Lisp 里的那种有返回值的赋值语句，处理起来会简单一些，因为可以简单地看作一个表达式。</p>
 
 <p>
-最后就随便说说，其实这段代码也没有特别的高级，只是自己写出来了，那就开心一下就好。
-代码里倒是有几个挺特别的想法值得学习。
-</p>
+最后就随便说说，其实这段代码也没有特别的高级，只是自己写出来了，那就开心一下就好。代码里倒是有几个挺特别的想法值得学习。</p>
 
 <p>
-文笔不好请见谅，有任何错误或写的不好的地方欢迎指出。
-</p>
+文笔不好请见谅，有任何错误或写的不好的地方欢迎指出。</p>
 
 <p>
-最后的最后，我把本篇文章完整的代码贴上，
-</p>
+最后的最后，我把本篇文章完整的代码贴上，</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: #93a8c6;">(</span><span style="color: black;">cps</span> expr<span style="color: #93a8c6;">)</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">define</span> <span style="color: #b0b1a3;">(</span><span style="color: black;">atom?</span> x<span style="color: #b0b1a3;">)</span>
