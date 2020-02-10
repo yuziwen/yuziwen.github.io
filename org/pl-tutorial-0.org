@@ -5,12 +5,8 @@
 创11:1　那时，天下人的口音、言语，都是一样。
 [[./img/tower-of-babel.jpg]]
 
-...
-
 创11:4　他们说：“来吧！我们要建造一座城和一座塔，塔顶通天，
 为要传扬我们的名，免得我们分散在全地上。”
-
-...
 
 创11:6　耶和华说：“看哪！他们成为一样的人民，都是一样的言语，
 如今既作起这事来，以后他们所要作的事，就没有不成就的了。
@@ -21,6 +17,12 @@
 
 ——《圣经·旧约·创世记》
 #+END_QUOTE
+
+-----
+
+#+BEGIN_EXPORT html
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=2&id=1313107264&auto=0&height=66"></iframe>
+#+END_EXPORT
 
 * 前言
 

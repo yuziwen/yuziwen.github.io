@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-10 Mon 14:33 -->
+<!-- 2020-02-10 Mon 22:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第一章 人和机器</title>
@@ -54,8 +54,7 @@
 </ul>
 </div>
 </div>
-
-
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=2&id=527573&auto=0&height=66"></iframe>
 <div id="outline-container-orge7ae1e3" class="outline-2">
 <h2 id="orge7ae1e3">我们的机器</h2>
 <div class="outline-text-2" id="text-orge7ae1e3">
@@ -393,8 +392,21 @@
 </p>
 
 <p>
-我费了好大的劲挑出来了这个语言，叫 <a href="https://www.racket-lang.org">Racket</a>，虽然还是不太满意，但毕竟没有什么明显的缺点，只要不被它的括号吓跑的话&#x2026;
+我们要用的语言，叫 <a href="https://www.racket-lang.org">Racket</a>，我斟酌过很久用什么语言入门会比较好，想起我以前抱着一本大厚书啃 C++ 时候的痛苦，我希望能找一个容易把问题讲清楚又好学的语言，可惜没有找到。虽然我对 Racket 还是不太满意，但毕竟没有什么明显的缺点，只要不被它的括号吓跑的话&#x2026;
 </p>
+
+<p>
+现在市面上有上百种语言，我接触过的至少有二三十种，最一开始一些概念没人也找不到书给我讲清楚，只能靠我反复看代码，猜它的意思。</p>
+
+<p>
+我发现有程序语言这个专业是在初三，我开始看一些国外大学的教材，我接触到的最好的有 SICP、EOPL、The Little Schemer、The Seasoned Schemer 这几本书，SICP有官方的电子书，我整本打印了看，EOPL找到了盗版，因为上百美元真的不是我能付得起的&#x2026;
+</p>
+
+<p>
+也许我会推荐别人去看这些书，它们写的真的非常好，特别是 SICP 是我最喜欢的编程书，我以前在学校学了一年算法竞赛，又回家自学了两年(因为跟不上:p)。我一直以为编程就是算法。但当我翻开这本书时，我意识到原来我以前根本就不会编程。曾经很多抽象的概念在我心里都很模糊，我只会模仿，但是它用直观的图画和逻辑讲的极其清楚，我不但心里有了极其清晰的概念，用起来得心应手，而且甚至学会了实现它，学会了自己设计语言。但其实我不会跟别人说，我自己看的时候，忍不住一直打盹，连着五六页满满的英文，实在不想看它在讲什么，要么就是连着五六页满满的代码，太痛苦了。</p>
+
+<p>
+而且我不想被一门语言限制住，我尝试自己发明语言，融合我接触过的语言里面的优点，但我一个人实在是力不从心。一节课才40分钟，通常我思路还没整理好就下课了。所以，我最后还是无奈地选了一个我觉得最好的语言。至于你们觉得它括号太多，这个现在我也解释不了，只能以后你们自己慢慢感受了。</p>
 
 <p>
 输入一个数字，Racket 就会原样输出。</p>
@@ -607,6 +619,60 @@
 比如地球上任意的位置都可以用数字(经纬度)表示，用 GPS 可以定位，电脑里也是这样。函数也是一段程序，它也是储存在电脑里的，所以它在电脑里有一个地址，这个地址就像经纬度一样，是个数字。我们要调用这个函数，只要知道它的地址，就可以找到这段程序，然后运行，就是这么简单。<br />
 现在不用在意这些细节问题，等到接触操作系统及以下的底层知识的时候，会很详细地讲这些东西(说实在底层的知识挺无聊的，还是高级一点的语言有意思)
 </p>
+
+<p>
+思考题: 你知道为什么数学老师告诉你，计算一个式子，要先计算最里层的括号吗？</p>
+
+<p>
+当然可以从最外层的括号开始算。不可能算不出来的。你明白这个吗？就算我们不从最内层括号算，而是调用外层函数的定义，我们也能算。</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">sqr</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">*</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span>
+      <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+只要你在不停地算，就一定能算出答案。接下来的步骤可以是
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">*</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span>
+     <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">*</span> <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+然后再下一步呢？</p>
+
+<p>
+我们可以先把剩下那个 <code>(+ 1 2)</code> 算出来，然后计算 <code>(* 3 3)</code>
+</p>
+
+<p>
+但也可以套用乘法的定义，先算乘法，把 <code>(+ 1 2)</code> 整体带着
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">*</span> <span style="color: #228b22;">3</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">=&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">+</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span>
+      <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span>
+      <span style="color: #93a8c6;">(</span><span style="color: #262680;">+</span> <span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+你以前也许都没想过这回事。然后呢，我们可以接着随意地算，直到算出最后的答案 <code>9</code>
+</p>
+
+<p>
+但问题其实在于，这样的效率实在是很感人呐。我们到底算了多少次 <code>(+ 1 2)</code>，有谁帮我数一下&#x2026;
+</p>
+
+<p>
+如果把 <code>(+ 1 2)</code> 换成一个非常复杂的式子，那就更夸张了。所以你明白了，并不是什么不能算的问题，而是效率的问题。</p>
+
+<p>
+而且之后我们会接触到更神奇的东西。你会发现，我们每次都着急地先算括号内的东西，其实是太勤奋了，我们有时候要懒一点才行，先把式子带着，先进函数里，必要的时候再算。不过这是后话了。</p>
+
+<p>
+还有一个很重要的点，括号只是符号上的东西而已，由我们画的那些图，产生的想象，才是本质上的东西。</p>
 
 <hr />
 
