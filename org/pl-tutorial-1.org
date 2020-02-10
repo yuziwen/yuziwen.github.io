@@ -960,18 +960,4 @@ $f(f(f(...f(1))))$ ，得到的结果就会越来越接近于 $\sqrt{a}$ 。
 
 剧透有点多了，就到这里了。
 
-(已经给博客加上了评论系统，因为 Github 是静态博客，
-所以只能通过提 Issue 的方式发评论，需要先登录 Github)
-
-
-
-#+BEGIN_EXPORT html
-<script src="https://utteranc.es/client.js"
-        repo="yuziwen/yuziwen.github.io"
-        issue-term="pathname"
-        label="comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
-#+END_EXPORT
+(评论系统不太靠谱，我又删掉了，以后看情况再加吧)

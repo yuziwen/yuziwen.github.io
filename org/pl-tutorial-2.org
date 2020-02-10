@@ -1087,18 +1087,4 @@ DrRacket 做得很好，你把鼠标移到变量上，它就会显示出这个�
 记住一个以后，类似的就都记住了。
 
 这就是所有的内容了，这章目前只是草稿，还有待修改和完善，
-另外如果有谁想出了更好的题目欢迎在下方评论。
-
-
-
-#+BEGIN_EXPORT html
-<script src="https://utteranc.es/client.js"
-        repo="yuziwen/yuziwen.github.io"
-        issue-term="pathname"
-        label="comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
-#+END_EXPORT
-
+另外如果有谁想出了更好的题目欢迎联系我。
