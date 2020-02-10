@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-10 Mon 12:13 -->
+<!-- 2020-02-10 Mon 14:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第一章 人和机器</title>
@@ -106,7 +106,7 @@
 </pre>
 </div>
 <p>
-学过的人肯定会有意见，但我不是想显示一下有多简单嘛，第一行定义这个函数名叫 <code>sort</code>. 第二行说，如果参数是空列表，结果当然也是空列表。第三行说，否则，就找列表中的最小值。第四行递归进去，就是以同样方式处理剩下的列表。程序写完了。你跟别的语言比一比就知道了。</p>
+学过的人肯定会有意见，但我不是想显示一下有多简单嘛，第一行定义这个函数名叫 <code>sort</code>。第二行说，如果参数是空列表，结果当然也是空列表。第三行说，否则，就找列表中的最小值。第四行递归进去，就是以同样方式处理剩下的列表。程序写完了。你跟别的语言比一比就知道了。</p>
 
 <p>
 (啊对了，感兴趣的可以去跟一个叫 APL 的语言比一比，现在不知道还有多少人听说过这门古老至极的语言，总之在有兴趣的时候，长长见识还是可以的:)
@@ -144,8 +144,7 @@
 </p>
 
 <p>
-首先，一个程序是什么?
-</p>
+首先，一个程序是什么？</p>
 
 <p>
 举个例子吧，这是个什么也不干的程序，名叫 <code>Program</code>:
@@ -184,7 +183,7 @@
 
 <p>
 你现在拿出纸(画图软件也行)，照着画一下
-<code>1+2*3</code>, <code>(1+2)*(3+4)</code>, <code>1+2+3+4</code>
+<code>1+2*3</code>，<code>(1+2)*(3+4)</code>，<code>1+2+3+4</code>
 </p>
 
 <p>
@@ -201,10 +200,10 @@
 首先，需要留意的是，它们不是瞬间发生的，这是编程和数学最大的不同。数学只要式子和结果，不在乎它们的先后过程，所以数学可以解方程。但作为一个现实的程序，它永远有计算的顺序，我们不但关注它的结果，我们还关注它是怎么计算出来的。</p>
 
 <p>
-计算 <code>1+2*3</code>, 首先是 2 和 3 进入乘法程序里，等 6 出来之后，它和 1 一起进入加法程序。</p>
+计算 <code>1+2*3</code>，首先是 2 和 3 进入乘法程序里，等 6 出来之后，它和 1 一起进入加法程序。</p>
 
 <p>
-第二个问题是， <code>(1+2)*(3+4)</code> 中，两个加法能否同时运行。你可以认为，它们是不能同时运行的，电脑里只有一个加法程序，它算完 <code>1+2</code> 之后，跑到下面去算 <code>3+4</code>, 然后 3 和 7 一起进入乘法程序。当然，也可以先算 <code>3+4</code>, 反正得一个一个算。</p>
+第二个问题是，<code>(1+2)*(3+4)</code> 中，两个加法能否同时运行。你可以认为，它们是不能同时运行的，电脑里只有一个加法程序，它算完 <code>1+2</code> 之后，跑到下面去算 <code>3+4</code>，然后 3 和 7 一起进入乘法程序。当然，也可以先算 <code>3+4</code>，反正得一个一个算。</p>
 
 <p>
 (现在的电脑多数都能自动同时计算这两个式子。(知道多核 CPU 的人别着急，这是单个 CPU 内的并行，跟你知道的东西无关)
@@ -216,8 +215,7 @@
 而不是 <code>((1+2)+3)+4</code>. 它们有什么区别自己思考。</p>
 
 <p>
-再加一个思考题: 我们有没有漏某种情况?
-</p>
+再加一个思考题: 我们有没有漏某种情况？</p>
 
 <p>
 虽然很烦人，但程序的问题就是这么出现的，考虑边边角角是个好习惯。至少需要知道，一个数除以 0 会怎么样。按照常识，程序会出错，就是这样。不多说了。</p>
@@ -249,7 +247,7 @@
 
 <p>
 画两遍 <code>1+2</code> 就有些麻烦(好吧我是复制粘贴&#x2026;)，还费时间费电，变量就出现了。<br />
-先定义个变量 <code>three</code>, 然后让它平方。</p>
+先定义个变量 <code>three</code>，然后让它平方。</p>
 
 
 <div class="figure">
@@ -302,7 +300,7 @@
 它左右的两根线就是入口和出口，这个 <code>x</code> 被包在了函数里面，然后被传给了一个加法程序，(1就是凭空出现的)，然后把结果传出去。在编程里，函数的输出一般被叫做“返回值(return value)”，或者干脆说函数的“值(value)”。</p>
 
 <p>
-我这里只是把它画成了透明的，实际中是看不到函数内部的，所以我们给它贴了个名字叫 <code>add1</code>, 告诉我们这个函数的作用。(叫它 y 或者 f 都可以，但因为这些名字没有意义，所以不推荐)
+我这里只是把它画成了透明的，实际中是看不到函数内部的，所以我们给它贴了个名字叫 <code>add1</code>，告诉我们这个函数的作用。(叫它 y 或者 f 都可以，但因为这些名字没有意义，所以不推荐)
 </p>
 
 <p>
@@ -322,7 +320,7 @@
 这就是函数的意义，它让你不用每次做加法都把复杂的二进制计算写一遍，而是一个加法函数搞定。你自己写的函数也是一样。</p>
 
 <p>
-举个例子， <code>sqr</code> 函数是平方函数: sqr(x)=x<sup>2</sup>
+举个例子，<code>sqr</code> 函数是平方函数: sqr(x)=x<sup>2</sup>
 </p>
 
 
@@ -451,7 +449,7 @@
 </p>
 
 <p>
-数学中的函数是有优先级的，但 Racket 里没有，而且也不能省略括号或乘号，也不能多加括号。比如我多加了个括号 <code>(1)</code>, 但其中的1的位置应该是一个函数
+数学中的函数是有优先级的，但 Racket 里没有，而且也不能省略括号或乘号，也不能多加括号。比如我多加了个括号 <code>(1)</code>，但其中的1的位置应该是一个函数
 (比如加减乘除)，但1不是函数，所以会出错。总之，就是完全的死板就对了。</p>
 
 <p>
@@ -481,22 +479,20 @@
 </pre>
 </div>
 <p>
-定义变量的语法是 <code>define</code>, 跟着要定义的变量的名字和它的值。</p>
+定义变量的语法是 <code>define</code>，跟着要定义的变量的名字和它的值。</p>
 
 <p>
 一个变量名可以是字母或大多数的符号(<code>+-*/&lt;&gt;?=!%^</code> 之类)或数字连在一起，一般会用英文单词，习惯上中间用横杠(就是减号)隔开，让人看得更清楚。一个变量名字的左右都要有空格(或换行)隔开，所以这时的横杠并不会被当成减法函数。</p>
 
 <p>
-思考: <code>define</code> 是函数吗?
-</p>
+思考: <code>define</code> 是函数吗？</p>
 
 <p>
 那要先看看函数是什么。</p>
 
 <p>
 一个函数，在调用之前应该先计算它的参数，比如 <code>(+ (* 1 2) abc)</code>
-(假设 <code>abc</code> 还是上面定义过的 123)，程序先计算 <code>(* 1 2)</code> 结果是2, <code>abc</code>
-结果是 123，然后再运行 <code>(+ 2 123)</code>
+(假设 <code>abc</code> 还是上面定义过的 123)，程序先计算 <code>(* 1 2)</code> 结果是2，<code>abc</code> 结果是 123，然后再运行 <code>(+ 2 123)</code>
 </p>
 
 <p>
@@ -523,15 +519,15 @@
 </pre>
 </div>
 <p>
-<code>λ</code> 开头的式子是一个函数，接下来是一个括号，括号里是参数的名字，再接下来是函数输出的值。很明显， <code>λ</code> 也是个特殊语法。</p>
+<code>λ</code> 开头的式子是一个函数，接下来是一个括号，括号里是参数的名字，再接下来是函数输出的值。很明显，<code>λ</code> 也是个特殊语法。</p>
 
 <p>
-(不会直接打出 <code>λ</code> 的话，可以用 <code>lambda</code> 代替，你在其它地方看到的程序，一般也都会用 <code>lambda</code> ，之后就不提这个了)
+(不会直接打出 <code>λ</code> 的话，可以用 <code>lambda</code> 代替，你在其它地方看到的程序，一般也都会用 <code>lambda</code>，之后就不提这个了)
 </p>
 
 <p>
 顺便一提，它会输出 <code>#&lt;procedure&gt;</code> 而不是原模原样的
-<code>(λ (x) (+ x 1))</code>, 就是因为这个函数内部已经看不见了。因此所有的函数在我们看来，都是一样的 <code>#&lt;procedure&gt;</code>
+<code>(λ (x) (+ x 1))</code>，就是因为这个函数内部已经看不见了。因此所有的函数在我们看来，都是一样的 <code>#&lt;procedure&gt;</code>
 </p>
 
 <p>
@@ -630,7 +626,7 @@
 </pre>
 </div>
 <p>
-这里出现了3处 <code>pi</code>, 但大家都知道这3个 <code>pi</code> 没有任何关联，<code>circle-area</code> 和 <code>circle-circumference</code> 的参数不会暴露在外面，所以即使调用 <code>circle-area</code> 和 <code>circle-circumference</code>
+这里出现了3处 <code>pi</code>，但大家都知道这3个 <code>pi</code> 没有任何关联，<code>circle-area</code> 和 <code>circle-circumference</code> 的参数不会暴露在外面，所以即使调用 <code>circle-area</code> 和 <code>circle-circumference</code>
 也不会导致 <code>pi</code> 被重新定义。</p>
 
 
@@ -658,12 +654,10 @@
 </div>
 
 <p>
-程序并没有出错，因为我们已经在外层定义过 <code>pi</code> 了。这个函数发现它要使用 <code>pi</code>, 但它的参数没有 <code>pi</code>,
-于是它就到外面去找，发现 <code>pi</code> 是 <code>3.1415926</code>,
-于是使用了这个值。</p>
+程序并没有出错，因为我们已经在外层定义过 <code>pi</code> 了。这个函数发现它要使用 <code>pi</code>，但它的参数没有 <code>pi</code>，于是它就到外面去找，发现 <code>pi</code> 是 <code>3.1415926</code>，于是使用了这个值。</p>
 
 <p>
-如果函数外也没定义 <code>pi</code>, 那就只能出错了。</p>
+如果函数外也没定义 <code>pi</code>，那就只能出错了。</p>
 
 <p>
 可以想一下这样做的好处。很多时候，程序里有很多很多变量，比如各种常数和各种函数，大一点的程序是很多人一起写的，每个人都不知道别人到底定义了什么，要阻止重名是不可能的事了。</p>
@@ -691,9 +685,7 @@
 </pre>
 </div>
 <p>
-现在的问题来了, <code>circle-area-v2</code> 中的 <code>pi</code> 到底是哪个 <code>pi</code>,
-是最外层的常数，还是 <code>cylinder-volume</code> 的参数?
-</p>
+现在的问题来了，<code>circle-area-v2</code> 中的 <code>pi</code> 到底是哪个 <code>pi</code>，是最外层的常数，还是 <code>cylinder-volume</code> 的参数？</p>
 
 <p>
 (你最好拿张纸把这几个函数抄一下，在纸上打打草稿，不然光看要晕倒的)
@@ -703,13 +695,10 @@
 先讲现在已经抛弃了的方法。</p>
 
 <p>
-照我们前面的解释，调用 <code>(cylinder-volume 3.14 1 1)</code> 之后，离 <code>circle-area-v2</code> 更近的 <code>pi</code> 变成了 <code>3.14</code>, 
-而不是外界的 <code>3.1415926</code>, 所以结果是 <code>3.14</code>.
-</p>
+照我们前面的解释，调用 <code>(cylinder-volume 3.14 1 1)</code> 之后，离 <code>circle-area-v2</code> 更近的 <code>pi</code> 变成了 <code>3.14</code>，而不是外界的 <code>3.1415926</code>，所以结果是 <code>3.14</code>。</p>
 
 <p>
-或者，因为 <code>circle-area-v2</code> 是 <code>(λ (radius) (* pi radius radius))</code>,
-所以把 <code>circle-area-v2</code> 用它的值代换, <code>cylinder-volume</code> 就等价于
+或者，因为 <code>circle-area-v2</code> 是 <code>(λ (radius) (* pi radius radius))</code>，所以把 <code>circle-area-v2</code> 用它的值代换，<code>cylinder-volume</code> 就等价于
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">pi</span> radius height<span style="color: #93a8c6;">)</span>
@@ -718,22 +707,17 @@
 </pre>
 </div>
 <p>
-所以答案就还是神奇地变成了 <code>3.14</code>.
-</p>
+所以答案就还是神奇地变成了 <code>3.14</code>。</p>
 
 <p>
 所以许多最古老的语言就都是这么做的，因为看起来理所当然。</p>
 
 <p>
 但理所当然是不行的，对一个语言来说，实用才是关键。所以还要看看它靠不靠谱。比如 <code>circle-area-v2</code>
-是我写的，我为了方便，定义了个变量 <code>pi</code>,
-然后在 <code>circle-area-v2</code> 里用了 <code>pi</code>, 然后把代码发给了你，你上来就写了个 <code>cylinder-volume</code>, 你看了看，<code>circle-area-v2</code> 只有一个参数 <code>radius</code>,
-也就是说圆的面积只跟输入的半径有关。所以我如果一直输入半径为 <code>1</code>,
-结果也应该永远是个定值 <code>(circle-area-v2 1)</code>, 即 3.1415926。结果发现 <code>(cylinder-volume 3.1415926 1 1)</code> 是 3.1415926,
-<code>(cylinder-volume 3.14 1 1)</code> 是 3.14，很不对是吧。都是 <code>(circle-area-v2 1)</code>, 结果居然不一样。这还怎么写代码。</p>
+是我写的，我为了方便，定义了个变量 <code>pi</code>，然后在 <code>circle-area-v2</code> 里用了 <code>pi</code>，然后把代码发给了你，你上来就写了个 <code>cylinder-volume</code>，你看了看，<code>circle-area-v2</code> 只有一个参数 <code>radius</code>，也就是说圆的面积只跟输入的半径有关。所以我如果一直输入半径为 <code>1</code>，结果也应该永远是个定值 <code>(circle-area-v2 1)</code>，即 3.1415926。结果发现 <code>(cylinder-volume 3.1415926 1 1)</code> 是 3.1415926，<code>(cylinder-volume 3.14 1 1)</code> 是 3.14，很不对是吧。都是 <code>(circle-area-v2 1)</code>，结果居然不一样。这还怎么写代码。</p>
 
 <p>
-那我也很不爽啊，我好好地定义了个 <code>pi</code>, 结果被你的给覆盖了。</p>
+那我也很不爽啊，我好好地定义了个 <code>pi</code>，结果被你的给覆盖了。</p>
 
 <p>
 (可能有人觉得，没人会在 <code>cylinder-volume</code> 里定义 <code>pi</code> 却不用，那我大不了就用一下呗，比如我要一个高就为 <code>pi</code> 的圆柱。<br />
@@ -744,9 +728,7 @@
 总归事实已经证明了，这对一门语言带来的几乎都是灾难。</p>
 
 <p>
-于是有人提出来，我们说“最近的变量”，不应该是在使用的时候最近，而是在定义的时候最近。 <code>circle-area-v2</code> 在定义时,
-<code>pi</code> 就是 3.1415926，这才应该是离它最近的那个 <code>pi</code>,
-那它就应该保存那个 <code>pi</code>, 它的 <code>pi</code> 就应该一直是 3.1415926，而不会随着使用时外界的 <code>pi</code> 而变化。</p>
+于是有人提出来，我们说“最近的变量”，不应该是在使用的时候最近，而是在定义的时候最近。<code>circle-area-v2</code> 在定义时，<code>pi</code> 就是 3.1415926，这才应该是离它最近的那个 <code>pi</code>，那它就应该保存那个 <code>pi</code>，它的 <code>pi</code> 就应该一直是 3.1415926，而不会随着使用时外界的 <code>pi</code> 而变化。</p>
 
 <p>
 现在一个函数不只包含一段程序了，它还要包含它定义的时候，所有用到的变量存放在哪里(地址)。</p>
@@ -816,8 +798,7 @@
 
 <p>
 当然，你也可以写出更多这样的函数，但是写的多了，你可能就发现你在写很多重复的东西，因为这些函数都是
-<code>(λ(x) (+ ? (* 10 x)))</code>.
-注意，复制粘贴不是什么好办法，我们可以写出一个通用的函数来代替它们。</p>
+<code>(λ(x) (+ ? (* 10 x)))</code>。注意，复制粘贴不是什么好办法，我们可以写出一个通用的函数来代替它们。</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">add-what</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>what x<span style="color: #b0b1a3;">)</span>
@@ -863,8 +844,7 @@ ______ <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#3
 </p>
 
 <p>
-所以我们写了一个通用的函数 <code>add-what</code> 来表示这个细节，这样只需要调用它就可以了。然后直接使用它也可以，如果有些参数使用得比较频繁，那就自己再定义几个特殊的函数，<code>add-chip</code>, <code>add-pie</code>, <code>add-peanut</code>.
-</p>
+所以我们写了一个通用的函数 <code>add-what</code> 来表示这个细节，这样只需要调用它就可以了。然后直接使用它也可以，如果有些参数使用得比较频繁，那就自己再定义几个特殊的函数，<code>add-chip</code>，<code>add-pie</code>，<code>add-peanut</code>。</p>
 
 <p>
 其实编程基本上都是在干这种事。从最底层开始，逻辑元件把二极管三极管
@@ -874,8 +854,7 @@ ______ <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#3
 这有一个名词，叫做“抽象(abstraction)”。</p>
 
 <p>
-这里的抽象不是指让人难理解，相反，它指的是把底层复杂的东西隐藏起来，比如，完全不会数学的人也能调用 <code>add-what</code>,
-他会发现他的数后面神奇地添加上了另一个数字；完全不懂电路的人也会玩电脑；也有许多不懂物理的 3D 游戏程序员&#x2026;&#x2026;
+这里的抽象不是指让人难理解，相反，它指的是把底层复杂的东西隐藏起来，比如，完全不会数学的人也能调用 <code>add-what</code>，他会发现他的数后面神奇地添加上了另一个数字；完全不懂电路的人也会玩电脑；也有许多不懂物理的 3D 游戏程序员&#x2026;&#x2026;
 我们不知道它们内部是什么，但不知道这些对我们没有影响，甚至更方便了。理解抽象是怎么回事也可以算是编程的内功吧。</p>
 </div>
 </div>
@@ -898,12 +877,11 @@ ______ <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#3
 </p>
 
 <p>
-首先，Racket 官网是这个 <a href="https://www.racket-lang.org">https://www.racket-lang.org</a>，你也可以直接去下载页面 <a href="https://download.racket-lang.org">https://download.racket-lang.org</a>，默认下载就可以。如果你不熟悉，一路默认安装就可以，安装完以后你的桌面上就会出现 DrRacket 的快捷方式了。(像我一样用 Ubuntu 的可以直接通过 apt 安装 <code>sudo apt install racket</code>, 
-DrRacket 会添加在你的应用里面。当然也可以用 Emacs 来编辑 Racket，我一直用的是 racket-mode，自己稍稍配置一下 paredit-mode 什么的，用起来还是挺舒服的。)
+首先，Racket 官网是这个 <a href="https://www.racket-lang.org">https://www.racket-lang.org</a>，你也可以直接去下载页面 <a href="https://download.racket-lang.org">https://download.racket-lang.org</a>，默认下载就可以。如果你不熟悉，一路默认安装就可以，安装完以后你的桌面上就会出现 DrRacket 的快捷方式了。(像我一样用 Ubuntu 的可以直接通过 apt 安装 <code>sudo apt install racket</code>，DrRacket 会添加在你的应用里面。当然也可以用 Emacs 来编辑 Racket，我一直用的是 racket-mode，自己稍稍配置一下 paredit-mode 什么的，用起来还是挺舒服的。)
 </p>
 
 <p>
-打开 DrRacket 以后，首先就在文件第一行打上 <code>#lang racket</code> ，然后在后面就可以写代码了。具体不会操作的请直接上网搜，“如何安装/使用 DrRacket”
+打开 DrRacket 以后，首先就在文件第一行打上 <code>#lang racket</code>，然后在后面就可以写代码了。具体不会操作的请直接上网搜，“如何安装/使用 DrRacket”
 </p>
 
 <p>
@@ -963,12 +941,12 @@ DrRacket 会添加在你的应用里面。当然也可以用 Emacs 来编辑 Rac
 最后，既然已经没的讲了，我就随便编一个 <code>sqrt</code> 函数，自己实现一个简单的开平方根的函数。我实在不想推导数学公式，你们会什么方法就用什么方法吧。</p>
 
 <p>
-比如我们要求 \(\sqrt{a}\) ，我们设 \(f(x)=\cfrac{a+x^2}{2x}\) ，然后随便取一个初始值，比如 1，然后一直调用 \(f\) ，就像
-\(f(f(f(...f(1))))\) ，得到的结果就会越来越接近于 \(\sqrt{a}\) 。(公式显示不出来的请反馈给我)
+比如我们要求 \(\sqrt{a}\)，我们设 \(f(x)=\cfrac{a+x^2}{2x}\)，然后随便取一个初始值，比如 1，然后一直调用 \(f\)，就像
+\(f(f(f(...f(1))))\)，得到的结果就会越来越接近于 \(\sqrt{a}\)。(公式显示不出来的请反馈给我)
 </p>
 
 <p>
-因为我们现在还没学更多的内容，我们只能让 <code>f</code> 接受两个参数，<code>a</code> 和 <code>x</code> ，所以
+因为我们现在还没学更多的内容，我们只能让 <code>f</code> 接受两个参数，<code>a</code> 和 <code>x</code>，所以
 </p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">f</span>
@@ -1069,9 +1047,8 @@ DrRacket 会添加在你的应用里面。当然也可以用 Emacs 来编辑 Rac
 </pre>
 </div>
 <p>
-附加题: 假设每次乘法的时间相同，函数调用不需要时间，能看出效率的差异吗(就相当于比较乘法次数)? 
-如果是 <code>power8</code>, <code>power16</code>&#x2026; 呢?
-</p>
+附加题: 假设每次乘法的时间相同，函数调用不需要时间，能看出效率的差异吗(就相当于比较乘法次数)？
+如果是 <code>power8</code>，<code>power16</code>&#x2026; 呢？</p>
 
 <p>
 数学好的人很快就明白了吧，以后写了通用的乘方函数，再来详细地讨论这个问题。</p>
