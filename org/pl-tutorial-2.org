@@ -690,6 +690,10 @@ b^n = b*b^(n-1)
 
 -----
 
+开个玩笑，你去谷歌一下“recursion”
+
+[[./img/plt2/google-recursion.png]]
+
 最后作为一个练习，如果你还不太理解递归，就把前面的函数画画图吧。
 
 当我学到递归的时候，我晚上做的梦都是递归的，我天天都意识到我在梦里做梦。
@@ -1021,6 +1025,10 @@ DrRacket 做得很好，你把鼠标移到变量上，它就会显示出这个�
 练习题: 同样的，把之前的 =sqrt= 函数用到的所有的函数都拿进来，
 尽可能地减少函数的参数。(原来的 =f= 有一个 =a= 一直传，
 现在可以消灭掉了)
+
+#+BEGIN_EXPORT html
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=2&id=547969244&auto=0&height=66"></iframe>
+#+END_EXPORT
 
 注: 从这里开始一直到这章结尾的内容也考虑去掉
 
