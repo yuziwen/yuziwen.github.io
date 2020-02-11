@@ -1,0 +1,688 @@
+#+TITLE: PL教程 第三章
+
+
+话说我打算逐步地讲如何编各种小游戏，然后知识点穿插在里面。
+这样应该会轻松一些吧。就这么决定了。
+
+* 手拉手
+
+来接触一个新的定义，它表示平面里一个位置的坐标。
+(我是在为编游戏做铺垫了)
+#+BEGIN_SRC racket
+(struct posn ;; position
+  (x y))
+#+END_SRC
+我们定义了一个 =struct= ，意为结构体，名叫 =posn= ，之后跟着一对括号，
+括号里为结构体存储的内容 =x= 和 =y= 。
+
+实际上，我们写下这句话的时候，程序就为我们自动定义了一堆函数。
+首先，定义了一个同名的函数，就叫 =posn= ，它用来创建一个 =posn= 结构。
+(这个函数的名字和结构体的名字相同，有误导性，我觉得是个设计错误，
+请自己分清楚吧)
+#+BEGIN_SRC racket
+> (posn 1 2) ;; 一个位于(1,2)的坐标点
+#<posn>
+#+END_SRC
+用 =posn-x= 和 =posn-y= 来拆开这个结构体，获得内部信息。
+用 =posn?= 来判断它是否为一个 =posn= 结构体。
+这些函数都是电脑自动帮我们定义的。
+#+BEGIN_SRC racket
+(define p (posn 1 2))
+> (posn-x p)
+1
+> (posn-y p)
+2
+> (posn? p)
+#t
+#+END_SRC
+我再举几个简单的例子。
+#+BEGIN_SRC racket
+(define posn-abs ;; distance to (0,0)
+  (λ (p)
+    (sqrt (+ (sqr (posn-x p))
+             (sqr (posn-y p))))))
+
+(define posn+ ;; add two 'posn's
+  (λ (p1 p2)
+    (posn (+ (posn-x p1)
+             (posn-x p2))
+          (+ (posn-y p1)
+             (posn-y p2)))))
+
+(define posn- ;; subtract two 'posn's
+  ....) ;; <= as exercise
+
+(define distance
+  (λ (p1 p2)
+    (posn-abs (posn- p1 p2))))
+#+END_SRC
+你可以体会一下我是怎么用 =posn-abs= 和 =posn-= 组合成 =distance= 的。
+
+先稍微总结一下，我们前两章学了通过函数组合出一个程序，
+我们说这叫“函数抽象”，现在我们又接触到了新的名词，
+叫“数据抽象(data abstraction)”。理解起来就是，
+一个 =struct= 是对数据的包装，就像函数是对程序逻辑的包装，
+我们要写上面那些跟 =posn= 有关的函数，当然可以不用定义 =struct=,
+传递参数的时候就分别传递横、纵坐标，比如
+#+BEGIN_SRC racket
+> (posn+ 1 2 100 200)
+101
+202
+#+END_SRC
+(先偷偷说一声，Racket 函数是可以返回多个值的)\\
+但看起来实在是一团凌乱。四个参数加两个返回值，这是给人看的吗。\\
+我高度近视，你知道的。
+
+# 以下内容已删除
+#+BEGIN_COMMENT
+来接触一个新的定义
+#+BEGIN_SRC racket
+(struct frac ;; fraction number (分数)
+  (a b)) ;; 分子，分母
+#+END_SRC
+我们定义了一个 =struct=, 意为结构体，名叫 =frac=, 之后跟着一对括号，
+括号里为结构体存储的内容 =a= 和 =b=,
+实际上，我们写下这句话的时候，程序就为我们自动定义了一堆函数。
+首先，定义了一个同名的函数就叫 =frac=, 它用来创建一个分数结构体。
+(这个函数的名字和结构体的名字相同，有误导性，我觉得是一个设计错误，
+请自己分清楚)
+#+BEGIN_SRC racket
+> (frac 1 2)
+#<frac>
+#+END_SRC
+用 =frac-a= 和 =frac-b= 来拆开这个结构体，
+获得内部信息。用 =frac?= 来判断它是否为一个 =frac= 结构体。
+#+BEGIN_SRC racket
+(define n (frac 1 2))
+> (frac-a n)
+1
+> (frac-b n)
+2
+> (frac? n)
+#t
+#+END_SRC
+我再举几个简单的例子，化简一个分数，把两个分数相加，判断两个分数是否相等。
+你们最好自己尝试一下练练手。
+#+BEGIN_SRC racket
+(define simple-frac
+  (λ (a b)
+    (define d (gcd a b)) ;; gcd 求最大公约数
+    (frac (/ a d) (/ b d))))
+
+(define frac-simplify
+  (λ (x)
+    (simple-frac (frac-a x)
+                 (frac-b x))))
+
+(define frac+
+  (λ (x y)
+    (simple-frac (+ (* (frac-a x)
+                       (frac-b y))
+                    (* (frac-a y)
+                       (frac-b x)))
+                 (* (frac-b x)
+                    (frac-b y)))))
+
+(define frac=?
+  (λ (x y)
+    (define x1 (frac-simplify x))
+    (define y1 (frac-simplify y))
+    (and (= (frac-a x1) (frac-a y1))
+         (= (frac-b x1) (frac-b y1)))))
+#+END_SRC
+这里有个新东西，就是 =and=, =(and x y)= 等价于 =(if x y #f)=,
+也就是只有当 =x= 和 =y= 都是 =#t= 的时候，才会返回 =#t=,
+否则返回 =#f=. 这个东西以后会有比较方便的地方，以后遇到时再细讲。
+
+这些函数你们可以复制过去试一试，顺便体会一下，我是怎么通过
+=simple-frac= 和 =frac-simplify= 这两个函数组合成其它函数的。
+
+下面就基本不会有数学内容了，我也很开心。
+上面那个 =frac+= 函数写起来着实有点心累。
+
+先稍微总结一下，我们前两章学了通过函数组合出一个程序，
+我们说这叫“函数抽象”，现在我们又接触到了新的名词，叫“数据抽象”。
+理解起来就是，一个 =struct= 是对数据的包装，就像函数是对程序逻辑的包装，
+我们要写上面那些跟分数有关的函数，当然可以不用定义 =struct=,
+传递参数的时候就分别传递分子、分母，比如
+#+BEGIN_SRC racket
+> (frac+ 1 2 1 3) ;; 1/2 + 1/3
+5
+6
+#+END_SRC
+(先偷偷告诉你，Racket 的函数是可以有多个返回值的)\\
+但是显然对于我这种近视的人，四个参数加两个返回值实在算不上有多友好……
+
+#+END_COMMENT
+
+其实只要提供极少的数据结构，所有的程序就都能写了，
+只不过谁也不想看到本来一个简单的结构变成了一堆参数，
+还看不清楚它们都是干什么的。这是 =struct= 最基本的应用。
+但接下来就是一个颠覆一般人世界观的东西了(至少对我而言是这样，
+就是我前面说的第一次让我对编程感兴趣的东西，做好准备吧)
+
+-----
+
+嗯，受到我看的编程书的影响，我继续拿吃的来举例吧。
+
+假设我们为某个餐厅写一个点菜的程序，你当做我们是在编游戏也没问题。
+#+BEGIN_SRC racket
+;; a menu of dishes
+(define pizza "pizza")
+(define rice "rice")
+(define salad "vegetable salad")
+(define juice "orange juice")
+
+(struct order
+  (table-ID dish))
+
+;; an example
+> (order 123 pizza) ;; guests at table 123 ordered a pizza
+#<order>
+#+END_SRC
+这应该是没问题的，接下来就有难题了。
+
+一般来讲你去饭店是不会只点一道菜的，除非你说，
+“我的饭店的特色就是一桌只有一道菜，但一个 pizza 里包含了世界上所有的菜。”
+以后要是你们中的谁开了一家这样的饭店，别忘了给我付版权费。
+
+作为一家没什么创意的饭店，我们不得不满足各种顾客的需求
+#+BEGIN_SRC racket
+(struct order
+  (table-ID dish1 dish2 dish3 dish4))
+#+END_SRC
+但理论上我们永远不能靠这样来解决问题。你可能觉得 4 个还不够，
+随着菜的数量增加，要再写 =dish5=, =dish6= ……
+甚至可能会一路写到 =dish100=.
+
+其实麻烦还不止这些，当你把这个订单发给厨师以后，厨师会发现他要反复调用
+=order-dish1=, =order-dish2=, =order-dish3= ……
+然后才能拿到所有点的菜。而且，从电脑的角度来说，
+大多数的订单并没有 100 道菜都点满，多数时候都有八九十道菜的内存是浪费的。
+
+所以这条路应该是行不通的。我们的思路是要做到支持任意道菜。
+
+请见下面这个结构
+#+BEGIN_SRC racket
+(struct dish-null ;; end of dish-list
+  ())
+
+(struct dish-list
+  (dish rest)) ;; 'rest' is a dish-list or dish-null
+
+(struct order
+  (table-ID dishes)) ;; 'dishes' is a dish-list
+#+END_SRC
+你可能比我聪明得多，所以不像我当时那么吃惊，或者你可能什么都没看出来，
+我们只是定义了 =dish-list= 和 =dish-null= 结构，
+=dish-list= 看起来再普通不过了，而 =dish-null= 有点奇怪，是个空的结构。
+神奇的就在于如何把它们组合起来。
+
+先看一遍代码的注释。
+=dish-list= 就是我们想要的，可以存放任意个 =dish= 的结构。
+可是它只有两个参数？ 没关系。请回答，下面这段代码表示什么？
+#+BEGIN_SRC racket
+> (dish-null)
+#<dish-list>
+#+END_SRC
+答: 一个空的订单，什么都没有。
+
+下面这个呢?
+#+BEGIN_SRC racket
+> (dish-list pizza (dish-null))
+#<dish-list>
+#+END_SRC
+答: 一个只点了一个 =pizza= 的订单。
+
+大胆猜想，
+#+BEGIN_SRC racket
+> (dish-list pizza
+             (dish-list salad
+                        (dish-null)))
+#+END_SRC
+答: 一个点了 =pizza= 和 =salad= 的订单。
+
+以此类推，
+#+BEGIN_SRC racket
+> (dish-list
+   pizza
+   (dish-list
+    salad
+    (dish-list
+     juice
+     (dish-list
+      salad
+      (dish-null)))))
+#+END_SRC
+答: 一个包含一份 =pizza=, 两份 =salad= 和一份 =juice= 的订单。
+
+-----
+
+我们来试着画出一个 =struct= 吧。
+
+比方说，先试一下画出一个 =dish-list= 大致的结构
+
+[[./img/plt3/dish-list-struct.png]]
+
+(因为它并不是一个函数(虽然有一个同名的函数叫 =dish-list= )，
+所以我暂且用圆角的长方形来表示它)
+
+一个 =dish-null= 就很简单，什么都没有
+
+[[./img/plt3/dish-null-struct.png]]
+
+那么 =(dish-list pizza (dish-null))= 就是
+
+[[./img/plt3/pizza-dish.png]]
+
+类似的，一个 =(dish-list pizza (dish-list salad (dish-null)))= 就是
+
+[[./img/plt3/pizza-salad-dish.png]]
+
+以此类推，我懒得画了。
+
+因为嵌套的结构太多，所以为了简单我们一般这样画
+
+[[./img/plt3/linked-pizza-salad-dish.png]]
+
+所以我们已经学会如何创造一份订单了！下面的问题是如何使用它
+
+根据我们对 =struct= 的学习，我们定义一个结构体为 =dish-list= 时，
+我们就自动定义了一些函数来创建和拆开这个 =struct=
+#+BEGIN_SRC racket
+(struct dish-list
+  (dish rest))
+
+> (define x (dish-list 1 2))
+> (dish-list-dish x)
+1
+> (dish-list-rest x)
+2
+#+END_SRC
+(虽然不得不说，我觉得这个起名方式怪怪的，特别是那个 =dish-list-dish=.
+不过你喜欢的话，完全可以用 =define= 给它另起一个名字)
+
+如何使用这些函数呢? 首先，我们可以用 =dish-list-dish= 函数来拿到第一道菜
+#+BEGIN_SRC racket
+(define d
+  (dish-list
+   pizza
+   (dish-list
+    salad
+    (dish-null))))
+
+> (dish-list-dish d)
+"pizza"
+#+END_SRC
+接下来，用 =dish-list-rest= 就能拿到剩下的订单，而结构是一模一样的。
+#+BEGIN_SRC racket
+> (define d-rest (dish-list-rest d))
+;; d-rest = (dish-list salad (dish-null))
+#+END_SRC
+所以，重复上述过程。再用 =dish-list-dish= 来得到 =d-rest= 中的第一道菜
+#+BEGIN_SRC racket
+> (dish-list-dish d-rest)
+"vegetable salad"
+> (dish-list-rest d-rest)
+#<dish-null>
+#+END_SRC
+如果菜单很长，就可以一直重复这个过程:\\
+1. 用 =dish-list-dish= 拿到当前的第一个菜
+2. 用 =dish-list-rest= 拿到剩余的菜单
+3. 重复这个过程
+
+一直重复下去，总有一次会得到一个 =dish-null= 而不是 =dish-list=
+
+于是这就表示已经没有更多的菜了，我们就停止循环。
+
+这个过程让你想到了什么?
+
+-----
+
+这又是上一章学过的递归。
+
+我们对这个菜单能干些什么呢?
+首先，除了把它的内容一个个拿出来以外，比方说，先数一数总共有几道菜。
+
+写出函数 =dish-list-length=, 输入一个 =dish-list=, 输出它共有多少道菜。
+
+下面是大致的框架
+#+BEGIN_SRC racket
+(define dish-list-length
+  (λ (dishes)
+    (if (dish-null? dishes)
+        ___
+        (___ (dish-list-length
+              (dish-list-rest dishes))))))
+#+END_SRC
+练习题: 请填空
+
+-----
+
+首先，如果 =dishes= 是空的，那答案就是 0，很简单
+#+BEGIN_SRC racket
+(if (dish-null? dishes)
+    0
+    ....)
+#+END_SRC
+否则，我们就取出第一个 =dish= ，然后递归计算剩余的长度，
+再把它加 1
+#+BEGIN_SRC racket
+(+ 1 (dish-list-length
+      (dish-list-rest dishes)))
+#+END_SRC
+就这么完成了。如果你上一章学得比较好，这里应该是没有任何问题的。
+
+你是否想到了上一章中的 =count-digits= ？
+就是计算一个数有多少位数字的函数。
+#+BEGIN_SRC racket
+(define count-digits
+  (λ (n)
+    (if (single-digit? n)
+        1
+        (+ 1 (count-digits
+              (delete-units-digit n))))))
+#+END_SRC
+它们是不是几乎一模一样？
+
+我们把它改一改
+#+BEGIN_SRC racket
+(define zero?
+  (λ (n)
+    (= n 0)))
+
+(define count-digits
+  (λ (n)
+    (if (zero? n) ;; 个位数再删掉一位数字，就变成了 0
+        0
+        (+ 1 (count-digits
+              (delete-units-digit n))))))
+
+;; compare with
+(define dish-list-length
+  (λ (dishes)
+    (if (null? dishes)
+        0
+        (+ 1 (dish-list-length
+              (dish-list-rest dishes))))))
+#+END_SRC
+这下真的一模一样了，发现了没？他们都是计算一个东西的长度。
+
+上一章，我们已经跟“数字列表”玩耍过，用 =add-what= 加上一个数字，
+用 =get-units-digit= 和 =delete-units-digit= 分别取个位数字，
+和更高位的剩余数字。这就是我们对“数字列表”所需要的全部了。
+
+现在，我们又接触了“ =dish-list= ”，用 =dish-list= 这个函数，
+创建新的结构体，加上一个新 =dish= ，
+用 =dish-list-dish= 和 =dish-list-rest= 分别取第一道 =dish= ，
+和剩余的 =dish= 列表。这就是我们需要的全部了。
+
+只要你理解了其中之一，你就都可以理解了。
+
+------
+
+但我很不爽，遇见重复的东西，我就想要把它提出来，单独变成一个函数。
+比如我要计算任意东西的长度
+#+BEGIN_SRC racket
+(define any-length
+  (λ ....))
+#+END_SRC
+你可能不知道如何下手了。看清楚了
+#+BEGIN_SRC racket
+(define any-length
+  (λ (x no-more? get-rest)
+    (if (no-more? x)
+        0
+        (+ 1 (any-length (get-rest x)
+                         no-more?
+                         get-rest)))))
+#+END_SRC
+什么？后面两个 =no-more?= 和 =get-rest= 参数是什么玩意儿？
+
+首先，我们用了 =(no-more? x)= 和 =(get-rest x)= ，也就是说，
+它们两个都是函数？
+
+没错。看看怎么用
+#+BEGIN_SRC racket
+(define dish-list-length
+  (λ (dishes)
+    (any-length dishes dish-null? dish-list-rest)))
+
+(define count-digits
+  (λ (n)
+    (any-length n zero? delete-units-digit)))
+#+END_SRC
+够不够神奇？
+
+你能明白这是怎么回事吗？函数就跟其它的东西一样，可以作为其它函数的参数，
+然后在其它函数中被调用。
+
+上一节中，还有个 =first-digit= 函数，计算最高位的数字，
+我们试一下，能不能一模一样地，计算一个 =dish-list= 最后一道 =dish= 。
+
+练习题: 写出 =last-dish= 函数。注意，这时候的判断条件就不是
+=dish-null?= 了，因为要计算最后一道菜，那输入肯定是至少有一道菜的，
+不可能是个空的菜单，对吧。
+
+-----
+
+#+BEGIN_SRC racket
+(define first-digit
+  (λ (n)
+    (if (single-digit? n)
+        n
+        (first-digit (delete-units-digit n)))))
+
+
+(define single-dish?
+  (λ (dishes)
+    (dish-null? (dish-list-rest dishes))))
+
+(define last-dish
+  (λ (dishes)
+    (if (single-dish? dishes)
+        (dish-list-dish dishes)
+        (last-dish (dish-list-rest dishes)))))
+#+END_SRC
+好了，来仔细地比较一下。
+
+别的都没问题，唯一不同的是，当 =if= 条件成立的时候，
+前者是 =n= ，后者是 =(dish-list-dish dishes)= ，
+而不是简单的 =dishes= 。我估计你自己做完这道题，
+要是没测试过的话，这里很有可能是写错的。
+
+其实也没错地很离谱，只不过我们再用 =dish-list-dish= 来获得一下那道
+=dish= 就好了。所以，自己试试写个通用的函数。
+
+-----
+
+#+BEGIN_SRC racket
+(define last-element
+  (λ (x stop? get-rest)
+    (if (stop? x)
+        x
+        (last-element (get-rest x)
+                      stop?
+                      get-rest))))
+#+END_SRC
+(别忘了还要把 =stop?= 和 =get-rest= 原样递归进去，
+参数别漏了(这都是我自己犯过的错误啊))
+
+练习题: 然后试试用它来定义 =first-digit= 和 =last-dish= 函数。
+
+-----
+
+#+BEGIN_SRC racket
+(define first-digit
+  (λ (n)
+    (last-element n single-digit? delete-units-digit)))
+
+(define last-dish
+  (λ (dishes)
+    (define one-dish-list
+      (last-element dishes single-dish? dish-list-rest))
+    (dish-list-dish one-dish-list)))
+#+END_SRC
+我这里用了上一章最后讲的语法，就是函数中可以有内部的变量定义。
+我先计算了 =one-dish-list= ，然后输出了 =(dish-list-dish one-dish-list)=
+
+(当然也可以不定义这个变量，直接把函数套在一块儿。
+但我个人喜欢多定义一些变量，这样思考起来更清楚。
+就像我第一章里说的，变量在一定程度上，能起到注释的作用)
+
+-----
+
+怎么样，你没想到函数还能这么用吧。
+
+还有很多很多的函数给你做练习题。你可以准备一下。
+这一节就再做最后一道吧:\\
+写出函数 =dish-list-member?= 和 =digit-member?= ，
+分别计算第一个参数(一道菜或一个一位数字)是否在第二个参数(列表)中。
+写出一个通用的函数 =member?= 来定义它们。
+(你可以看到这些结尾是问号的函数，返回值都是 =#t= 或 =#f=)
+
+上一节中讲过，判断是否相等的函数是 =equal?=
+
+一个 =if= 判断显然是不够用的。你可能要多分一类讨论，
+在 =if= 中再嵌套一个 =if= ，请不要马上往下看，自己思考。
+
+-----
+
+我就把 =member?= 给出来吧。
+#+BEGIN_SRC racket
+(define member? ;; search x in ls
+  (λ (x ls no-more? get-elem get-rest) ;; elem: element
+
+    (define mem?
+      (λ (x ls)
+        (if (no-more? ls)
+            #f
+            (if (equal? x (get-elem ls))
+                #t
+                (mem? x (get-rest ls))))))
+
+    (mem? x ls)))
+#+END_SRC
+这里因为不停地传的参数太多了，我就在内部定义了一个函数，
+让代码看起来更简单一点。
+
+当然这种函数已经是极限了(指它的参数个数)，基本上我已经快眼花了，
+快要记不住哪个参数在第几个位置了。我一般是不会写出这样的函数的。
+如果参数再多两个，在实际中遇到的话，我宁愿复制粘贴代码。
+因为如果提出来一个函数，反倒更看不清了，折腾这个通用的函数变成负担了，
+那还不如傻一点，老老实实一个一个写。
+
+-----
+
+现在你已经见识到函数绝大部分的威力了，只是你可能还不是很得心应手。
+目前的重点就是，学习怎样用好函数提供的这些能力。
+
+函数永远是一个程序的中心。其它的东西都是死的，只有函数是活的。
+
+我扯一些题外话吧。为什么说人类的语言比动物的语言高级？
+我认为，因为人类的语言有动词。动词跟程序中的函数是同一个概念。
+所谓的主语、宾语，不过都是动词的参数而已。
+
+只有动词，能真正地造出任意复杂的句子，就像函数能任意地嵌套一样。
+当然，你也可以往名词上一个劲地叠形容词，但它造不出复杂的句子。
+每个人学英语的时候，都在语法上有一个难关，就是从句。
+从句能充当形容词，副词，名词，但充当不了动词，它们都是在为动词服务。
+
+所以学外语的时候，我认为背单词，重点在于动词。
+把动词用漂亮了，能完胜那些只会堆形容词和副词的人。
+
+而且学起语法来就没什么难度了。你心里很清楚它们是什么样的成分，
+只不过程序语言比较高级，可以像一个图形一样嵌套，
+自然语言只能把这些“结构上”的东西都抹平，然后用一些助词什么的来表示，
+其实它们只不过是在模仿程序语言里自然而然的结构。
+
+我也不是说孰优孰劣，但我对语言的东西确实很感兴趣，
+我们是如何表达自己的意思的，我们是如何理解他人的信息的。
+
+有时候我会梦想，希望人类能像三体人那样有透明的思维，
+这样世界上就不会有语言存在了(作为学过 程序+语言 专业的人，
+我能看出《三体》的无数 bug...)，大家都能互相理解了，
+真是个美好的世界。
+
+不过同时，你会发现个人不存在什么自由了。为什么呢，
+比如世界要毁灭了，唯有杀了你才能拯救(这是什么中二情节)。
+你当然怕死，但是其它所有人的痛苦你都能感同身受，
+我认为，在这种情况下，你一定是很痛快地选择自愿去死，
+而且并不会像地球的电影里拍的那样各种纠结、遗憾。
+
+对于看过 Eva 的人，这就是那里面所说的人类补完计划。
+
+这其实等于你的思维、情感，已经是整个人类的一部分，
+你是没有什么自我意识的，整个人类已经组成了一个超级大脑，
+他们会诞生出一个真正的集体意识。你以为是你做出的决定，
+其实是这个集体意识做出的决定。为了集体可以牺牲部分。
+你具有的自我意识可能只是一种错觉。
+
+但人类有语言这个屏障，人是不可能理解他人的，
+人能不能理解自己都是个问题。这就是我这么希望研究语言的原因，
+自然语言，还有程序语言，音乐、美术的语言，甚至是电脑游戏的语言。
+我想找到那些能表达自己的东西，能在人之间建立起联系的东西。
+
+所以在这一系列教程的前言里，我最开头就放上了巴别塔的故事。
+就这么一点传说，当时却给了我很大的触动。
+
+但是问题也在于，这样世界真的会向美好的方向发展吗？
+现在信息技术发达多了，可以说，人类之间应该是联系更紧密了，
+所以人类应该更加互相理解了。
+
+我认为是这样的，人们更能互相理解了，至少沟通的手段多了。
+但是这跟人的幸福似乎是相反的，似乎人之间的联系能够增加多少，
+人类这个集体的意识也会相应增加，人似乎就更听从于集体的决定，
+承担为了集体而给自己带来的痛苦。
+
+你可以类比一下，你身上的每个细胞都像是一个独立的人，
+但是为了你的生存，它们不停的工作，甚至有的已经变异得认不出来了，
+就为了能让集体生存，要是这个集体死了，它们都会死。
+它们只能听从这个集体的意识，即使这会给它们带来痛苦。
+
+所以我们是不是应该对组成自己身体的任何一部分，稍微多尊重一些？
+
+我不确定细胞也会有痛苦，至少它们的意识是跟我们完全不同的存在。
+但是可以猜想，如果人类这样发展下去，也许也会成为这样的一个整体，
+我们会诞生出整体的意识，人类在其中会失去自己，
+或者被免疫系统自动清理掉。
+
+如果想保持个人的自由，我认为发展应该是有限度的，
+人类之间的联系增加，人类整体的发展，都是以牺牲个人为代价的。
+
+但这也许又是人类进化的终极途径。试想一下，
+如果整个地球诞生出一个整体的意识，我们是它的细胞，
+这会是什么样子，我是无法想象的。
+
+也许我臆想的成分有点多，但是不管怎么说，我始终都在矛盾之中。
+我觉得世界上的痛苦都是人际关系导致的，我指的不是简单的与人交往，
+而是人之间有意无意的互相影响。如果从古至今只有我一个人的存在，
+我就不需要面对所有的这些问题。
+
+所以最一开始，单细胞生物诞生的时候，为什么它们要想到组合在一起，
+甘愿成为高级生命的一部分呢？为什么要牺牲自己来创造更高级的生命呢？
+世界上就自己一个细胞，快快乐乐地生存不好吗？
+
+还是说，真的还是有什么自然规律在支配这些吗？
+
+但是现在既然有这些问题了，交流似乎就是唯一解决问题的途径，
+交流都是通过各种形式的语言来完成。所以研究语言，
+似乎就可以解决我们所有的烦恼了。
+
+问题就是，这个解决的结果，到底是人类快乐地共同生活，
+还是人类已经不作为一个个体存在？
+
+也许两者都是，也无所谓快乐不快乐？
+
+是的，我研究的是程序语言，而且研究地挺深了，我也喜欢接触其它各种语言，
+比如我学了些日语，见[[./japanese-learning.html][此链接]]。但在这期间，我也想了很多很多，
+我不知道这样的研究，和人类的发展，究竟会带来什么样的结果。
+我自己当然没有这么强的能力，让人类之间的联系获得巨大的发展，
+但是这样发展下去，总有一天会有这样的结果。
+人类以前认为发展是好的，现在认为在环保的前提下，发展是好的，
+有多少人明白发展到最后，到底会带来什么东西呢。
+在这之前，我们就一直这样研究下去吗。
+
+# * 调教多米诺骨牌的一万种方法
+
+# to be continued...
