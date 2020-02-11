@@ -1,8 +1,5 @@
 #+TITLE: PL教程 第一章 人和机器
 
-#+BEGIN_EXPORT html
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=2&id=527573&auto=0&height=66"></iframe>
-#+END_EXPORT
 * 我们的机器
 
 首先我得说，本来这些杂七杂八要放在前言里讲的，结果是...
@@ -320,6 +317,7 @@ The Seasoned Schemer 这几本书， SICP有官方的电子书，
 曾经很多抽象的概念在我心里都很模糊，我只会模仿，
 但是它用直观的图画和逻辑讲的极其清楚，我不但心里有了极其清晰的概念，
 用起来得心应手，而且甚至学会了实现它，学会了自己设计语言。
+
 但其实我不会跟别人说，我自己看的时候，忍不住一直打盹，
 连着五六页满满的英文，实在不想看它在讲什么，
 要么就是连着五六页满满的代码，太痛苦了。
@@ -330,6 +328,10 @@ The Seasoned Schemer 这几本书， SICP有官方的电子书，
 所以，我最后还是无奈地选了一个我觉得最好的语言。
 至于你们觉得它括号太多，这个现在我也解释不了，
 只能以后你们自己慢慢感受了。
+
+下面开始吧。
+
+-----
 
 输入一个数字，Racket 就会原样输出。
 #+BEGIN_SRC racket
@@ -560,8 +562,12 @@ The Seasoned Schemer 这几本书， SICP有官方的电子书，
 我们有时候要懒一点才行，先把式子带着，先进函数里，必要的时候再算。
 不过这是后话了。
 
-还有一个很重要的点，括号只是符号上的东西而已，
+如果别人再扯什么括号之类的话，你心里应该明白，括号只是符号上的东西而已，
 由我们画的那些图，产生的想象，才是本质上的东西。
+
+我现在可以解释程序语言专业的目的了，它研究程序表面和本质的关系，
+表面的符号是如何转化成本质的计算的，如何设计易懂的符号，
+诸如此类。
 
 -----
 
@@ -1037,3 +1043,7 @@ $f(f(f(...f(1))))$ ，得到的结果就会越来越接近于 $\sqrt{a}$ 。
 剧透有点多了，就到这里了。
 
 (评论系统不太靠谱，我又删掉了，以后看情况再加吧)
+
+#+BEGIN_EXPORT html
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="https://music.163.com/outchain/player?type=2&id=527573&auto=0&height=66"></iframe>
+#+END_EXPORT
