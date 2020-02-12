@@ -1,6 +1,8 @@
 #+TITLE: Ziwen's Blog Homepage
 
 -----
+ [[./pl-tutorial-3.html][PL教程 第三章 (未完)]]
+-----
  [[./japanese-learning.html][给初学者的日语学习指南]]
 -----
  [[./on-reasoning.html][关于生活中的理性]]
