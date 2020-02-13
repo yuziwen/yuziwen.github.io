@@ -18,6 +18,8 @@
 
 ** 其它
 
+-----
+   [[./linguistics.html][谈一谈语言的研究]]
 ----- 
    [[./japanese-learning.html][给初学者的日语学习指南]]
 -----
