@@ -1,23 +1,33 @@
-#+TITLE: Ziwen's Blog Homepage
+#+TITLE: ziwen's blog homepage
 
+* 
+** 程序语言教程 总目录
+   :PROPERTIES:
+   :CUSTOM_ID: pl-tutorial-contents
+   :END:
+
+-----  
+   [[./pl-tutorial-0.html][前言 关于程序语言理论]]
 -----
- [[./pl-tutorial-3.html][PL教程 第三章 (未完)]]
+   [[./pl-tutorial-1.html][第一章 人和机器]]
 -----
- [[./japanese-learning.html][给初学者的日语学习指南]]
+   [[./pl-tutorial-2.html][第二章 停下来]]
 -----
- [[./on-reasoning.html][关于生活中的理性]]
+   [[./pl-tutorial-3.html][第三章 (未完)]]
 -----
- [[./mental-journey.html][再忆往事]]
+
+** 其它
+
+----- 
+   [[./japanese-learning.html][给初学者的日语学习指南]]
 -----
- [[./skip-school-experience.html][记我的逃学经历]]
+   [[./on-reasoning.html][关于生活中的理性]]
 -----
- [[./pl-tutorial-2.html][PL教程 第二章 停下来!]]
+   [[./mental-journey.html][再忆往事]]
 -----
- [[./pl-tutorial-1.html][PL教程 第一章 人和机器]] 
+   [[./skip-school-experience.html][记我的逃学经历]]
 -----
- [[./pl-tutorial-0.html][PL教程 前言 关于程序语言理论]]
+   [[./cps-converter.html][自动 CPS 变换]]
 -----
- [[./cps-converter.html][自动 CPS 变换]]
------
- [[./junior-high-experience.html][我的初中经历]]
+   [[./junior-high-experience.html][我的初中经历]]
 -----

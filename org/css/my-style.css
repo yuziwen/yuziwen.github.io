@@ -20,6 +20,13 @@ img {
         padding-left: 8%;
         padding-right: 8%;
     }
+
+    #table-of-contents ul {
+      padding-left: 0.25em;
+    }
+    #table-of-contents:hover #text-table-of-contents {
+      margin-left: 0.5em;
+    }
 }
 @media all and (max-width: 1040px) {
     body #content {
