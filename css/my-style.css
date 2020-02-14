@@ -12,6 +12,10 @@ img {
     max-width: 100%;
 }
 
+iframe {
+  margin-left: -1em;
+}
+
 @media all {
     body #content {
         border: 1px solid lightgray;
