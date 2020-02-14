@@ -6,14 +6,14 @@
    :CUSTOM_ID: pl-tutorial-contents
    :END:
 
------  
-   [[./pl-tutorial-0.html][前言 关于程序语言理论]]
 -----
-   [[./pl-tutorial-1.html][第一章 人和机器]]
+   [[./pl-tutorial-3.html][第三章 (未完)]]
 -----
    [[./pl-tutorial-2.html][第二章 停下来]]
 -----
-   [[./pl-tutorial-3.html][第三章 (未完)]]
+   [[./pl-tutorial-1.html][第一章 人和机器]]
+-----  
+   [[./pl-tutorial-0.html][前言 关于程序语言理论]]
 -----
 
 ** 杂文
