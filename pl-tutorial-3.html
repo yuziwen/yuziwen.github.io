@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-13 Thu 16:15 -->
+<!-- 2020-02-15 Sat 20:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第三章 (未完)</title>
@@ -22,6 +22,8 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgf52f7d5">手拉手</a></li>
+<li><a href="#orgfc569ea">集齐多米诺骨牌⏎</a></li>
+<li><a href="#org1cc5e47">┗&gt;&gt; 即可召唤魔法⏎</a></li>
 </ul>
 </div>
 </div>
@@ -595,7 +597,7 @@
 
 <p>
 还有很多很多的函数给你做练习题。你可以准备一下。这一节就再做最后一道吧:<br />
-写出函数 <code>dish-list-member?</code> 和 <code>digit-member?</code>，分别计算第一个参数(一道菜或一个一位数字)是否在第二个参数(列表)中。写出一个通用的函数 <code>member?</code> 来定义它们。(你可以看到这些结尾是问号的函数，返回值都是 <code>#t</code> 或 <code>#f</code>)
+写出函数 <code>dish-list-member?</code> 和 <code>digit-member?</code>，分别计算第一个参数(一道菜或一个一位数字)是否在第二个参数(列表)中。写出一个通用的函数 <code>any-member?</code> 来定义它们。(你可以看到这些结尾是问号的函数，返回值都是 <code>#t</code> 或 <code>#f</code>)
 </p>
 
 <p>
@@ -608,9 +610,9 @@
 <hr />
 
 <p>
-我就把 <code>member?</code> 给出来吧。</p>
+我就把 <code>any-member?</code> 给出来吧。</p>
 <div class="org-src-container">
-<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">member?</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">search x in ls</span>
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">any-member?</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">search x in ls</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x ls no-more? get-elem get-rest<span style="color: #b0b1a3;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">elem: element</span>
 
     <span style="color: #b0b1a3;">(</span><span style="color: #262680;">define</span> <span style="color: black;">mem?</span>
@@ -639,13 +641,14 @@
 函数永远是一个程序的中心。其它的东西都是死的，只有函数是活的。</p>
 
 <p>
-我扯一些题外话吧。为什么说人类的语言比动物的语言高级？我认为，因为人类的语言有动词。动词跟程序中的函数是同一个概念。所谓的主语、宾语，不过都是动词的参数而已。</p>
+我扯一些题外话吧。为什么说人类的语言比其它动物的语言高级？我认为，因为人类的语言有动词。动词跟程序中的函数是同一个概念。所谓的主语、宾语，不过都是动词的参数而已。</p>
 
 <p>
 只有动词，能真正地造出任意复杂的句子，就像函数能任意地嵌套一样。当然，你也可以往名词上一个劲地叠形容词，但它造不出复杂的句子。每个人学英语的时候，都在语法上有一个难关，就是从句。从句能充当形容词，副词，名词，但充当不了动词，它们都是在为动词服务。</p>
 
 <p>
-所以学外语的时候，我认为背单词，重点在于动词。把动词用漂亮了，能完胜那些只会堆形容词和副词的人。</p>
+所以学外语的时候，我认为背单词，重点在于动词。把动词用漂亮了，能完胜那些只会堆形容词和副词的人。(说不定这句话能对你的英语作文有帮助)
+</p>
 
 <p>
 而且学起语法来就没什么难度了。你心里很清楚它们是什么样的成分，只不过程序语言比较高级，可以像一个图形一样嵌套，自然语言只能把这些“结构上”的东西都抹平，然后用一些助词什么的来表示，其实它们只不过是在模仿程序语言里自然而然的结构。</p>
@@ -654,7 +657,7 @@
 我也不是说孰优孰劣，但我对语言的东西确实很感兴趣，我们是如何表达自己的意思的，我们是如何理解他人的信息的。</p>
 
 <p>
-有时候我会梦想，希望人类能像三体人那样有透明的思维，这样世界上就不会有语言存在了，大家都能互相理解了，真是个美好的世界。(另: 作为学过 程序+语言 专业的人，我能看出《三体》的无数 bug&#x2026;而且我一点也不喜欢这本书)
+有时候我会梦想，希望人类能像三体人那样有透明的思维，这样世界上就不会有语言存在了，大家都能互相理解了，真是个美好的世界。(另: 作为学过 程序+语言 的人，我能看出《三体》的无数 bug&#x2026;而且我一点也不喜欢这本书)
 </p>
 
 <p>
@@ -715,6 +718,249 @@
 <p>
 是的，我研究的是程序语言，而且研究地挺深了，我也喜欢接触其它各种语言，比如日语，见<a href="./japanese-learning.html">此链接</a>。但在这期间，我也想了很多很多，我不知道这样的研究，和人类的发展，究竟会带来什么。我自己当然没有这么强的能力，让人类之间的联系获得巨大的进步，但是这样发展下去，总有一天会有这样的结果。人类以前认为发展是好的，现在认为在环保的前提下，发展是好的，有多少人明白发展到最后，到底会带来什么东西呢。在这之前，我们就一直这样研究下去吗。</p>
 </div>
+</div>
+
+<div id="outline-container-orgfc569ea" class="outline-2">
+<h2 id="orgfc569ea">集齐多米诺骨牌⏎</h2>
+<div class="outline-text-2" id="text-orgfc569ea">
+<p>
+不行，我写教程还是要收一收，别的话还是放到博客的其它文章里再说吧。回归正题。</p>
+
+<p>
+因为“列表(list)”在程序中实在太常见了，特别是在初学的时候，所以 Racket 其实已经提供了相关的一系列函数。</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> '<span style="color: #8c8c8c;">()</span>
+'<span style="color: #8c8c8c;">()</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #262680;">null</span>
+'<span style="color: #8c8c8c;">()</span>
+</pre>
+</div>
+<p>
+<code>null</code> 就是 Racket 提供的一个变量，它表示空列表。注意，它不是个函数，把它直接写出来就是空列表了。我也不清楚为什么不统一成函数，可能直接这么写比较方便吧。</p>
+
+<p>
+至于 <code>'()</code> 是什么，你可以类比一下字符串，比如 <code>""</code> 是空字符串，而 <code>'(</code> 一直到 <code>)</code> 就相当于那两个双引号，一个表示列表开始，一个表示列表结尾。只要在一个东西前面加个单引号 <code>'</code>，里面的东西就不会被当成程序了，而会变成一个列表。</p>
+
+<p>
+(我觉得这个语法有点难看，为什么不干脆用花括号 <code>{}</code> 呢？)
+</p>
+
+<p>
+你可能已经被讲晕了，直接上例子吧
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cons</span> <span style="color: #228b22;">1</span> '<span style="color: #93a8c6;">()</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">1</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> '<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">1</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">1</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+这是一个只含有 <code>1</code> 的列表。列表可以直接写出来 <code>'(1)</code>，也可以用 <code>cons</code> 函数，它的意思是 <code>construct</code>，就跟我们上一节中的 <code>dish-list</code> 用法一样，前一个参数是新列表的元素，后一个参数是旧列表。</p>
+
+<p>
+接下来继续
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cons</span> <span style="color: #228b22;">2</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">2</span> <span style="color: #228b22;">1</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cons</span> <span style="color: #228b22;">3</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">2</span> <span style="color: #228b22;">1</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">3</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">1</span><span style="color: #8c8c8c;">)</span>
+....
+</pre>
+</div>
+<p>
+这样应该能看懂了。</p>
+
+<p>
+需要特别提醒一下的是，列表跟字符串不同。字符串跟程序是一点关系也没有的，比如 <code>"1"</code> 跟程序中的数字 <code>1</code> 毫无关系，顶多只是看起来长得像罢了。但列表 <code>'(1)</code> 中的 <code>1</code> 就是程序中的数字 <code>1</code>，我们把这个列表拆开之后，还能拿到这个数字 <code>1</code>。</p>
+
+<p>
+所以列表中也可以放任意的东西
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cons</span> <span style="color: #228b22;">"abc"</span> <span style="color: #262680;">null</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">"abc"</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cons</span> <span style="color: #228b22;">#t</span> <span style="color: #93a8c6;">(</span><span style="color: #262680;">cons</span> <span style="color: #228b22;">123</span> <span style="color: #262680;">null</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">#t</span> <span style="color: #228b22;">123</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cons</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span><span style="color: #93a8c6;">)</span> <span style="color: #262680;">null</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span> <span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">&#21015;&#34920;&#20013;&#30340;&#21015;&#34920;</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cons</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span><span style="color: #93a8c6;">)</span> '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span><span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span><span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">(</span><span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+你可以自己在电脑上多玩一玩。</p>
+
+<p>
+当然还有把列表拆开的函数。</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">car</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">"what?"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">"what?"</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cdr</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">"what?"</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">()</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">car</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">1</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cdr</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+'<span style="color: #8c8c8c;">(</span><span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">car</span> '<span style="color: #93a8c6;">()</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">error</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">cdr</span> '<span style="color: #93a8c6;">()</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">error</span>
+</pre>
+</div>
+<p>
+<code>car</code> (就读作小汽车的那个 car)，和 <code>cdr</code> (读作 could-er)，就是跟 <code>cons</code> 反着干的，它们分别取出 <code>cons</code> 的两个参数。</p>
+
+<p>
+(至于为什么要叫这两个名字，据说是四五十(还是五六十)年前的的故事了，在古老的传说中，有一个叫 Lisp 的语言，它是 Scheme 语言的前身，然后 Scheme 又是我们现在用的 Racket 的前身。在那个 Lisp 语言里，好像有两个什么东西叫做 ‘a’ 和 ‘d’，然后不知怎么就有了这两个函数名，然后就流传下来了&#x2026;)
+</p>
+
+<p>
+(你要是不爽，可以用 <code>first</code> 和 <code>rest</code> 这两个函数，效果完全一样，是 Racket 帮你定义的别名，只是看上去没 <code>car</code> 和 <code>cdr</code> 高端罢了，每次写 <code>car</code> 和 <code>cdr</code>，我就觉得自己在写上个世纪五六十年代的代码，特别带劲儿)
+</p>
+
+<p>
+(好了又扯多了)
+</p>
+
+<p>
+最后，用 <code>null?</code> 可以判断一个列表是否为 <code>null</code>，与之相对应的，用 <code>cons?</code> 可以判断它是否是 不为 <code>null</code> 的列表，就是说，它是否是一个 <code>cons</code> 组成的。</p>
+
+<p>
+估计你真的晕了，再总结一下，<code>null</code>、<code>cons</code>、<code>car</code>、<code>cdr</code>、<code>null?</code>、<code>cons?</code>，就这些。</p>
+
+<p>
+下面你们就可以忘了 <code>dish-list</code> 和 <code>digit-list</code> 了，以后我们都只研究由 <code>null</code> 和 <code>cons</code> 组成的列表(<code>list</code>)。但前面的东西能告诉你 <code>list</code> 是怎么来的。</p>
+
+<p>
+练习题们: 试着用这些函数定义一下前面几节讲的函数。这几个函数就像加减乘除一样，会陪伴我们学编程的一生，你可以多写一些函数练练手。先不看那些通用的函数，自己重新写一遍下列函数，只需要处理由 <code>cons</code> 组成的列表就可以了。</p>
+<ol class="org-ol">
+<li><code>length</code>，计算一个列表的长度。</li>
+<li><code>last</code>，返回列表的最后一个成员。</li>
+<li><code>member?</code>，判断第一个参数是否在列表中。</li>
+</ol>
+
+<hr />
+
+<p>
+好了，继续，<code>member?</code> 里面用的是 <code>equal?</code> 来判断真假，还有比它更通用的，试着把参数 <code>x</code> 换成另一个参数 <code>pred?</code>，然后把函数中的 <code>equal?</code> 换成 <code>pred?</code>，(<code>predicate</code> 的缩写)，新的函数叫
+<code>memf?</code> (f 是 function(函数)的意思)，说一说它有什么作用？</p>
+
+<p>
+比如
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">&gt;10?</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? &gt;10? '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#f</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? &gt;10? '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">9</span> <span style="color: #228b22;">10</span> <span style="color: #228b22;">11</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span>
+</pre>
+</div>
+<p>
+提醒一下第一章就学过的内容，一个函数只是定义给了变量而已，所以不必定义 <code>&gt;10?</code> 这个变量，上面的代码可以写作
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+         '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#f</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+         '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">9</span> <span style="color: #228b22;">10</span> <span style="color: #228b22;">11</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">#t</span>
+
+
+<span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">member?</span>
+  <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x lst<span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">(</span>memf? <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #aebed8;">(</span>v<span style="color: #aebed8;">)</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">equal?</span> x v<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
+           lst<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+<p>
+你可以随心所欲地使用 <code>λ</code>，把 <code>λ</code> 传来传去就是自然而然的事情一样。(这也是我选择 Racket 语言的原因，好多流行的语言都对函数有许多限制，让人觉得碍手碍脚的，只有 Racket(和少数语言，比如 Python)是真正的自由，这也是 Python 现在火起来的原因之一)
+</p>
+
+<p>
+(而且 Python 在有些地方还比 Racket 好，但学到后面，写解释器的时候，你肯定就明白为什么我最后选择 Racket 了)
+</p>
+
+<p>
+(所以说实话，现在推广学 Python 还是不错的，但问题是，根本就没那么多老师真正理解编程，我还没见过有课程是把最重要的知识:
+函数调用，递归，列表等数据结构，之后就是程序的状态，然后是解释器，放在最前面先讲明白的。让学生花好多节课，背那些格式化字符串，还有各种循环语句，然后就是所谓的面向对象，几十节上百节课，背到最后，学生甚至连递归也不理解，更不要说闭包这种东西了)
+</p>
+
+<p>
+(想知道“闭包(closure)”是什么？闭包就是函数代码+函数中引用的外部变量。所有的函数都是个闭包，这是第一章就应该能理解的内容了吧，函数不光要包含代码，还要保存它定义的时候，变量所在的位置。闭包就是这玩意。现在学了函数还能当参数传来传去，应该对它有更深的理解了。)
+</p>
+
+<p>
+(又扯远了)
+</p>
+
+<p>
+来吧，去 <a href="https://docs.racket-lang.org/reference/pairs.html">Racket 官方文档</a>上瞅一眼，什么函数都有。比如，把上面的 <code>memf?</code> 的返回值从布尔类型，改成第一个满足函数的元素，就是官方的 <code>findf</code>，比如 <code>(findf &gt;10? '(9 10 11 12)) =&gt; 11</code>
+</p>
+
+<p>
+再找一个做练习题: 写出 <code>list-ref</code> 函数(<code>ref</code> 为 <code>reference</code> 的缩写)，参数为一个列表 <code>lst</code> 和一个自然数 <code>pos</code> (<code>position</code>)，返回第 <code>pos</code> 个元素。</p>
+
+<p>
+有一个有点摸不着头脑的地方，就是编程里的列表这类结构，都不是从 1 开始数的，而是从 0 开始数的。就是说，列表的第一个元素，在编程中叫做第 0 个元素。所以
+</p>
+<div class="org-src-container">
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">list-ref</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span> <span style="color: #228b22;">0</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">1</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">list-ref</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span> <span style="color: #228b22;">1</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">2</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span><span style="color: #262680;">list-ref</span> '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span> <span style="color: #228b22;">2</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #228b22;">3</span>
+</pre>
+</div>
+<p>
+别问我为什么，我也天天搞错这玩意。好像又是因为上古时代，大家还在写机器代码的时候，就是这么设计的。程序员数数也特别喜欢从 0 开始，就是数“自然数”，而不是“正整数”，应该也是受这个影响。比如阶乘函数，非要定义个 <code>(factorial 0) =&gt; 1</code>，这样就可以从 0 开始递归了。谁知道为什么。</p>
+
+<p>
+(不过说实话，在目前的电脑上，判断是否为 0，比判断是否为 1，好像效率高那么一点点&#x2026;不过鬼才想管这种事情)
+</p>
+
+<p>
+(不过似乎好多国家都习惯从 0 开始数？比如英式英语把 1 楼叫 the ground floor，2 楼才叫 the first floor)
+</p>
+
+<p>
+(不过一切都从 0 开始数，很多东西真的会简单好多。比如说算公元前某年到现在的时间，或者数楼层，考试的时候少了好多坑诶)
+</p>
+
+<p>
+所以就先记着吧，至于从 0 开始数是不是真的简单，我也不太肯定，但大家都是这么说的。养成从 0 开始数的习惯就好了。</p>
+
+<p>
+我估计你已经忘记做上面那道题了，现在可以安心写 <code>list-ref</code> 函数了。我啰嗦的习惯要改一改。</p>
+
+<p>
+然后是思考题: 如果输入的数字超过了列表的长度会怎么样？你可以自己试一试。是否能用 <code>error</code> 函数返回我们想要的错误呢？</p>
+
+<p>
+你可以对比一下官方的 <code>list-ref</code> 函数。把你的函数整体注释掉，然后 Racket 本身已经提供了 <code>list-ref</code> 了，你能在文档上找到。(再提示，直接在左括号前加 <code>#;</code> 可以整体注释掉整个括号的内容，这语法也挺好用的，我希望我不会讲得太快，让你语法记不过来了吧)
+</p>
+
+<p>
+我保证，是最后一个练习题了。写出函数 <code>all-satisfy?</code>，输入一个函数和一个列表，判断是否所有的元素都满足这个函数。这个函数跟前面的 <code>memf?</code> 是相对应的，因为 <code>memf?</code> 其实也可以叫做
+<code>some-satisfy?</code>，就是“是否存在满足函数的元素”。</p>
+
+<p>
+有没有感觉到逻辑学的臭味&#x2026;
+</p>
+
+<p>
+好了，如果说这一节是如何推倒多米诺骨牌，下一节就是，如何小心翼翼地把它们搭起来。</p>
+</div>
+</div>
+
+<div id="outline-container-org1cc5e47" class="outline-2">
+<h2 id="org1cc5e47">┗&gt;&gt; 即可召唤魔法⏎</h2>
 </div>
 </div>
 </body>
