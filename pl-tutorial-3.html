@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-15 Sat 20:20 -->
+<!-- 2020-02-16 Sun 09:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PL教程 第三章 (未完)</title>
@@ -181,7 +181,7 @@
 先看一遍代码的注释。<code>dish-list</code> 就是我们想要的，可以存放任意个 <code>dish</code> 的结构。可是它只有两个参数？没关系。请回答，下面这段代码表示什么？</p>
 <div class="org-src-container">
 <pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>dish-null<span style="color: #8c8c8c;">)</span>
-#&lt;dish-list&gt;
+#&lt;dish-null&gt;
 </pre>
 </div>
 <p>
@@ -597,7 +597,7 @@
 
 <p>
 还有很多很多的函数给你做练习题。你可以准备一下。这一节就再做最后一道吧:<br />
-写出函数 <code>dish-list-member?</code> 和 <code>digit-member?</code>，分别计算第一个参数(一道菜或一个一位数字)是否在第二个参数(列表)中。写出一个通用的函数 <code>any-member?</code> 来定义它们。(你可以看到这些结尾是问号的函数，返回值都是 <code>#t</code> 或 <code>#f</code>)
+写出函数 <code>dish-list-member?</code> 和 <code>digit-member?</code>，分别计算第一个参数(一道菜或一个一位数字)是否在第二个参数(列表)中。写出一个通用的函数 <code>any-member?</code> 来定义它们。(你可以看到这些结尾是问号的函数，返回值都是 <code>#t</code> 或 <code>#f</code>，也就是布尔类型的值)
 </p>
 
 <p>
@@ -844,8 +844,7 @@
 <hr />
 
 <p>
-好了，继续，<code>member?</code> 里面用的是 <code>equal?</code> 来判断真假，还有比它更通用的，试着把参数 <code>x</code> 换成另一个参数 <code>pred?</code>，然后把函数中的 <code>equal?</code> 换成 <code>pred?</code>，(<code>predicate</code> 的缩写)，新的函数叫
-<code>memf?</code> (f 是 function(函数)的意思)，说一说它有什么作用？</p>
+好了，继续，<code>member?</code> 里面用的是 <code>equal?</code> 来判断真假，还有比它更通用的，试着把参数 <code>x</code> 换成另一个参数 <code>pred?</code>，然后把函数中的 <code>equal?</code> 换成 <code>pred?</code>，(<code>predicate</code> 的缩写)，新的函数叫 <code>exist?</code>，说一说它有什么作用？</p>
 
 <p>
 比如
@@ -854,9 +853,9 @@
 <pre class="src src-racket"><span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">&gt;10?</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? &gt;10? '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>exist? &gt;10? '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">#f</span>
-<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? &gt;10? '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">9</span> <span style="color: #228b22;">10</span> <span style="color: #228b22;">11</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>exist? &gt;10? '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">9</span> <span style="color: #228b22;">10</span> <span style="color: #228b22;">11</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">#t</span>
 </pre>
 </div>
@@ -864,18 +863,18 @@
 提醒一下第一章就学过的内容，一个函数只是定义给了变量而已，所以不必定义 <code>&gt;10?</code> 这个变量，上面的代码可以写作
 </p>
 <div class="org-src-container">
-<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
-         '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<pre class="src src-racket"><span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>exist? <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+          '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">1</span> <span style="color: #228b22;">2</span> <span style="color: #228b22;">3</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">#f</span>
-<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>memf? <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
-         '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">9</span> <span style="color: #228b22;">10</span> <span style="color: #228b22;">11</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #262680;">&gt;</span> <span style="color: #8c8c8c;">(</span>exist? <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">(</span><span style="color: #262680;">&gt;</span> x <span style="color: #228b22;">10</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+          '<span style="color: #93a8c6;">(</span><span style="color: #228b22;">9</span> <span style="color: #228b22;">10</span> <span style="color: #228b22;">11</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 <span style="color: #228b22;">#t</span>
 
 
 <span style="color: #8c8c8c;">(</span><span style="color: #262680;">define</span> <span style="color: black;">member?</span>
   <span style="color: #93a8c6;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #b0b1a3;">(</span>x lst<span style="color: #b0b1a3;">)</span>
-    <span style="color: #b0b1a3;">(</span>memf? <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #aebed8;">(</span>v<span style="color: #aebed8;">)</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">equal?</span> x v<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
-           lst<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+    <span style="color: #b0b1a3;">(</span>exist? <span style="color: #97b098;">(</span><span style="color: #262680;">&#955;</span> <span style="color: #aebed8;">(</span>v<span style="color: #aebed8;">)</span> <span style="color: #aebed8;">(</span><span style="color: #262680;">equal?</span> x v<span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span>
+            lst<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 <p>
@@ -900,7 +899,7 @@
 </p>
 
 <p>
-来吧，去 <a href="https://docs.racket-lang.org/reference/pairs.html">Racket 官方文档</a>上瞅一眼，什么函数都有。比如，把上面的 <code>memf?</code> 的返回值从布尔类型，改成第一个满足函数的元素，就是官方的 <code>findf</code>，比如 <code>(findf &gt;10? '(9 10 11 12)) =&gt; 11</code>
+来吧，去 <a href="https://docs.racket-lang.org/reference/pairs.html">Racket 官方文档</a>上瞅一眼，什么函数都有。比如，把上面的 <code>exist?</code> 的返回值从布尔类型，改成第一个满足函数的元素，就是官方的 <code>findf</code>，比如 <code>(findf &gt;10? '(9 10 11 12)) =&gt; 11</code>
 </p>
 
 <p>
@@ -943,11 +942,11 @@
 然后是思考题: 如果输入的数字超过了列表的长度会怎么样？你可以自己试一试。是否能用 <code>error</code> 函数返回我们想要的错误呢？</p>
 
 <p>
-你可以对比一下官方的 <code>list-ref</code> 函数。把你的函数整体注释掉，然后 Racket 本身已经提供了 <code>list-ref</code> 了，你能在文档上找到。(再提示，直接在左括号前加 <code>#;</code> 可以整体注释掉整个括号的内容，这语法也挺好用的，我希望我不会讲得太快，让你语法记不过来了吧)
+你可以对比一下官方的 <code>list-ref</code> 函数。把你的函数整体注释掉，然后 Racket 本身已经提供了 <code>list-ref</code> 了(你能在文档上找到)，你可以自己试一试。(再提示，直接在左括号前加 <code>#;</code> 可以整体注释掉整个括号的内容，这语法也挺好用的，我希望我不会讲得太快，让你语法记不过来了吧)
 </p>
 
 <p>
-我保证，是最后一个练习题了。写出函数 <code>all-satisfy?</code>，输入一个函数和一个列表，判断是否所有的元素都满足这个函数。这个函数跟前面的 <code>memf?</code> 是相对应的，因为 <code>memf?</code> 其实也可以叫做
+我保证，是最后一个练习题了。写出函数 <code>all-satisfy?</code>，输入一个函数和一个列表，判断是否所有的元素都满足这个函数。这个函数跟前面的 <code>exist?</code> 是相对应的，<code>exist?</code> 也可以叫做
 <code>some-satisfy?</code>，就是“是否存在满足函数的元素”。</p>
 
 <p>
